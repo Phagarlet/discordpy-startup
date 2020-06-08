@@ -35,7 +35,7 @@ async def on_ready():
     await channel.send('業務を開始します')
 
 # メッセージ受信時に動作する処理
-@bot.event
+@bot.command()
 async def on_message(message):
     # メッセージ送信者がBotだった場合は無視する
     if message.author.bot:
