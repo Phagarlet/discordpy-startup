@@ -45,10 +45,10 @@ async def on_message(message):
         await message.channel.send('私は猫ではないです...')
     #「/who」botの説明
     if message.content == '/who':
-        await message.channel.send('私はDTB闘技場の管理人、ヤタスィです。\n24時間は動けませんが、必須そうな処理は覚えたので、実際に運営をする日も近いかもしれません。')
+        await message.channel.send('私はDTB闘技場の管理人、ヤタスィです。\n24時間稼働に対応しました。\nSeason2から正式に業務を開始します。よろしくお願いします。')
     #「進捗どうですか？」
     if message.content =='進捗どうですか？':
-        await message.channel.send('24時間稼働"には"対応しました')
+        await message.channel.send('ついに24時間稼働に成功しました')
 
     if 'make_PLdata' == message.content:#プレーヤーデータの作成
         cursor.execute("DROP TABLE IF EXISTS PLdata")
