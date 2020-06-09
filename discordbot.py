@@ -16,16 +16,16 @@ cursor = con.cursor()
 
 
 
-#@bot.event
-#async def on_command_error(ctx, error):
-#    orig_error = getattr(error, "original", error)
-#    error_msg = ''.join(traceback.TracebackException.from_exception(orig_error).format())
-#    await ctx.send(error_msg)
+@bot.event
+async def on_command_error(ctx, error):
+    orig_error = getattr(error, "original", error)
+    error_msg = ''.join(traceback.TracebackException.from_exception(orig_error).format())
+    await ctx.send(error_msg)
 
 
-@bot.command()
-async def ping(ctx):
-    await ctx.send('pong')
+#@bot.command()
+#async def ping(ctx):
+#    await ctx.send('pong')
 
 # 起動時に動作する処理
 @client.event
