@@ -6,6 +6,13 @@ import sqlite3
 import re
 import sys
 
+#チャンネルID
+ch_bot=706713526873620500
+ch_kan=667380995242328078
+ch_CR=667404424007647272
+ch_WR=669536277502099471
+ch_RR=677771772212412459
+
 bot = commands.Bot(command_prefix='/')
 token = os.environ['DISCORD_BOT_TOKEN']
 
