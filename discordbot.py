@@ -43,6 +43,13 @@ async def on_message(message):
     # 「/neko」と発言したら「にゃーん」が返る処理
     if message.content == '/neko':
         await message.channel.send('私は猫ではないです...')
+    #「/who」botの説明
+    if message.content == '/who':
+        await message.channel.send('私はDTB闘技場の管理人、ヤタスィです。\n24時間は動けませんが、必須そうな処理は覚えたので、実際に運営をする日も近いかもしれません。')
+    #「進捗どうですか？」
+    if message.content =='進捗どうですか？':
+        await message.channel.send('24時間稼働"には"対応しました')
+
 # Botの起動とDiscordサーバーへの接続
 client.run(token)
 
