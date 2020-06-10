@@ -370,7 +370,7 @@ async def on_message(message):
                 await message.channel.send("変更完了です")
             else:
                 await message.channel.send('管理技士専用コマンドです')
-# Botの起動とDiscordサーバーへの接続
+# Botの起動とDiscordサーバーへの接続(これ大事)
 client.run(token)
 
     
