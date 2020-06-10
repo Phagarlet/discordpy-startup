@@ -271,32 +271,33 @@ async def on_message(message):
 
 #レート一覧表示 以下管理技士専用コマンド
     if 'Rupdate'in message.content:#レート更新
-        rank_CR=[]
-        rank_WR=[]
-        Rup=re.split('[\n]',message.content)
-        channel=client.get_channel(ch_kan)#更新告知　ch_kan
-        await channel.send(str(Rup[1])+'\nレート一覧を更新します\n完了の表示が出るまでコマンドを使用しないでください\nこの処理は5分～10分程度を要する可能性があります')
-        channel=client.get_channel(ch_CR)#ch_CRに変更
-        await channel.send(str(Rup[1])+'現在\n闘技場レート')#闘技場レート更新
-        cursor.execute("SELECT * FROM PLdata")
-        allPL=cursor.fetchall()
-        for i in range(len(allPL)):
+        if message.author.guild_permissions.administrator:
+            rank_CR=[]
+            rank_WR=[]
+            Rup=re.split('[\n]',message.content)
+            channel=client.get_channel(ch_kan)#更新告知　ch_kan
+            await channel.send(str(Rup[1])+'\nレート一覧を更新します\n完了の表示が出るまでコマンドを使用しないでください\nこの処理は5分～10分程度を要する可能性があります')
+            channel=client.get_channel(ch_CR)#ch_CRに変更
+            await channel.send(str(Rup[1])+'現在\n闘技場レート')#闘技場レート更新
             cursor.execute("SELECT * FROM PLdata")
-            PLname=cursor.fetchall()[i][0]
-            cursor.execute("SELECT * FROM PLdata")
-            PLCR=cursor.fetchall()[i][2]
-            await channel.send(str(PLname)+' '+str(PLCR))
-        await channel.send('出力完了です')
+            allPL=cursor.fetchall()
+            for i in range(len(allPL)):
+                cursor.execute("SELECT * FROM PLdata")
+                PLname=cursor.fetchall()[i][0]
+                cursor.execute("SELECT * FROM PLdata")
+                PLCR=cursor.fetchall()[i][2]
+                await channel.send(str(PLname)+' '+str(PLCR))
+            await channel.send('出力完了です')
 
-        channel=client.get_channel(ch_WR)#ch_WRに変更
-        await channel.send(str(Rup[1])+'現在\n勝敗レート')#勝敗レート更新
-        for j in range(len(allPL)):
-            cursor.execute("SELECT * FROM PLdata")
-            PLname=cursor.fetchall()[j][0]
-            cursor.execute("SELECT * FROM PLdata")
-            PLWR=cursor.fetchall()[j][6]
-            await channel.send(str(PLname)+' '+str(PLWR))
-        await channel.send('出力完了です')
+            channel=client.get_channel(ch_WR)#ch_WRに変更
+            await channel.send(str(Rup[1])+'現在\n勝敗レート')#勝敗レート更新
+            for j in range(len(allPL)):
+                cursor.execute("SELECT * FROM PLdata")
+                PLname=cursor.fetchall()[j][0]
+                cursor.execute("SELECT * FROM PLdata")
+                PLWR=cursor.fetchall()[j][6]
+                await channel.send(str(PLname)+' '+str(PLWR))
+            await channel.send('出力完了です')
 
         channel=client.get_channel(ch_RR)#ch_RRに変更
         await channel.send(str(Rup[1])+'現在\nレートランキング')#レートランキング更新
@@ -321,6 +322,8 @@ async def on_message(message):
 
         channel=client.get_channel(ch_kan)#更新告知　ch_kan
         await channel.send(str(Rup[1])+'\nレート一覧を更新しました')
+        else:
+                await message.channel.send('管理技士専用コマンドです')
 #ミス修正コマンド
     if 'edit' in message.content:#PLdataの値変更
         if message.author.guild_permissions.administrator:
@@ -331,11 +334,13 @@ async def on_message(message):
             cursor2.execute("update info set %s=?"%retsu,(int(nani),))
             cursor2.execute("select * PLdata")
             await message.channel.send('変更後'+str(cursor2.fetchall()))
-        con2.commit()
+            con.commit()
+        else:
+                await message.channel.send('管理技士専用コマンドです')
     
         
 #通称リセットコマンド
-    if 'reset' in message.content:#指定した何かの指定した列を変更する（シーズンリセットじに使用）
+    if 'reset' in message.content:#指定した何かの指定した列を変更する（シーズンリセット時に使用）
             if message.author.guild_permissions.administrator:
                 nani2=re.split('[\n]',message.content)[1]#変更前値
                 namae=re.split('[\n]',message.content)[2]#name
