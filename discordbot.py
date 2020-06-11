@@ -272,6 +272,7 @@ async def on_message(message):
             channel=client.get_channel(ch_kan)#更新告知　ch_kan
             await channel.send(str(Rup[1])+'\nレート一覧を更新します\n完了の表示が出るまでコマンドを使用しないでください\nこの処理は5分～10分程度を要する可能性があります')
             channel=client.get_channel(ch_CR)#ch_CRに変更
+            #闘技場レート出力機構
             await channel.send(str(Rup[1])+'現在\n闘技場レート')#闘技場レート更新
             cursor.execute("SELECT * FROM PLdata")
             allPL=cursor.fetchall()
@@ -282,7 +283,7 @@ async def on_message(message):
                 PLCR=cursor.fetchall()[i][2]
                 await channel.send(str(PLname)+' '+str(PLCR))
             await channel.send('出力完了です')
-
+            #勝敗レート出力機構
             channel=client.get_channel(ch_WR)#ch_WRに変更
             await channel.send(str(Rup[1])+'現在\n勝敗レート')#勝敗レート更新
             for j in range(len(allPL)):
@@ -290,21 +291,21 @@ async def on_message(message):
                 PLname=cursor.fetchall()[j][0]
                 cursor.execute("SELECT * FROM PLdata")
                 PLWR=cursor.fetchall()[j][6]
-                await channel.send(str(PLname)+' '+str(PLWR))
+            await channel.send(str(PLname)+' '+str(PLWR))
             await channel.send('出力完了です')
-
+            #レートランキング出力機構
             channel=client.get_channel(ch_RR)#ch_RRに変更
             await channel.send(str(Rup[1])+'現在\nレートランキング')#レートランキング更新
             for k in range(len(allPL)):
-               cursor.execute("SELECT * FROM PLdata")
-               PLname=cursor.fetchall()[k][0]
-               cursor.execute("SELECT * FROM PLdata")
-               PLCRr=cursor.fetchall()[k][2]
-               cursor.execute("SELECT * FROM PLdata")
-               PLWRr=cursor.fetchall()[k][6]
-               rank_CR.append([PLCRr,PLname])
-               rank_WR.append([PLWRr,PLname])
-          　rank_CR.sort(key=lambda x:x[0],reverse=True)#ソートCR
+                cursor.execute("SELECT * FROM PLdata")
+                PLname=cursor.fetchall()[k][0]
+                cursor.execute("SELECT * FROM PLdata")
+                PLCRr=cursor.fetchall()[k][2]
+                cursor.execute("SELECT * FROM PLdata")
+                PLWRr=cursor.fetchall()[k][6]
+                rank_CR.append([PLCRr,PLname])
+                rank_WR.append([PLWRr,PLname])
+            rank_CR.sort(key=lambda x:x[0],reverse=True)#ソートCR
             rank_WR.sort(key=lambda x:x[0],reverse=True)#ソートWR
             await channel.send('闘技場レートランキング')
             for i in range(10):
@@ -313,11 +314,12 @@ async def on_message(message):
             for j in range(10):
                 await channel.send(rank_WR[j])
             await channel.send('出力完了です')
-
+            #終了告知
             channel=client.get_channel(ch_kan)#更新告知　ch_kan
             await channel.send(str(Rup[1])+'\nレート一覧を更新しました')
         else:
             await message.channel.send('管理技士専用コマンドです')
+
 #ミス修正コマンド
     if 'edit' in message.content:#PLdataの値変更
         if message.author.guild_permissions.administrator:
@@ -366,5 +368,3 @@ async def on_message(message):
                 await message.channel.send('管理技士専用コマンドです')
 # Botの起動とDiscordサーバーへの接続
 client.run(token)
-
-    
