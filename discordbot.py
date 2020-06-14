@@ -58,16 +58,17 @@ async def on_message(message):
         cursor.execute("insert into PLdata values('Yataswee',0,1500,0,0,0,1500,0,0,0)")
         con.commit()
     if 'check_PLdata' == message.content:#PLdataを見る
-        cursor.execute("select * from PLdata")
-        allPL=cursor.fetchall()
-        for j in range(0,len(allPL),5):
-            if j!=len(allPL)-len(allPL)%5:
-                await message.channel.send(str(allPL[j])+'\n'+str(allPL[j+1])+'\n'+str(allPL[j+2])\
-                                           +'\n'+str(allPL[j+3])+'\n'+str(allPL[j+4]))
-            else:
-                for i in range(len(allPL)-(len(allPL)%5),len(allPL)):
-                    await message.channel.send(str(allPL[i]))
-        await message.channel.send("全員出力完了！")
+        if message.author.guild_permissions.administrator:
+            cursor.execute("select * from PLdata")
+            allPL=cursor.fetchall()
+            for j in range(0,len(allPL),5):
+                if j!=len(allPL)-len(allPL)%5:
+                    await message.channel.send(str(allPL[j])+'\n'+str(allPL[j+1])+'\n'+str(allPL[j+2])\
+                                               +'\n'+str(allPL[j+3])+'\n'+str(allPL[j+4]))
+                else:
+                    for i in range(len(allPL)-(len(allPL)%5),len(allPL)):
+                        await message.channel.send(str(allPL[i]))
+            await message.channel.send("全員出力完了！")
     if 'regist' in message.content:#新規登録
         PLname=re.split('[\n]',message.content)[1]
         if ',' in PLname or ' ' in PLname or '/' in PLname or '-' in PLname or '(' in PLname or ')' in PLname or'\u3000' in PLname:
