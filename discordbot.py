@@ -5,6 +5,7 @@ import discord
 import sqlite3
 import re
 import sys
+A
 
 #チャンネルID
 ch_bot=706713526873620500
