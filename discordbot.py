@@ -9,15 +9,13 @@ con = psycopg2.connect(path)
 cursor = con.cursor()
 channel_debug=706713526873620500
 
-@client
-.event
+@client.event
 async def on_ready():
     CHANNEL_ID = channel_debug
     channel = client.get_channel(CHANNEL_ID)
     await channel.send('起きたよー')
 
-@client
-.event
+@client.event
 async def on_message(message):
     try:
         if http://message.author.bot:#botの文章を無視する
