@@ -21,9 +21,9 @@ async def on_message(message):
         if message.author.bot:#botの文章を無視する
             return
         if 'neko' == message.content:#にゃんにゃんと返す
-            await http://message.channel.send("にゃんにゃん")
+            await message.channel.send("にゃんにゃん")
      except:
         cursor.execute("ROLLBACK")#エラー時にその操作を無かったことにする
-        await http://message.channel.send('エラー')
+        await message.channel.send('エラー')
         
 client.run(token)
