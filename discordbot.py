@@ -22,7 +22,7 @@ async def on_message(message):
             return
         if 'neko' == message.content:#にゃんにゃんと返す
             await message.channel.send("にゃんにゃん")
-     except:
+    except:
         cursor.execute("ROLLBACK")#エラー時にその操作を無かったことにする
         await message.channel.send('エラー')
         
