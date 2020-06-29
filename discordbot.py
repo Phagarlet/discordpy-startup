@@ -18,7 +18,7 @@ async def on_ready():
 @client.event
 async def on_message(message):
     try:
-        if http://message.author.bot:#botの文章を無視する
+        if message.author.bot:#botの文章を無視する
             return
         if 'neko' == message.content:#にゃんにゃんと返す
             await http://message.channel.send("にゃんにゃん")
