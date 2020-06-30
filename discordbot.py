@@ -30,7 +30,7 @@ async def on_command_error(ctx, error):
 @client.event
 async def on_ready():
     # 起動したらターミナルにログイン通知が表示される
-    channel=client.get_channel(ch_kan)#実装時に(ch_kan)に変更
+    channel=client.get_channel(ch_bot)#実装時に(ch_kan)に変更
     await channel.send('業務を開始します')
 
 # メッセージ受信時に動作する処理
@@ -44,14 +44,14 @@ async def on_message(message):
         await message.channel.send('私は猫ではないです...')
     #「/who」botの説明
     if message.content == 'who':
-        await message.channel.send('私はDTB闘技場の管理人、ヤタスィです。\n24時間稼働に対応しました。\nSeason2から正式に業務を開始します。よろしくお願いします。')
+        await message.channel.send('私はDTB闘技場の管理人です。\n24時間稼働に対応しました。\nSeason2から正式に業務を開始します。よろしくお願いします。')
     #「進捗どうですか？」
     if message.content =='進捗どうですか？':
         await message.channel.send('ついに24時間稼働に成功しました')
 
     if 'make_PLdata' == message.content:#プレーヤーデータの作成
         cursor.execute("DROP TABLE IF EXISTS PLdata")
-        cursor.execute("create table PLdata(name,ID,CR,Ctotal,Cwin,Close,WR,Wtotal,Wwin,Wlose)")
+        cursor.execute("create table PLdata(text,name integer,ID integer,CR integer,Ctotal integer,Cwin integer,Close integer,WR integer,Wtotal integer,Wwin integer,Wlose)")
         cursor.execute("insert into PLdata values('Yataswee',0,1500,0,0,0,1500,0,0,0)")
         con.commit()
     if 'check_PLdata' == message.content:#PLdataを見る
