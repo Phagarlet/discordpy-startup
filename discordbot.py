@@ -249,15 +249,13 @@ async def on_message(message):
         cursor.execute("SELECT * FROM PLdata")
         LWl=cursor.fetchall()[LID][9]
         LCw=LCw+LG
-        await message.channel.send(str(LCw))
+        await message.channel.send(str(LG))
         LCl=LCl+WG
-        await message.channel.send(str(LCl))
+        await message.channel.send(str(WG))
         LCt=int(LCw)+int(LCl)
-        await message.channel.send(str(LCt))
         LWl=LWl+1
-        await message.channel.send(str(LWl))
         LWt=int(LWl)+LWw
-        await message.channel.send(str(LWt))
+        await message.channel.send(str(LWw))
         cursor.execute("update PLdata set CR=(%s) where ID=(%s)",(NLCR,LID))#CR
         cursor.execute("update PLdata set WR=(%s) where ID=(%s)",(NLWR,LID))#CR
         cursor.execute("update PLdata set Ctotal=(%s) where ID=(%s)",(LCt,LID))#Ctotal
