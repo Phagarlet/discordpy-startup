@@ -54,6 +54,7 @@ async def on_message(message):
         cursor.execute("create table PLdata(text,name integer,ID integer,CR integer,Ctotal integer,Cwin integer,Close integer,WR integer,Wtotal integer,Wwin integer,Wlose)")
         cursor.execute("insert into PLdata values('Yataswee',0,1500,0,0,0,1500,0,0,0)")
         con.commit()
+        await message.channel.send('作成完了です')
     if 'check_PLdata' == message.content:#PLdataを見る
         if message.author.guild_permissions.administrator:
             cursor.execute("select * from PLdata")
