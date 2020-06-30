@@ -51,7 +51,7 @@ async def on_message(message):
 
     if 'make_PLdata' == message.content:#プレーヤーデータの作成
         cursor.execute("DROP TABLE IF EXISTS PLdata")
-        cursor.execute("create table PLdata(text,name integer,ID integer,CR integer,Ctotal integer,Cwin integer,Close integer,WR integer,Wtotal integer,Wwin integer,Wlose)")
+        cursor.execute("create table PLdata(text,name integer,ID integer,CR integer,Ctotal integer,Cwin integer,Close integer,WR integer,Wtotal integer,Wwin integer,Wlose")
         cursor.execute("insert into PLdata values('Yataswee',0,1500,0,0,0,1500,0,0,0)")
         con.commit()
         await message.channel.send('作成完了です')
