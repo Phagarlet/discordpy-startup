@@ -227,10 +227,10 @@ async def on_message(message):
         WWw=cursor.fetchall()[WID][8]
         cursor.execute("SELECT * FROM PLdata")
         WWl=cursor.fetchall()[WID][9]
-        WCw=WCw+WG
-        WCl=WCl+LG
+        WCw=+WG
+        WCl=+LG
         WCt=int(WCw)+int(WCl)
-        WWw=WWw+1
+        WWw=+1
         WWt=int(WWw)+WWl
         cursor.execute("update PLdata set CR=(%s) where ID=(%s)",(NWCR,WID))#CR
         cursor.execute("update PLdata set WR=(%s) where ID=(%s)",(NWWR,WID))#WR
@@ -248,12 +248,12 @@ async def on_message(message):
         LWw=cursor.fetchall()[LID][8]
         cursor.execute("SELECT * FROM PLdata")
         LWl=cursor.fetchall()[LID][9]
-        LCw=LCw+LG
+        LCw=+LG
         await message.channel.send(str(LCw))
-        LCl=LCl+WG
+        LCl=+WG
         await message.channel.send(str(LCl))
         LCt=int(LCw)+int(LCl)
-        LWl=LWl+1
+        LWl=+1
         LWt=int(LWl)+LWw
         await message.channel.send(str(LWw))
         cursor.execute("update PLdata set CR=(%s) where ID=(%s)",(NLCR,LID))#CR
