@@ -239,6 +239,7 @@ async def on_message(message):
         cursor.execute("update PLdata set Close=(%s) where ID=(%s)",(WCl,WID))#Close
         cursor.execute("update PLdata set Wtotal=(%s) where ID=(%s)",(WWt,WID))#Wtotal
         cursor.execute("update PLdata set Wwin=(%s) where ID=(%s)",(WWw,WID))#Wwin
+        con.commit()
         #敗北側
         cursor.execute("SELECT * FROM PLdata")
         LCw=cursor.fetchall()[LID][4]
