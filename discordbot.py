@@ -177,7 +177,6 @@ async def on_message(message):
                         WG=int(res5[0])
                         LID=int(res4[1])#敗者データ
                         LG=int(res5[1])
-                        await message.channel.send(str(WG)+str(LG))
         else:
             await message.channel.send('構文エラーです。\n情報過多エラー')
 #レート処理
@@ -250,10 +249,15 @@ async def on_message(message):
         cursor.execute("SELECT * FROM PLdata")
         LWl=cursor.fetchall()[LID][9]
         LCw=LCw+LG
+        await message.channel.send(str(LCw))
         LCl=LCl+WG
+        await message.channel.send(str(LCl))
         LCt=int(LCw)+int(LCl)
+        await message.channel.send(str(LCt))
         LWl=LWl+1
+        await message.channel.send(str(LWl))
         LWt=int(LWl)+LWw
+        await message.channel.send(str(LWt))
         cursor.execute("update PLdata set CR=(%s) where ID=(%s)",(NLCR,LID))#CR
         cursor.execute("update PLdata set WR=(%s) where ID=(%s)",(NLWR,LID))#CR
         cursor.execute("update PLdata set Ctotal=(%s) where ID=(%s)",(LCt,LID))#Ctotal
