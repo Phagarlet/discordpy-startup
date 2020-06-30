@@ -8,6 +8,7 @@ path=os.environ['DATABASE_URL']
 con = psycopg2.connect(path,sslmode='require')
 client = discord.Client()
 cursor = con.cursor()
+import re
 
 #チャンネルID
 ch_bot=706713526873620500
