@@ -177,7 +177,7 @@ async def on_message(message):
                         WG=int(res5[0])
                         LID=int(res4[1])#敗者データ
                         LG=int(res5[1])
-                        await message.channel.send('str(WG)+str(LG)')
+                        await message.channel.send(str(WG)+str(LG))
         else:
             await message.channel.send('構文エラーです。\n情報過多エラー')
 #レート処理
