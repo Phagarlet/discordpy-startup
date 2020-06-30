@@ -3,9 +3,9 @@ import discord
 import traceback
 import psycopg2
 token = os.environ['DISCORD_BOT_TOKEN']
-path=os.environ['PLACE']
+path=os.environ['DATABASE_URL']
+con = psycopg2.connect(path,sslmode='require')
 client = discord.Client()
-con = psycopg2.connect(path)
 cursor = con.cursor()
 channel_debug=706713526873620500
 
