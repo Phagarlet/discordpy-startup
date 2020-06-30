@@ -249,9 +249,9 @@ async def on_message(message):
         cursor.execute("SELECT * FROM PLdata")
         LWl=cursor.fetchall()[LID][9]
         LCw=LCw+LG
-        await message.channel.send(str(LG))
+        await message.channel.send(str(LCw))
         LCl=LCl+WG
-        await message.channel.send(str(WG))
+        await message.channel.send(str(LCl))
         LCt=int(LCw)+int(LCl)
         LWl=LWl+1
         LWt=int(LWl)+LWw
