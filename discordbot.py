@@ -303,10 +303,10 @@ async def on_message(message):
                 cursor.execute("SELECT * FROM PLdata")
                 PLname=cursor.fetchall()[j][0]
                 cursor.execute("SELECT * FROM PLdata")
-                PLID=cursor.fetchall()[i][1]
+                PLID2=cursor.fetchall()[i][1]
                 cursor.execute("SELECT * FROM PLdata")
                 PLWR=cursor.fetchall()[j][6]
-                sort_WR.append([PLID,PLname,PLWR])
+                sort_WR.append([PLID2,PLname,PLWR])
             sort_WR.sort(key=lambda x:x[0],reverse=False)#IDソート
             await message.channel.send(sort_WR)
             for j in range(len(allPL)):
