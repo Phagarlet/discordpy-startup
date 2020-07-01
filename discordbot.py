@@ -237,8 +237,8 @@ async def on_message(message):
         LWl=cursor.fetchall()[LID][9]
         #勝利側
         await message.channel.send(str(WCw)+str(WCl)+str(WWw)+str(WWl))
-        WCw=+WG
-        WCl=+LG
+        WCw=WCw+WG
+        WCl=+WCl+LG
         WCt=int(WCw)+int(WCl)
         WWw=+1
         WWt=int(WWw)+int(WWl)
@@ -253,8 +253,8 @@ async def on_message(message):
         con.commit()
         #敗北側
         await message.channel.send(str(LCw)+str(LCl)+str(LWw)+str(LWl))
-        LCw=+LG
-        LCl=+WG
+        LCw=LCw+LG
+        LCl=LCl+WG
         LCt=int(LCw)+int(LCl)
         LWl=+1
         LWt=int(LWl)+int(LWw)
