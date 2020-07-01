@@ -218,7 +218,7 @@ async def on_message(message):
         await message.channel.send("勝敗："+str(NWWR)+"-"+str(NLWR))
         await message.channel.send('出力終了です')
 #データのアップデート
-        #勝利側
+        #取得部分
         cursor.execute("SELECT * FROM PLdata")
         WCw=cursor.fetchall()[WID][4]
         cursor.execute("SELECT * FROM PLdata")
@@ -227,6 +227,15 @@ async def on_message(message):
         WWw=cursor.fetchall()[WID][8]
         cursor.execute("SELECT * FROM PLdata")
         WWl=cursor.fetchall()[WID][9]
+        cursor.execute("SELECT * FROM PLdata")
+        LCw=cursor.fetchall()[LID][4]
+        cursor.execute("SELECT * FROM PLdata")
+        LCl=cursor.fetchall()[LID][5]
+        cursor.execute("SELECT * FROM PLdata")
+        LWw=cursor.fetchall()[LID][8]
+        cursor.execute("SELECT * FROM PLdata")
+        LWl=cursor.fetchall()[LID][9]
+        #勝利側
         await message.channel.send(str(WCw)+str(WCl)+str(WWw)+str(WWl))
         WCw=+WG
         WCl=+LG
@@ -243,14 +252,6 @@ async def on_message(message):
         cursor.execute("update PLdata set Wwin=(%s) where ID=(%s)",(WWw,WID))#Wwin
         con.commit()
         #敗北側
-        cursor.execute("SELECT * FROM PLdata")
-        LCw=cursor.fetchall()[LID][4]
-        cursor.execute("SELECT * FROM PLdata")
-        LCl=cursor.fetchall()[LID][5]
-        cursor.execute("SELECT * FROM PLdata")
-        LWw=cursor.fetchall()[LID][8]
-        cursor.execute("SELECT * FROM PLdata")
-        LWl=cursor.fetchall()[LID][9]
         await message.channel.send(str(LCw)+str(LCl)+str(LWw)+str(LWl))
         LCw=+LG
         LCl=+WG
