@@ -227,11 +227,13 @@ async def on_message(message):
         WWw=cursor.fetchall()[WID][8]
         cursor.execute("SELECT * FROM PLdata")
         WWl=cursor.fetchall()[WID][9]
+        await message.channel.send(str(WCw)+str(WCl)+str(WWw)+str(WWl))
         WCw=+WG
         WCl=+LG
         WCt=int(WCw)+int(WCl)
         WWw=+1
         WWt=int(WWw)+int(WWl)
+        await message.channel.send(str(WCw)+str(WCl)+str(WCt)+str(WWw)+str(WWt))
         cursor.execute("update PLdata set CR=(%s) where ID=(%s)",(NWCR,WID))#CR
         cursor.execute("update PLdata set WR=(%s) where ID=(%s)",(NWWR,WID))#WR
         cursor.execute("update PLdata set Ctotal=(%s) where ID=(%s)",(WCt,WID))#Ctotal
@@ -249,11 +251,13 @@ async def on_message(message):
         LWw=cursor.fetchall()[LID][8]
         cursor.execute("SELECT * FROM PLdata")
         LWl=cursor.fetchall()[LID][9]
+        await message.channel.send(str(LCw)+str(LCl)+str(LWw)+str(LWl))
         LCw=+LG
         LCl=+WG
         LCt=int(LCw)+int(LCl)
         LWl=+1
         LWt=int(LWl)+int(LWw)
+        await message.channel.send(str(LCw)+str(LCl)+str(LCt)+str(LWl)+str(LWt))
         cursor.execute("update PLdata set CR=(%s) where ID=(%s)",(NLCR,LID))#CR
         cursor.execute("update PLdata set WR=(%s) where ID=(%s)",(NLWR,LID))#CR
         cursor.execute("update PLdata set Ctotal=(%s) where ID=(%s)",(LCt,LID))#Ctotal
