@@ -293,8 +293,8 @@ async def on_message(message):
                 sort_CR.append([PLID,PLname,PLCR])
             sort_CR.sort(key=lambda x:x[0],reverse=False)#IDソート
             await message.channel.send(sort_CR)
-            for j in range(len(allPL)):
-                await channel.send(sort_CR[j])
+            for i in range(len(allPL)):
+                await channel.send(sort_CR[i])
             await channel.send('出力完了です')
             #勝敗レート出力機構
             channel=client.get_channel(ch_WR)#ch_WRに変更
@@ -303,8 +303,14 @@ async def on_message(message):
                 cursor.execute("SELECT * FROM PLdata")
                 PLname=cursor.fetchall()[j][0]
                 cursor.execute("SELECT * FROM PLdata")
+                PLID=cursor.fetchall()[i][1]
+                cursor.execute("SELECT * FROM PLdata")
                 PLWR=cursor.fetchall()[j][6]
-            await channel.send(str(PLname)+' '+str(PLWR))
+                sort_WR.append([PLID,PLname,PLWR])
+            sort_WR.sort(key=lambda x:x[0],reverse=False)#IDソート
+            await message.channel.send(sort_WR)
+            for j in range(len(allPL)):
+                await channel.send(sort_WR[j])
             await channel.send('出力完了です')
             #レートランキング出力機構
             channel=client.get_channel(ch_RR)#ch_RRに変更
