@@ -291,8 +291,8 @@ async def on_message(message):
                 cursor.execute("SELECT * FROM PLdata")
                 PLCR=cursor.fetchall()[i][2]
                 sort_WR.append([PLID,PLname,PLCR])
-                await message.channel.send(sort_WR)
             sort_CR.sort(key=lambda x:x[0],reverse=False)#IDソート
+            await message.channel.send(sort_WR)
             for j in range(len(allPL)):
                 await channel.send(sort_CR[j])
             await channel.send('出力完了です')
