@@ -143,6 +143,23 @@ async def on_message(message):
             MWR=cursor.fetchall()[nameID][6]
             await message.channel.send('名前：'+str(Mname)+'\nID：'+str(MID)+'\n試合数：'+str(MWt)+'\n闘技場レート'+str(MCR)+'\n勝敗レート'+str(MWR))
 #プレーヤーID表示
+    if 'IDlist'in message.content:#レート更新
+        if message.author.guild_permissions.administrator:
+            IDlist=[]
+            cursor.execute("SELECT * FROM PLdata")
+            allPL=cursor.fetchall()
+            for i in range(len(allPL)):
+                cursor.execute("SELECT * FROM PLdata")
+                PLname=cursor.fetchall()[i][0]
+                cursor.execute("SELECT * FROM PLdata")
+                PLID=cursor.fetchall()[i][1]
+                IDlist.append([PLID,PLname])
+                IDlist.sort(key=lambda x:x[0],reverse=False)#IDソート
+                for i in range(len(allPL)):
+                    await channel.send(IDlist[i])
+                await channel.send('出力完了です')
+        else:
+            await message.channel.send('管理技士専用コマンドです')
     #試合処理系統 result Rupdateコマンド
     if 'result'in message.content:#試合処理
 #前処理
@@ -296,7 +313,6 @@ async def on_message(message):
             #闘技場レート出力機構
             await channel.send(str(Rup[1])+'現在\n闘技場レート')#闘技場レート更新
             sort_CR.sort(key=lambda x:x[0],reverse=False)#IDソート
-            await message.channel.send(sort_CR)
             for i in range(len(allPL)):
                 await channel.send(sort_CR[i])
             await channel.send('出力完了です')
