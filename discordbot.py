@@ -290,7 +290,7 @@ async def on_message(message):
                 cursor.execute("SELECT * FROM PLdata")
                 PLCR=cursor.fetchall()[i][2]
                 cursor.execute("SELECT * FROM PLdata")
-                PLWR=cursor.fetchall()[j][6]
+                PLWR=cursor.fetchall()[][6]
                 sort_CR.append([PLID,PLname,PLCR])
                 sort_WR.append([PLID,PLname,PLWR])
             #闘技場レート出力機構
