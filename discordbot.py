@@ -227,7 +227,6 @@ async def on_message(message):
         NLWR=int(LWR-32*WBWper)
 #試合後の出力
         await message.channel.send('試合後レート'+"\n闘技場："+str(NWCR)+"-"+str(NLCR)+"\n勝敗："+str(NWWR)+"-"+str(NLWR))
-        await message.channel.send('出力終了です')
 #データのアップデート
         #取得部分
         cursor.execute("SELECT * FROM PLdata")
@@ -273,8 +272,9 @@ async def on_message(message):
         cursor.execute("update PLdata set Close=(%s) where ID=(%s)",(LCl,LID))#Close
         cursor.execute("update PLdata set Wtotal=(%s) where ID=(%s)",(LWt,LID))#Wtotal
         cursor.execute("update PLdata set Wlose=(%s) where ID=(%s)",(LWl,LID))#Wlose
-        con.commit()
         cursor.execute("SELECT * FROM PLdata order by ID")
+        con.commit()
+        await message.channel.send('出力終了です')
 
 #レート一覧表示 以下管理技士専用コマンド
     if 'Rupdate'in message.content:#レート更新
