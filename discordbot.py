@@ -272,7 +272,7 @@ async def on_message(message):
         cursor.execute("update PLdata set Close=(%s) where ID=(%s)",(LCl,LID))#Close
         cursor.execute("update PLdata set Wtotal=(%s) where ID=(%s)",(LWt,LID))#Wtotal
         cursor.execute("update PLdata set Wlose=(%s) where ID=(%s)",(LWl,LID))#Wlose
-        cursor.execute("SELECT * FROM PLdata sort by if ID")
+        cursor.execute("SELECT * FROM PLdata sort by ID")
         con.commit()
         await message.channel.send('出力終了です')
 
