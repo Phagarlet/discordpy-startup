@@ -155,7 +155,7 @@ async def on_message(message):
                 PLID=cursor.fetchall()[i][1]
                 IDlist.append([PLID,PLname])
                 IDlist.sort(key=lambda x:x[0],reverse=False)#IDソート
-                 await message.channel.send(IDlist)
+                await message.channel.send(IDlist)
                 for i in range(len(allPL)):
                     await message.channel.send(IDlist[i])
                 await message.channel.send('出力完了です')
