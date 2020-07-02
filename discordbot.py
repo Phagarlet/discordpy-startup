@@ -280,7 +280,6 @@ async def on_message(message):
             await channel.send(str(Rup[1])+'\nレート一覧を更新します\n完了の表示が出るまでコマンドを使用しないでください\nこの処理は5分～10分程度を要する可能性があります')
             channel=client.get_channel(ch_CR)#ch_CRに変更
             #闘技場レート＆勝敗レート処理
-            await channel.send(str(Rup[1])+'現在\n闘技場レート')#闘技場レート更新
             cursor.execute("SELECT * FROM PLdata")
             allPL=cursor.fetchall()
             for i in range(len(allPL)):
@@ -295,6 +294,7 @@ async def on_message(message):
                 sort_CR.append([PLID,PLname,PLCR])
                 sort_WR.append([PLID,PLname,PLWR])
             #闘技場レート出力機構
+            await channel.send(str(Rup[1])+'現在\n闘技場レート')#闘技場レート更新
             sort_CR.sort(key=lambda x:x[0],reverse=False)#IDソート
             await message.channel.send(sort_CR)
             for i in range(len(allPL)):
