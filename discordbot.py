@@ -274,6 +274,7 @@ async def on_message(message):
         cursor.execute("update PLdata set Wtotal=(%s) where ID=(%s)",(LWt,LID))#Wtotal
         cursor.execute("update PLdata set Wlose=(%s) where ID=(%s)",(LWl,LID))#Wlose
         con.commit()
+        cursor.execute("SELECT * FROM data_set order by id")
 
 #レート一覧表示 以下管理技士専用コマンド
     if 'Rupdate'in message.content:#レート更新
