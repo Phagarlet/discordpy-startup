@@ -147,7 +147,7 @@ async def on_message(message):
     if 'IDlist'in message.content:#レート更新
         if message.author.guild_permissions.administrator:
             IDlist=[]
-	        cursor.execute("SELECT * FROM PLdata")
+	    cursor.execute("SELECT * FROM PLdata")
             allPL=cursor.fetchall()
             for i in range(len(allPL)):
                 cursor.execute("SELECT * FROM PLdata")
