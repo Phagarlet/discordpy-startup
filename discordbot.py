@@ -44,10 +44,10 @@ async def on_message(message):
         await message.channel.send('私は猫ではないです...')
     #「/who」botの説明
     if message.content == 'who':
-        await message.channel.send('私はDTB闘技場の管理人です。\n24時間稼働に対応しました。\nSeason2から正式に業務を開始します。よろしくお願いします。')
+        await message.channel.send('私はDTB闘技場の管理人です。\nSeason2から正式に業務を開始します。よろしくお願いします。')
     #「進捗どうですか？」
     if message.content =='進捗どうですか？':
-        await message.channel.send('ついに24時間稼働に成功しました')
+        await message.channel.send('機能の調整中です')
 
     if 'make_PLdata' == message.content:#プレーヤーデータの作成
         cursor.execute("DROP TABLE IF EXISTS PLdata")
@@ -188,7 +188,7 @@ async def on_message(message):
                         test8=1/int(int(res5[0])-int(res5[1]))
                         test9=1/int(int(res4[0])-int(res4[1]))
                     except ZeroDivisionError:
-                        await message.channel.send('構文エラーです。\情報同一エラー')
+                        await message.channel.send('構文エラーです。\n情報同一エラー')
                     else:
                         WID=int(res4[0])#勝者データ
                         WG=int(res5[0])
@@ -211,11 +211,7 @@ async def on_message(message):
         LWR=cursor.fetchall()[LID][6]
 
         match=int(WG+LG)
-        await message.channel.send('結果出力が終わるまでコマンドは打たないでください')
-        await message.channel.send(Wname+"さん"+' 対 '+Lname+"さん の試合結果です")
-        await message.channel.send('試合前レート')
-        await message.channel.send("闘技場："+str(WCR)+"-"+str(LCR))
-        await message.channel.send("勝敗："+str(WWR)+"-"+str(LWR))
+        await message.channel.send('結果出力が終わるまでコマンドは打たないでください'\n str(Wname)+"さん"+' 対 '+Lname+"さん の試合結果です"\n'試合前レート'\n("闘技場："+str(WCR)+"-"+str(LCR)\n"勝敗："+str(WWR)+"-"+str(LWR))
 #闘技場レート計算
         CsaA=LCR-WCR
         CsaB=int(CsaA)*-1
