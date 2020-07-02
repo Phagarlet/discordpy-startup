@@ -211,7 +211,7 @@ async def on_message(message):
         LWR=cursor.fetchall()[LID][6]
 
         match=int(WG+LG)
-        await message.channel.send('結果出力が終わるまでコマンドは打たないでください'\n Wname+'さん'+ ' 対 '+str(Lname)+'さん の試合結果です'\n'試合前レート'\n'闘技場：'+str(WCR)+' - 'str(LCR)\n'勝敗：'+'str(WWR)+' - '+str(LWR))
+        await message.channel.send('結果出力が終わるまでコマンドは打たないでください'\n Wname+'さん'+ ' 対 '+str(Lname)+'さん の試合結果です')
         CsaA=LCR-WCR
         CsaB=int(CsaA)*-1
         AWper=round(1/(10**((CsaA)/400)+1),2)
