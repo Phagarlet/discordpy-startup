@@ -226,7 +226,7 @@ async def on_message(message):
         NWWR=int(WWR+32*WBWper)
         NLWR=int(LWR-32*WBWper)
 #試合後の出力
-        await message.channel.send('試合後レート'+"/n闘技場："+str(NWCR)+"-"+str(NLCR)+"\n勝敗："+str(NWWR)+"-"+str(NLWR))
+        await message.channel.send('試合後レート'+"\n闘技場："+str(NWCR)+"-"+str(NLCR)+"\n勝敗："+str(NWWR)+"-"+str(NLWR))
         await message.channel.send('出力終了です')
 #データのアップデート
         #取得部分
@@ -250,7 +250,7 @@ async def on_message(message):
         WCw=WCw+WG
         WCl=+WCl+LG
         WCt=int(WCw)+int(WCl)
-        WWw=+1
+        WWw=int(WWw)+1
         WWt=int(WWw)+int(WWl)
         cursor.execute("update PLdata set CR=(%s) where ID=(%s)",(NWCR,WID))#CR
         cursor.execute("update PLdata set WR=(%s) where ID=(%s)",(NWWR,WID))#WR
@@ -264,7 +264,7 @@ async def on_message(message):
         LCw=LCw+LG
         LCl=LCl+WG
         LCt=int(LCw)+int(LCl)
-        LWl=+1
+        LWl=int(LWl)+1
         LWt=int(LWl)+int(LWw)
         cursor.execute("update PLdata set CR=(%s) where ID=(%s)",(NLCR,LID))#CR
         cursor.execute("update PLdata set WR=(%s) where ID=(%s)",(NLWR,LID))#CR
