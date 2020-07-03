@@ -295,6 +295,7 @@ async def on_message(message):
         #試合記録
         cursor.execute("select * from history where Wname=(%s)",(Wname,))
         delet=cursor.fetchall()
+        await message.channel.send(delet)
         if len(delet)==0:
             cursor.execute("select * from history")
             Num=(len(cursor.fetchall())-1)
@@ -304,12 +305,6 @@ async def on_message(message):
         #ソート
         cursor.execute("SELECT * FROM PLdata order by ID")
         con.commit()
-        Wname=0
-        WID=0
-        Lname=0
-        LID=0
-        WG=0
-        LG=0
         await message.channel.send('出力終了です')
 
 #レート一覧表示 以下管理技士専用コマンド
