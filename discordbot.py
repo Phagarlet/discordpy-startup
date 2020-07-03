@@ -55,11 +55,12 @@ async def on_message(message):
         cursor.execute("insert into PLdata values('Yataswee',0,1500,0,0,0,1500,0,0,0)")
         con.commit()
         await message.channel.send('作成完了です')
-    if 'history' == message.content:#試合履歴データの作成
+    if 'make_history' == message.content:#試合履歴データの作成
         cursor.execute("DROP TABLE IF EXISTS history")
-        cursor.execute("create table history(MID integer,Wname text,WID integer,Lname text,LID integer,Wcount integer,Lcount integer)")
+        cursor.execute("create table history(MID integer,Wname text,WinID integer,Lname text,LoseID integer,Wcount integer,Lcount integer)")
         cursor.execute("insert into history values(0,'Yataswee',0,'Soraneko',71,0,0)")
         con.commit()
+        await message.channel.send('作成完了です')
         
     if 'check_PLdata' == message.content:#PLdataを見る
         if message.author.guild_permissions.administrator:
@@ -285,13 +286,21 @@ async def on_message(message):
         LWl=int(LWl)+1
         LWt=int(LWl)+int(LWw)
         cursor.execute("update PLdata set CR=(%s) where ID=(%s)",(NLCR,LID))#CR
-        cursor.execute("update PLdata set WR=(%s) where ID=(%s)",(NLWR,LID))#CR
+        cursor.execute("update PLdata set WR=(%s) where ID=(%s)",(NLWR,LID))#WR
         cursor.execute("update PLdata set Ctotal=(%s) where ID=(%s)",(LCt,LID))#Ctotal
         cursor.execute("update PLdata set Cwin=(%s) where ID=(%s)",(LCw,LID))#Cwin
         cursor.execute("update PLdata set Close=(%s) where ID=(%s)",(LCl,LID))#Close
         cursor.execute("update PLdata set Wtotal=(%s) where ID=(%s)",(LWt,LID))#Wtotal
         cursor.execute("update PLdata set Wlose=(%s) where ID=(%s)",(LWl,LID))#Wlose
-        
+        #試合記録
+        delet=cursor.fetchall()
+            if len(delet)==0:
+                cursor.execute("select * from history")
+                Num=(len(cursor.fetchall())-1)
+                cursor.execute("insert into history values ((%s),(%s),(%s),(%s),(%s),(%s),(%s))",(num+1,'0',0,'0',0,0,0))
+                con.commit()
+        #cursor.execute("update history set CR=(%s) where ID=(%s)",(NLCR,LID))#CR
+        #ソート
         cursor.execute("SELECT * FROM PLdata order by ID")
         con.commit()
         await message.channel.send('出力終了です')
