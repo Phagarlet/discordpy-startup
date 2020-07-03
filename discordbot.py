@@ -294,11 +294,11 @@ async def on_message(message):
         cursor.execute("update PLdata set Wlose=(%s) where ID=(%s)",(LWl,LID))#Wlose
         #試合記録
         delet=cursor.fetchall()
-            if len(delet)==0:
-                cursor.execute("select * from history")
-                Num=(len(cursor.fetchall())-1)
-                cursor.execute("insert into history values ((%s),(%s),(%s),(%s),(%s),(%s),(%s))",(num+1,'0',0,'0',0,0,0))
-                con.commit()
+        if len(delet)==0:
+            cursor.execute("select * from history")
+            Num=(len(cursor.fetchall())-1)
+            cursor.execute("insert into history values ((%s),(%s),(%s),(%s),(%s),(%s),(%s))",(num+1,'0',0,'0',0,0,0))
+            con.commit()
         #cursor.execute("update history set CR=(%s) where ID=(%s)",(NLCR,LID))#CR
         #ソート
         cursor.execute("SELECT * FROM PLdata order by ID")
