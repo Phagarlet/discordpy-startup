@@ -55,6 +55,12 @@ async def on_message(message):
         cursor.execute("insert into PLdata values('Yataswee',0,1500,0,0,0,1500,0,0,0)")
         con.commit()
         await message.channel.send('作成完了です')
+    if 'history' == message.content:#試合履歴データの作成
+        cursor.execute("DROP TABLE IF EXISTS history")
+        cursor.execute("create table history(MID integer,Wname text,WID integer,Lname text,LID integer,Wcount integer,Lcount integer)")
+        cursor.execute("insert into history values(0,'Yataswee',0,'Soraneko',71,0,0)")
+        con.commit()
+        
     if 'check_PLdata' == message.content:#PLdataを見る
         if message.author.guild_permissions.administrator:
             cursor.execute("select * from PLdata")
@@ -67,6 +73,19 @@ async def on_message(message):
                     for i in range(len(allPL)-(len(allPL)%5),len(allPL)):
                         await message.channel.send(str(allPL[i]))
             await message.channel.send("全員出力完了！")
+    if 'check_history' == message.content:#historyを見る
+        if message.author.guild_permissions.administrator:
+            cursor.execute("select * from history")
+            allhis=cursor.fetchall()
+            for j in range(0,len(allhis),5):
+                if j!=len(allhis)-len(allhis)%5:
+                    await message.channel.send(str(allhis[j])+'\n'+str(allhis[j+1])+'\n'+str(allhis[j+2])\
+                                               +'\n'+str(allhis[j+3])+'\n'+str(allhis[j+4]))
+                else:
+                    for i in range(len(allhis)-(len(allhis)%5),len(allhis)):
+                        await message.channel.send(str(allhis[i]))
+            await message.channel.send("全試合出力完了！")
+            
     if 'regist' in message.content:#新規登録
         PLname=re.split('[\n]',message.content)[1]
         if ',' in PLname or ' ' in PLname or '/' in PLname or '-' in PLname or '(' in PLname or ')' in PLname or'\u3000' in PLname:
