@@ -369,18 +369,8 @@ async def on_message(message):
             await message.channel.send('管理技士専用コマンドです')
 
 #試合結果修正コマンド
-    if 'edit' in message.content:#PLdataの値変更
-        if message.author.guild_permissions.administrator:
-            retsu=re.split('[\n]',message.content)[1]
-            nani=re.split('[\n]',message.content)[2]
-            cursor2.execute("select * PLdata")
-            await message.channel.send('変更前'+str(cursor2.fetchall()))
-            cursor2.execute("update info set{0}=(%s)"%retsu,(int(nani),))
-            cursor2.execute("select * PLdata")
-            await message.channel.send('変更後'+str(cursor2.fetchall()))
-            con.commit()
-        else:
-                await message.channel.send('管理技士専用コマンドです')
+    if 'edit' in message.content:
+
     
         
 #通称リセットコマンド
