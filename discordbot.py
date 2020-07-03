@@ -301,7 +301,7 @@ async def on_message(message):
         #ソート
         cursor.execute("SELECT * FROM PLdata order by ID")
         con.commit()
-        await message.channel.send('試合ID：'+str(Num+1)'\n出力終了です')
+        await message.channel.send('試合ID：'+str(Num+1)+'\n出力終了です')
 
 #レート一覧表示 以下管理技士専用コマンド
     if 'Rupdate'in message.content:#レート更新
@@ -368,7 +368,7 @@ async def on_message(message):
         else:
             await message.channel.send('管理技士専用コマンドです')
 
-#ミス修正コマンド
+#試合結果修正コマンド
     if 'edit' in message.content:#PLdataの値変更
         if message.author.guild_permissions.administrator:
             retsu=re.split('[\n]',message.content)[1]
