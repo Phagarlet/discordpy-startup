@@ -298,6 +298,7 @@ async def on_message(message):
         if len(delet)==0:
             cursor.execute("select * from history")
             Num=(len(cursor.fetchall())-1)
+            await message.channel.send(Num)
             cursor.execute("insert into history values ((%s),(%s),(%s),(%s),(%s),(%s),(%s))",(Num+1,Wname,WID,Lname,LID,WG,LG))
             con.commit()
         #ソート
