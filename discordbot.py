@@ -304,6 +304,12 @@ async def on_message(message):
         #ソート
         cursor.execute("SELECT * FROM PLdata order by ID")
         con.commit()
+        Wname=0
+        WID=0
+        Lname=0
+        LID=0
+        WG=0
+        LG=0
         await message.channel.send('出力終了です')
 
 #レート一覧表示 以下管理技士専用コマンド
