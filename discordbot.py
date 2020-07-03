@@ -296,13 +296,12 @@ async def on_message(message):
         cursor.execute("select * from history where Wname=(%s)",(Wname,))
         cursor.execute("select * from history")
         Num=(len(cursor.fetchall())-1)
-        await message.channel.send(Num)
         cursor.execute("insert into history values ((%s),(%s),(%s),(%s),(%s),(%s),(%s))",(Num+1,Wname,WID,Lname,LID,WG,LG))
         con.commit()
         #ソート
         cursor.execute("SELECT * FROM PLdata order by ID")
         con.commit()
-        await message.channel.send('出力終了です')
+        await message.channel.send('試合ID：'+str(Num+1)'\n出力終了です')
 
 #レート一覧表示 以下管理技士専用コマンド
     if 'Rupdate'in message.content:#レート更新
