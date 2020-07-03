@@ -369,7 +369,7 @@ async def on_message(message):
             await message.channel.send('管理技士専用コマンドです')
 
 #試合結果修正コマンド
-    if 'edit' in message.content:
+    #if 'edit' in message.content:
 
     
         
