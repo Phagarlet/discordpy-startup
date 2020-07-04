@@ -474,9 +474,21 @@ async def on_message(message):
 #試合結果修正コマンド
     if 'edit' in message.content:
         res100=re.split('[\n/-]',message.content)#分割
+        try:
+            MID=int(res100[1])
+            DWID=int(res100[2])
+            DLID=int(res100[3])
+            NWID=int(res100[6])
+            NLID=int(res100[7])
+            DWres=int(res100[4])
+            DLles=int(res100[5])
+            NWres=int(res100[8])
+            NLres=int(res100[9])
+            
+        except IndexError:
+            await message.channel.send('構文エラーです\n記号ミスエラー')
         
-        await message.channel.send(res100)
-        
+        #historyから抽出
         cursor.execute("SELECT * FROM hisoty")#試合ID
         Match=cursor.fetchall()[MID][0]
         cursor.execute("SELECT * FROM hisoty")#Wname
@@ -492,7 +504,7 @@ async def on_message(message):
         cursor.execute("SELECT * FROM hisoty")#Lcount
         Lcount=cursor.fetchall()[MID][6]
         
-        #await message.channel.send(WID+''+LID)
+        
         
 #通称リセットコマンド
     if 'reset' in message.content:#指定した何かの指定した列を変更する（シーズンリセット時に使用）
