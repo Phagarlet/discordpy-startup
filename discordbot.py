@@ -475,7 +475,7 @@ async def on_message(message):
     if 'edit' in message.content:
         res100=re.split('[\n/-]',message.content)#分割
         try:
-            test0=res1[3]
+            test0=res1[10]
         except IndexError:
             try:
                 MID=int(res100[1])
@@ -525,16 +525,16 @@ async def on_message(message):
         cursor.execute("SELECT * FROM hisoty")#Lcount
         Lcount=cursor.fetchall()[MID][6]
 
-            if DWID!=WinID:
-                await message.channel.send('構文エラーです。\n情報不一致エラー')
-            if DLID!=LoseID:
-                await message.channel.send('構文エラーです。\n情報不一致エラー')
-            if DWres!=Wcount:
-                await message.channel.send('構文エラーです。\n情報不一致エラー')
-            if DLres!=Lcount:
-                await message.channel.send('構文エラーです。\n情報不一致エラー')
+        if DWID!=WinID:
+            await message.channel.send('構文エラーです。\n情報不一致エラー')
+        if DLID!=LoseID:
+            await message.channel.send('構文エラーです。\n情報不一致エラー')
+        if DWres!=Wcount:
+            await message.channel.send('構文エラーです。\n情報不一致エラー')
+        if DLres!=Lcount:
+            await message.channel.send('構文エラーです。\n情報不一致エラー')
 
-            await message.channel.send('到達しました')
+        await message.channel.send('到達しました')
         
 #通称リセットコマンド
     if 'reset' in message.content:#指定した何かの指定した列を変更する（シーズンリセット時に使用）
