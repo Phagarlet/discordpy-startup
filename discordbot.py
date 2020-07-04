@@ -475,7 +475,7 @@ async def on_message(message):
     if 'edit' in message.content:
         res100=re.split('[\n/-]',message.content)#分割
         try:
-            test0=res1[10]
+            test0=res100[10]
         except IndexError:
             try:
                 MID=int(res100[1])
