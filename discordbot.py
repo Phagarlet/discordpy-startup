@@ -55,6 +55,7 @@ async def on_message(message):
         cursor.execute("insert into PLdata values('Yataswee',0,1500,0,0,0,1500,0,0,0)")
         con.commit()
         await message.channel.send('作成完了です')
+        
     if 'make_history' == message.content:#試合履歴データの作成
         cursor.execute("DROP TABLE IF EXISTS history")
         cursor.execute("create table history(MID integer,Wname text,WinID integer,Lname text,LoseID integer,Wcount integer,Lcount integer)")
@@ -74,6 +75,7 @@ async def on_message(message):
                     for i in range(len(allPL)-(len(allPL)%5),len(allPL)):
                         await message.channel.send(str(allPL[i]))
             await message.channel.send("全員出力完了！")
+            
     if 'check_history' == message.content:#historyを見る
         if message.author.guild_permissions.administrator:
             cursor.execute("select * from history")
@@ -102,6 +104,7 @@ async def on_message(message):
                 await message.channel.send("新規登録完了です\nIDは"+str(num+1)+"です")
             else:
                 await message.channel.send("同じ名前が既に使用されています\nほかの名前を使ってください")
+                
     if 'Nupdate' in message.content:#プレーヤーの名前を変更する
             Defname=re.split('[\n]',message.content)[1]
             Newname=re.split('[\n]',message.content)[2]
@@ -111,6 +114,7 @@ async def on_message(message):
                 cursor.execute("update PLdata set name=(%s) where name=(%s)",(Newname,Defname))
                 con.commit()
                 await message.channel.send("名前を変更しました")
+                
     if 'myID' in message.content:#指定した人のIDを表示
             member_name=re.split('[\n]',message.content)[1]
             cursor.execute("select * from PLdata where name=(%s)",(member_name,))
@@ -143,6 +147,7 @@ async def on_message(message):
             cursor.execute("SELECT * FROM PLdata")#Wlose
             MWl=cursor.fetchall()[nameID][9]
             await message.channel.send('名前：'+str(Mname)+'\nID：'+str(MID)+'\n'+str(MWt)+'試合'+str(MWw)+'勝'+str(MWl)+'敗'+'\n'+str(MCw)+'-'+str(MCl)+'\n闘技場レート'+str(MCR)+'\n勝敗レート'+str(MWR))
+    
     if 'mydata' in message.content:#プレーヤーデータの確認
         res11=re.split('[\n]',message.content)
         try:
@@ -473,7 +478,26 @@ async def on_message(message):
         Defres=re.split('[\n]',message.content)[3]#対象結果
         NewPL=re.split('[\n]',message.content)[4]#更新相手
         Newres=re.split('[\n]',message.content)[5]#更新結果
-        await message.channel.send(DefPL+Defres+NewPL+Newres)
+        
+        WID=re.split('[/]',DefPL.content)[0]#勝者ID
+        LID=re.split('[/]',DefPL.content)[0]#敗者ID
+
+        cursor.execute("SELECT * FROM hisoty")#試合ID
+        Match=cursor.fetchall()[MID][0]
+        cursor.execute("SELECT * FROM hisoty")#Wname
+        Winname=cursor.fetchall()[MID][1]
+        cursor.execute("SELECT * FROM hisoty")#Lname
+        Losename=cursor.fetchall()[MID][3]
+        cursor.execute("SELECT * FROM hisoty")#WID
+        WinID=cursor.fetchall()[MID][2]
+        cursor.execute("SELECT * FROM hisoty")#LID
+        LoseID=cursor.fetchall()[MID][4]
+        cursor.execute("SELECT * FROM hisoty")#Wcount
+        Wcount=cursor.fetchall()[MID][5]
+        cursor.execute("SELECT * FROM hisoty")#Lcount
+        Lcount=cursor.fetchall()[MID][6]
+        
+        await message.channel.send(WID+''+LID)
         
 #通称リセットコマンド
     if 'reset' in message.content:#指定した何かの指定した列を変更する（シーズンリセット時に使用）
