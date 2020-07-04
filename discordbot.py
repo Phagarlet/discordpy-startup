@@ -486,22 +486,21 @@ async def on_message(message):
             NLres=int(res100[9])
         except ValueError:
             await message.channel.send('構文エラーです\n記号ミスエラー')
+        try:
+            test101=1/int(int(NWID)-int(NLID))
+            test102=1/int(int(NWres)-int(NLres))
+        except ZeroDivisionError:
+            await message.channel.send('構文エラーです。\n情報同一エラー')
         else:
-            try:
-                test101=1/int(int(NWID)-int(NLID))
-                test102=1/int(int(NWres)-int(NLres))
-            except ZeroDivisionError:
-                await message.channel.send('構文エラーです。\n情報同一エラー')
-            else:
-                MID=int(res100[1])
-                DWID=int(res100[2])
-                DLID=int(res100[3])
-                NWID=int(res100[6])
-                NLID=int(res100[7])
-                DWres=int(res100[4])
-                DLles=int(res100[5])
-                NWres=int(res100[8])
-                NLres=int(res100[9])
+            MID=int(res100[1])
+            DWID=int(res100[2])
+            DLID=int(res100[3])
+            NWID=int(res100[6])
+            NLID=int(res100[7])
+            DWres=int(res100[4])
+            DLles=int(res100[5])
+            NWres=int(res100[8])
+            NLres=int(res100[9])
         else:
             await message.channel.send('構文エラーです。\n情報過多エラー')
         #historyから抽出
