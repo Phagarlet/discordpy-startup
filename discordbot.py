@@ -475,34 +475,40 @@ async def on_message(message):
     if 'edit' in message.content:
         res100=re.split('[\n/-]',message.content)#分割
         try:
-            MID=int(res100[1])
-            DWID=int(res100[2])
-            DLID=int(res100[3])
-            NWID=int(res100[6])
-            NLID=int(res100[7])
-            DWres=int(res100[4])
-            DLles=int(res100[5])
-            NWres=int(res100[8])
-            NLres=int(res100[9])
-        except ValueError:
-            await message.channel.send('構文エラーです\n記号ミスエラー')
-        try:
-            test101=1/int(int(NWID)-int(NLID))
-            test102=1/int(int(NWres)-int(NLres))
-        except ZeroDivisionError:
-            await message.channel.send('構文エラーです。\n情報同一エラー')
-        else:
-            MID=int(res100[1])
-            DWID=int(res100[2])
-            DLID=int(res100[3])
-            NWID=int(res100[6])
-            NLID=int(res100[7])
-            DWres=int(res100[4])
-            DLles=int(res100[5])
-            NWres=int(res100[8])
-            NLres=int(res100[9])
+            test0=res1[3]
+        except IndexError:
+            try:
+                MID=int(res100[1])
+                DWID=int(res100[2])
+                DLID=int(res100[3])
+                NWID=int(res100[6])
+                NLID=int(res100[7])
+                DWres=int(res100[4])
+                DLles=int(res100[5])
+                NWres=int(res100[8])
+                NLres=int(res100[9])
+            except ValueError:
+                await message.channel.send('構文エラーです\n記号ミスエラー')
+            else:
+                try:
+                    test101=1/int(int(NWID)-int(NLID))
+                    test102=1/int(int(NWres)-int(NLres))
+                except ZeroDivisionError:
+                    await message.channel.send('構文エラーです。\n情報同一エラー')
+                else:
+                    MID=int(res100[1])
+                    DWID=int(res100[2])
+                    DLID=int(res100[3])
+                    NWID=int(res100[6])
+                    NLID=int(res100[7])
+                    DWres=int(res100[4])
+                    DLles=int(res100[5])
+                    NWres=int(res100[8])
+                    NLres=int(res100[9])
+
         else:
             await message.channel.send('構文エラーです。\n情報過多エラー')
+                    
         #historyから抽出
         cursor.execute("SELECT * FROM hisoty")#試合ID
         Match=cursor.fetchall()[MID][0]
