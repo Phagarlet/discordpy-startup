@@ -527,6 +527,8 @@ async def on_message(message):
             await message.channel.send('構文エラーです。\n情報不一致エラー')
         if DLres!=Lcount:
             await message.channel.send('構文エラーです。\n情報不一致エラー')
+            
+        await message.channel.send('到達しました')
         
 #通称リセットコマンド
     if 'reset' in message.content:#指定した何かの指定した列を変更する（シーズンリセット時に使用）
