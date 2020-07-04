@@ -89,7 +89,7 @@ async def on_message(message):
                         await message.channel.send(str(allhis[i]))
             await message.channel.send("全試合出力完了！")
             
-    if 'regist' in message.content:#新規登録
+    if '/regist' in message.content:#新規登録
         PLname=re.split('[\n]',message.content)[1]
         if ',' in PLname or ' ' in PLname or '/' in PLname or '-' in PLname or '(' in PLname or ')' in PLname or'\u3000' in PLname:
             await message.channel.send(', - / ( ) 全角/半角スペースは名前に使用することができません')
@@ -502,33 +502,32 @@ async def on_message(message):
                 DLles=int(res100[5])
                 NWres=int(res100[8])
                 NLres=int(res100[9])
+            #historyから抽出
+            cursor.execute("SELECT * FROM hisoty")#試合ID
+            Match=cursor.fetchall()[MID][0]
+            cursor.execute("SELECT * FROM hisoty")#Wname
+            Winname=cursor.fetchall()[MID][1]
+            cursor.execute("SELECT * FROM hisoty")#Lname
+            Losename=cursor.fetchall()[MID][3]
+            cursor.execute("SELECT * FROM hisoty")#WID
+            WinID=cursor.fetchall()[MID][2]
+            cursor.execute("SELECT * FROM hisoty")#LID
+            LoseID=cursor.fetchall()[MID][4]
+            cursor.execute("SELECT * FROM hisoty")#Wcount
+            Wcount=cursor.fetchall()[MID][5]
+            cursor.execute("SELECT * FROM hisoty")#Lcount
+            Lcount=cursor.fetchall()[MID][6]
 
-        #historyから抽出
-        cursor.execute("SELECT * FROM hisoty")#試合ID
-        Match=cursor.fetchall()[MID][0]
-        cursor.execute("SELECT * FROM hisoty")#Wname
-        Winname=cursor.fetchall()[MID][1]
-        cursor.execute("SELECT * FROM hisoty")#Lname
-        Losename=cursor.fetchall()[MID][3]
-        cursor.execute("SELECT * FROM hisoty")#WID
-        WinID=cursor.fetchall()[MID][2]
-        cursor.execute("SELECT * FROM hisoty")#LID
-        LoseID=cursor.fetchall()[MID][4]
-        cursor.execute("SELECT * FROM hisoty")#Wcount
-        Wcount=cursor.fetchall()[MID][5]
-        cursor.execute("SELECT * FROM hisoty")#Lcount
-        Lcount=cursor.fetchall()[MID][6]
-        
-        if DWID!=WinID:
-            await message.channel.send('構文エラーです。\n情報不一致エラー')
-        if DLID!=LoseID:
-            await message.channel.send('構文エラーです。\n情報不一致エラー')
-        if DWres!=Wcount:
-            await message.channel.send('構文エラーです。\n情報不一致エラー')
-        if DLres!=Lcount:
-            await message.channel.send('構文エラーです。\n情報不一致エラー')
-            
-        await message.channel.send('到達しました')
+            if DWID!=WinID:
+                await message.channel.send('構文エラーです。\n情報不一致エラー')
+            if DLID!=LoseID:
+                await message.channel.send('構文エラーです。\n情報不一致エラー')
+            if DWres!=Wcount:
+                await message.channel.send('構文エラーです。\n情報不一致エラー')
+            if DLres!=Lcount:
+                await message.channel.send('構文エラーです。\n情報不一致エラー')
+
+            await message.channel.send('到達しました')
         
 #通称リセットコマンド
     if 'reset' in message.content:#指定した何かの指定した列を変更する（シーズンリセット時に使用）
