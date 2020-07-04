@@ -473,7 +473,7 @@ async def on_message(message):
         Defres=re.split('[\n]',message.content)[3]#対象結果
         NewPL=re.split('[\n]',message.content)[4]#更新相手
         Newres=re.split('[\n]',message.content)[5]#更新結果
-        await message.channel.send(DefPL,Defres,NewPL,Newres)
+        await message.channel.send(DefPL+Defres+NewPL+Newres)
         
 #通称リセットコマンド
     if 'reset' in message.content:#指定した何かの指定した列を変更する（シーズンリセット時に使用）
