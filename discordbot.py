@@ -306,13 +306,111 @@ async def on_message(message):
 #レート一覧表示 以下管理技士専用コマンド
     if 'Rupdate'in message.content:#レート更新
         if message.author.guild_permissions.administrator:
+            Rup=re.split('[\n]',message.content)
+            channel=client.get_channel(ch_kan)#更新告知　ch_kan
+            await channel.send(str(Rup[1])+'\nレート一覧を更新します\n完了の表示が出るまでコマンドを使用しないでください\nこの処理は5分～10分程度を要する可能性があります')
+            #レートリセット
+            cursor.execute("SELECT * FROM history")
+            alhis=cursor.fetchall()
+            for i in range(len(alhis)-1):
+                cursor.execute("update PLdata set CR=(%s) where ID=(%s)",(1500,i+1))#CR
+                cursor.execute("update PLdata set WR=(%s) where ID=(%s)",(1500,i+1))#WR
+                cursor.execute("update PLdata set Ctotal=(%s) where ID=(%s)",(0,i+1))#Ctotal
+                cursor.execute("update PLdata set Cwin=(%s) where ID=(%s)",(0,i+1))#Cwin
+                cursor.execute("update PLdata set Close=(%s) where ID=(%s)",(0,i+1))#Close
+                cursor.execute("update PLdata set Wtotal=(%s) where ID=(%s)",(0,i+1))#Wtotal
+                cursor.execute("update PLdata set Wwin=(%s) where ID=(%s)",(0,i+1))#Wwin
+                cursor.execute("update PLdata set Wlose=(%s) where ID=(%s)",(0,i+1))#Wlose
+            #レート計算
+
+            for i in range(len(alhis)-1):
+                cursor.execute("SELECT * FROM history")
+                WID=cursor.fetchall()[i+1][2]
+                cursor.execute("SELECT * FROM history")
+                LID=cursor.fetchall()[i+1][4]
+                cursor.execute("SELECT * FROM history")
+                WG=cursor.fetchall()[i+1][5]
+                cursor.execute("SELECT * FROM history")
+                LG=cursor.fetchall()[i+1][6]
+                
+                cursor.execute("SELECT * FROM PLdata")
+                WCR=cursor.fetchall()[WID][2]
+                cursor.execute("SELECT * FROM PLdata")
+                LCR=cursor.fetchall()[LID][2]
+                cursor.execute("SELECT * FROM PLdata")
+                WWR=cursor.fetchall()[WID][6]
+                cursor.execute("SELECT * FROM PLdata")
+                LWR=cursor.fetchall()[LID][6]
+
+                match=int(WG+LG)
+                #闘技場レート計算
+                CsaA=LCR-WCR
+                CsaB=int(CsaA)*-1
+                AWper=round(1/(10**((CsaA)/400)+1),2)
+                BWper=round(1/(10**((CsaB)/400)+1),2)
+                NWCR=round(WCR+16*(WG-match*AWper))
+                NLCR=round(LCR+16*(LG-match*BWper))
+#勝敗レート計算
+                WsaA=LWR-WWR
+                WsaB=int(WsaA*-1)
+                WBWper=round(1/(10**((WsaB)/400)+1),2)
+                NWWR=int(WWR+32*WBWper)
+                NLWR=int(LWR-32*WBWper)
+                
+#データのアップデート
+                #取得部分
+                cursor.execute("SELECT * FROM PLdata")
+                WCw=cursor.fetchall()[WID][4]
+                cursor.execute("SELECT * FROM PLdata")
+                WCl=cursor.fetchall()[WID][5]
+                cursor.execute("SELECT * FROM PLdata")
+                WWw=cursor.fetchall()[WID][8]
+                cursor.execute("SELECT * FROM PLdata")
+                WWl=cursor.fetchall()[WID][9]
+                cursor.execute("SELECT * FROM PLdata")
+                LCw=cursor.fetchall()[LID][4]
+                cursor.execute("SELECT * FROM PLdata")
+                LCl=cursor.fetchall()[LID][5]
+                cursor.execute("SELECT * FROM PLdata")
+                LWw=cursor.fetchall()[LID][8]
+                cursor.execute("SELECT * FROM PLdata")
+                LWl=cursor.fetchall()[LID][9]
+                #勝利側
+                WCw=WCw+WG
+                WCl=+WCl+LG
+                WCt=int(WCw)+int(WCl)
+                WWw=int(WWw)+1
+                WWt=int(WWw)+int(WWl)
+                cursor.execute("update PLdata set CR=(%s) where ID=(%s)",(NWCR,WID))#CR
+                cursor.execute("update PLdata set WR=(%s) where ID=(%s)",(NWWR,WID))#WR
+                cursor.execute("update PLdata set Ctotal=(%s) where ID=(%s)",(WCt,WID))#Ctotal
+                cursor.execute("update PLdata set Cwin=(%s) where ID=(%s)",(WCw,WID))#Cwin
+                cursor.execute("update PLdata set Close=(%s) where ID=(%s)",(WCl,WID))#Close
+                cursor.execute("update PLdata set Wtotal=(%s) where ID=(%s)",(WWt,WID))#Wtotal
+                cursor.execute("update PLdata set Wwin=(%s) where ID=(%s)",(WWw,WID))#Wwin
+                con.commit()
+                #敗北側
+                LCw=LCw+LG
+                LCl=LCl+WG
+                LCt=int(LCw)+int(LCl)
+                LWl=int(LWl)+1
+                LWt=int(LWl)+int(LWw)
+                cursor.execute("update PLdata set CR=(%s) where ID=(%s)",(NLCR,LID))#CR
+                cursor.execute("update PLdata set WR=(%s) where ID=(%s)",(NLWR,LID))#WR
+                cursor.execute("update PLdata set Ctotal=(%s) where ID=(%s)",(LCt,LID))#Ctotal
+                cursor.execute("update PLdata set Cwin=(%s) where ID=(%s)",(LCw,LID))#Cwin
+                cursor.execute("update PLdata set Close=(%s) where ID=(%s)",(LCl,LID))#Close
+                cursor.execute("update PLdata set Wtotal=(%s) where ID=(%s)",(LWt,LID))#Wtotal
+                cursor.execute("update PLdata set Wlose=(%s) where ID=(%s)",(LWl,LID))#Wlose
+                #ソート
+                cursor.execute("SELECT * FROM PLdata order by ID")
+                con.commit()
+            
             sort_CR=[]
             sort_WR=[]
             rank_CR=[]
             rank_WR=[]
-            Rup=re.split('[\n]',message.content)
-            channel=client.get_channel(ch_kan)#更新告知　ch_kan
-            await channel.send(str(Rup[1])+'\nレート一覧を更新します\n完了の表示が出るまでコマンドを使用しないでください\nこの処理は5分～10分程度を要する可能性があります')
+
             channel=client.get_channel(ch_CR)#ch_CRに変更
             #闘技場レート＆勝敗レート処理
             cursor.execute("SELECT * FROM PLdata")
