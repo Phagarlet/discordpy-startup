@@ -530,18 +530,18 @@ async def on_message(message):
             DLres/Lcount
         except ZeroDivisionError:
         
-        cursor.execute("SELECT * FROM PLdata")#勝者名前取得
-        Wname=cursor.fetchall()[WinID][0]
-        cursor.execute("SELECT * FROM PLdata")#敗者名前取得
-        Lname=cursor.fetchall()[LoseID][0]
-        
-        #修正上書き
-        cursor.execute("update history set Wname=(%s) where MID=(%s)",(Wname,MID))#Wname
-        cursor.execute("update history set WinID=(%s) where MID=(%s)",(NWID,MID))#WinID
-        cursor.execute("update history set Lname=(%s) where MID=(%s)",(Lname,MID))#Lname
-        cursor.execute("update history set LoseID=(%s) where MID=(%s)",(NLID,MID))#LoseID
-        cursor.execute("update history set Wcount=(%s) where MID=(%s)",(NWres,MID))#Wcount
-        cursor.execute("update history set Lcount=(%s) where MID=(%s)",(NLres,MID))#Lcount
+            cursor.execute("SELECT * FROM PLdata")#勝者名前取得
+            Wname=cursor.fetchall()[WinID][0]
+            cursor.execute("SELECT * FROM PLdata")#敗者名前取得
+            Lname=cursor.fetchall()[LoseID][0]
+
+            #修正上書き
+            cursor.execute("update history set Wname=(%s) where MID=(%s)",(Wname,MID))#Wname
+            cursor.execute("update history set WinID=(%s) where MID=(%s)",(NWID,MID))#WinID
+            cursor.execute("update history set Lname=(%s) where MID=(%s)",(Lname,MID))#Lname
+            cursor.execute("update history set LoseID=(%s) where MID=(%s)",(NLID,MID))#LoseID
+            cursor.execute("update history set Wcount=(%s) where MID=(%s)",(NWres,MID))#Wcount
+            cursor.execute("update history set Lcount=(%s) where MID=(%s)",(NLres,MID))#Lcount
             
         else:
             await message.channel.send('構文エラーです。\n情報不一致エラー')
