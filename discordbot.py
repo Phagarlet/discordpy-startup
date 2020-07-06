@@ -30,7 +30,7 @@ async def on_command_error(ctx, error):
 @client.event
 async def on_ready():
     # 起動したらターミナルにログイン通知が表示される
-    channel=client.get_channel(ch_bot)#実装時に(ch_kan)に変更
+    channel=client.get_channel(ch_kan)#実装時に(ch_kan)に変更
     await channel.send('業務を開始します')
 
 # メッセージ受信時に動作する処理
@@ -48,7 +48,7 @@ async def on_message(message):
             await message.channel.send('私はDTB闘技場の管理人です。\nSeason2から正式に業務を開始します。よろしくお願いします。')
         #「進捗どうですか？」
         if message.content =='進捗どうですか？':
-            await message.channel.send('機能の調整中です')
+            await message.channel.send('Season2待機中です')
 
         if 'make_PLdata' == message.content:#プレーヤーデータの作成
             cursor.execute("DROP TABLE IF EXISTS PLdata")
@@ -90,7 +90,7 @@ async def on_message(message):
                             await message.channel.send(str(allhis[i]))
                 await message.channel.send("全試合出力完了！")
 
-        if '/regist' in message.content:#新規登録
+        if 'regist' in message.content:#新規登録
             PLname=re.split('[\n]',message.content)[1]
             if ',' in PLname or ' ' in PLname or '/' in PLname or '-' in PLname or '(' in PLname or ')' in PLname or'\u3000' in PLname:
                 await message.channel.send(', - / ( ) 全角/半角スペースは名前に使用することができません')
