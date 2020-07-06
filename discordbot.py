@@ -523,7 +523,8 @@ async def on_message(message):
             cursor.execute("SELECT * FROM history")#Lcount
             Lcount=cursor.fetchall()[MID][6]
             
-
+            print(test110=int(DWID)/int(WinID))
+            
             try:
                 test110=int(DWID)/int(WinID)
                 test111=int(DLID)/int(LoseID)
