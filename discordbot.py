@@ -525,10 +525,10 @@ async def on_message(message):
             
 
             try:
-                test110=DWID/int(WinID)
-                test111=DLID/int(LoseID)
-                test112=DWres/Wcount
-                test13=DLres/Lcount
+                test110=int(DWID)/int(WinID)
+                test111=int(DLID)/int(LoseID)
+                test112=int(DWres)/int(Wcount)
+                test13=int(DLres)/int(Lcount)
             except ZeroDivisionError:
 
                 cursor.execute("SELECT * FROM PLdata")#勝者名前取得
