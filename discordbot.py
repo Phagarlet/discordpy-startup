@@ -522,12 +522,13 @@ async def on_message(message):
             Wcount=cursor.fetchall()[MID][5]
             cursor.execute("SELECT * FROM history")#Lcount
             Lcount=cursor.fetchall()[MID][6]
+            
 
             try:
-                DWID/int(WinID)
-                DLID/int(LoseID)
-                DWres/Wcount
-                DLres/Lcount
+                test110=DWID/int(WinID)
+                test111=DLID/int(LoseID)
+                test112=DWres/Wcount
+                test13=DLres/Lcount
             except ZeroDivisionError:
 
                 cursor.execute("SELECT * FROM PLdata")#勝者名前取得
