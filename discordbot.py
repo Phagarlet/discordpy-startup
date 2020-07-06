@@ -524,8 +524,8 @@ async def on_message(message):
             Lcount=cursor.fetchall()[MID][6]
 
         try:
-            DWID/WinID
-            DLID/LoseID
+            DWID/int(WinID)
+            DLID/int(LoseID)
             DWres/Wcount
             DLres/Lcount
         except ZeroDivisionError:
@@ -542,11 +542,11 @@ async def on_message(message):
             cursor.execute("update history set LoseID=(%s) where MID=(%s)",(NLID,MID))#LoseID
             cursor.execute("update history set Wcount=(%s) where MID=(%s)",(NWres,MID))#Wcount
             cursor.execute("update history set Lcount=(%s) where MID=(%s)",(NLres,MID))#Lcount
+            con.commit()
             
         else:
             await message.channel.send('構文エラーです。\n情報不一致エラー')
 
-        await message.channel.send('到達しました')
 
     #通称リセットコマンド
         if 'reset' in message.content:#指定した何かの指定した列を変更する（シーズンリセット時に使用）
