@@ -523,13 +523,11 @@ async def on_message(message):
             cursor.execute("SELECT * FROM history")#Lcount
             Lcount=cursor.fetchall()[MID][6]
             
-            await message.channel.send(int(DWID)/int(WinID))
-            
             try:
-                test110=int(DWID)/int(WinID)
-                test111=int(DLID)/int(LoseID)
-                test112=int(DWres)/int(Wcount)
-                test13=int(DLres)/int(Lcount)
+                test110=1/int(int(DWID)-int(WinID))
+                test111=1/int(int(DLID)-int(LoseID))
+                test112=1/int(int(DWres)-int(Wcount))
+                test13=1/int(int(DLres)-int(Lcount))
             except ZeroDivisionError:
 
                 cursor.execute("SELECT * FROM PLdata")#勝者名前取得
