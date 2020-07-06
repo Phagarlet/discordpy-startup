@@ -543,6 +543,7 @@ async def on_message(message):
                 cursor.execute("update history set Wcount=(%s) where MID=(%s)",(NWres,MID))#Wcount
                 cursor.execute("update history set Lcount=(%s) where MID=(%s)",(NLres,MID))#Lcount
                 con.commit()
+                await message.channel.send('修正完了です')
 
             else:
                 await message.channel.send('構文エラーです。\n情報不一致エラー')
