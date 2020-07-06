@@ -497,17 +497,19 @@ async def on_message(message):
                     except ZeroDivisionError:
                         await message.channel.send('構文エラーです。\n情報同一エラー')
                     else:
-                        MID=int(res100[1])
-                        DWID=int(res100[2])
-                        DLID=int(res100[3])
-                        NWID=int(res100[6])
-                        NLID=int(res100[7])
-                        DWres=int(res100[4])
-                        DLres=int(res100[5])
-                        NWres=int(res100[8])
-                        NLres=int(res100[9])
+                        pass
             else:
                 await message.channel.send('構文エラーです。\n情報過多エラー')
+
+            MID=int(res100[1])
+            DWID=int(res100[2])
+            DLID=int(res100[3])
+            NWID=int(res100[6])
+            NLID=int(res100[7])
+            DWres=int(res100[4])
+            DLres=int(res100[5])
+            NWres=int(res100[8])
+            NLres=int(res100[9])
         
             #historyから抽出
             cursor.execute("SELECT * FROM history")#試合ID
