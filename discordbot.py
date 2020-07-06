@@ -510,19 +510,19 @@ async def on_message(message):
                 await message.channel.send('構文エラーです。\n情報過多エラー')
         
             #historyから抽出
-            cursor.execute("SELECT * FROM hisoty")#試合ID
+            cursor.execute("SELECT * FROM history")#試合ID
             Match=cursor.fetchall()[MID][0]
-            cursor.execute("SELECT * FROM hisoty")#Wname
+            cursor.execute("SELECT * FROM history")#Wname
             Winname=cursor.fetchall()[MID][1]
-            cursor.execute("SELECT * FROM hisoty")#Lname
+            cursor.execute("SELECT * FROM history")#Lname
             Losename=cursor.fetchall()[MID][3]
-            cursor.execute("SELECT * FROM hisoty")#WID
+            cursor.execute("SELECT * FROM history")#WID
             WinID=cursor.fetchall()[MID][2]
-            cursor.execute("SELECT * FROM hisoty")#LID
+            cursor.execute("SELECT * FROM history")#LID
             LoseID=cursor.fetchall()[MID][4]
-            cursor.execute("SELECT * FROM hisoty")#Wcount
+            cursor.execute("SELECT * FROM history")#Wcount
             Wcount=cursor.fetchall()[MID][5]
-            cursor.execute("SELECT * FROM hisoty")#Lcount
+            cursor.execute("SELECT * FROM history")#Lcount
             Lcount=cursor.fetchall()[MID][6]
 
             if DWID!=WinID:
