@@ -474,23 +474,6 @@ async def on_message(message):
 
     #試合結果修正コマンド
         if 'edit' in message.content:
-
-            #historyから抽出
-            cursor.execute("SELECT * FROM hisoty")#試合ID
-            Match=cursor.fetchall()[MID][0]
-            cursor.execute("SELECT * FROM hisoty")#Wname
-            Winname=cursor.fetchall()[MID][1]
-            cursor.execute("SELECT * FROM hisoty")#Lname
-            Losename=cursor.fetchall()[MID][3]
-            cursor.execute("SELECT * FROM hisoty")#WID
-            WinID=cursor.fetchall()[MID][2]
-            cursor.execute("SELECT * FROM hisoty")#LID
-            LoseID=cursor.fetchall()[MID][4]
-            cursor.execute("SELECT * FROM hisoty")#Wcount
-            Wcount=cursor.fetchall()[MID][5]
-            cursor.execute("SELECT * FROM hisoty")#Lcount
-            Lcount=cursor.fetchall()[MID][6]
-
             res100=re.split('[\n/-]',message.content)#分割
             try:
                 test0=res100[10]
@@ -525,6 +508,22 @@ async def on_message(message):
                         NLres=int(res100[9])
             else:
                 await message.channel.send('構文エラーです。\n情報過多エラー')
+        
+            #historyから抽出
+            cursor.execute("SELECT * FROM hisoty")#試合ID
+            Match=cursor.fetchall()[MID][0]
+            cursor.execute("SELECT * FROM hisoty")#Wname
+            Winname=cursor.fetchall()[MID][1]
+            cursor.execute("SELECT * FROM hisoty")#Lname
+            Losename=cursor.fetchall()[MID][3]
+            cursor.execute("SELECT * FROM hisoty")#WID
+            WinID=cursor.fetchall()[MID][2]
+            cursor.execute("SELECT * FROM hisoty")#LID
+            LoseID=cursor.fetchall()[MID][4]
+            cursor.execute("SELECT * FROM hisoty")#Wcount
+            Wcount=cursor.fetchall()[MID][5]
+            cursor.execute("SELECT * FROM hisoty")#Lcount
+            Lcount=cursor.fetchall()[MID][6]
 
             if DWID!=WinID:
                 await message.channel.send('構文エラーです。\n情報不一致エラー')
