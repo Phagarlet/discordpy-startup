@@ -503,7 +503,7 @@ async def on_message(message):
                         NWID=int(res100[6])
                         NLID=int(res100[7])
                         DWres=int(res100[4])
-                        DLles=int(res100[5])
+                        DLres=int(res100[5])
                         NWres=int(res100[8])
                         NLres=int(res100[9])
             else:
@@ -512,10 +512,6 @@ async def on_message(message):
             #historyから抽出
             cursor.execute("SELECT * FROM history")#試合ID
             Match=cursor.fetchall()[MID][0]
-            cursor.execute("SELECT * FROM history")#Wname
-            Winname=cursor.fetchall()[MID][1]
-            cursor.execute("SELECT * FROM history")#Lname
-            Losename=cursor.fetchall()[MID][3]
             cursor.execute("SELECT * FROM history")#WID
             WinID=cursor.fetchall()[MID][2]
             cursor.execute("SELECT * FROM history")#LID
@@ -525,16 +521,30 @@ async def on_message(message):
             cursor.execute("SELECT * FROM history")#Lcount
             Lcount=cursor.fetchall()[MID][6]
 
-            if DWID!=WinID:
-                await message.channel.send('構文エラーです。\n情報不一致エラー')
-            if DLID!=LoseID:
-                await message.channel.send('構文エラーです。\n情報不一致エラー')
-            if DWres!=Wcount:
-                await message.channel.send('構文エラーです。\n情報不一致エラー')
-            if DLres!=Lcount:
-                await message.channel.send('構文エラーです。\n情報不一致エラー')
+        try:
+            DWID/WinID
+            DLID/LoseID
+            DWres/Wcount
+            DLres/Lcount
+        except ZeroDivisionError:
+        
+        cursor.execute("SELECT * FROM PLdata")#勝者名前取得
+        Wname=cursor.fetchall()[WinID][0]
+        cursor.execute("SELECT * FROM PLdata")#敗者名前取得
+        Lname=cursor.fetchall()[LoseID][0]
+        
+        #修正上書き
+        cursor.execute("update history set Wname=(%s) where MID=(%s)",(Wname,MID))#Wname
+        cursor.execute("update history set WinID=(%s) where MID=(%s)",(NWID,MID))#WinID
+        cursor.execute("update history set Lname=(%s) where MID=(%s)",(Lname,MID))#Lname
+        cursor.execute("update history set LoseID=(%s) where MID=(%s)",(NLID,MID))#LoseID
+        cursor.execute("update history set Wcount=(%s) where MID=(%s)",(NWres,MID))#Wcount
+        cursor.execute("update history set Lcount=(%s) where MID=(%s)",(NLres,MID))#Lcount
+            
+        else:
+            await message.channel.send('構文エラーです。\n情報不一致エラー')
 
-            await message.channel.send('到達しました')
+        await message.channel.send('到達しました')
 
     #通称リセットコマンド
         if 'reset' in message.content:#指定した何かの指定した列を変更する（シーズンリセット時に使用）
