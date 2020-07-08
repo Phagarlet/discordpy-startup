@@ -57,7 +57,7 @@ async def on_message(message):
             con.commit()
             await message.channel.send('作成完了です')
 
-        if 'make_history' == message.content:#試合履歴データの作成
+        if 'make_history' == message.content:#試合履歴DBの作成
             cursor.execute("DROP TABLE IF EXISTS history")
             cursor.execute("create table history(MID integer,Wname text,WinID integer,Lname text,LoseID integer,Wcount integer,Lcount integer)")
             cursor.execute("insert into history values(0,'Yataswee',0,'Soraneko',71,0,0)")
