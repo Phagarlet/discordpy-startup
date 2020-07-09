@@ -319,7 +319,7 @@ async def on_message(message):
                 cursor.execute("SELECT * FROM PLdata order by ID")
                 allPL=cursor.fetchall()
                 cursor.execute("select * from history order by MID")
-                allhis=cursor.fetchall()
+                alhis=cursor.fetchall()
                 for i in range(len(allPL)-1):
                     cursor.execute("update PLdata set CR=(%s) where ID=(%s)",(1500,i+1))#CR
                     cursor.execute("update PLdata set WR=(%s) where ID=(%s)",(1500,i+1))#WR
@@ -481,7 +481,7 @@ async def on_message(message):
                 cursor.execute("SELECT * FROM PLdata order by ID")
                 allPL=cursor.fetchall()
                 cursor.execute("select * from history order by MID")
-                allhis=cursor.fetchall()
+                alhis=cursor.fetchall()
                 for i in range(len(allPL)-1):
                     cursor.execute("update PLdata set CR=(%s) where ID=(%s)",(1500,i+1))#CR
                     cursor.execute("update PLdata set WR=(%s) where ID=(%s)",(1500,i+1))#WR
