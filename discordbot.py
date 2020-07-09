@@ -473,8 +473,7 @@ async def on_message(message):
             else:
                 await message.channel.send('管理技士専用コマンドです')
 
-                
-        if 'Dupdate'in message.content:#レート更新
+        if 'recal'in message.content:#レート更新
             if message.author.guild_permissions.administrator:
                 #レートリセット
                 cursor.execute("SELECT * FROM history order by MID")
@@ -488,6 +487,8 @@ async def on_message(message):
                     cursor.execute("update PLdata set Wtotal=(%s) where ID=(%s)",(0,i+1))#Wtotal
                     cursor.execute("update PLdata set Wwin=(%s) where ID=(%s)",(0,i+1))#Wwin
                     cursor.execute("update PLdata set Wlose=(%s) where ID=(%s)",(0,i+1))#Wlose
+                await message.channel.send('レリセ完了')
+
                 #レート計算
 
                 for i in range(len(alhis)-1):
@@ -647,6 +648,7 @@ async def on_message(message):
                 cursor.execute("update history set LoseID=(%s) where MID=(%s)",(NLID,MID))#LoseID
                 cursor.execute("update history set Wcount=(%s) where MID=(%s)",(NWres,MID))#Wcount
                 cursor.execute("update history set Lcount=(%s) where MID=(%s)",(NLres,MID))#Lcount
+                cursor.execute("SELECT * FROM history order by MID")
                 con.commit()
                 await message.channel.send('修正完了です')
 
