@@ -491,7 +491,6 @@ async def on_message(message):
                     cursor.execute("update PLdata set Wtotal=(%s) where ID=(%s)",(0,i+1))#Wtotal
                     cursor.execute("update PLdata set Wwin=(%s) where ID=(%s)",(0,i+1))#Wwin
                     cursor.execute("update PLdata set Wlose=(%s) where ID=(%s)",(0,i+1))#Wlose
-                    await message.channel.send()
 
                 await message.channel.send('レリセ完了')
 
