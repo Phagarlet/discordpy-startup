@@ -237,7 +237,7 @@ async def on_message(message):
             LWR=cursor.fetchall()[LID][6]
 
             match=int(WG+LG)
-            await message.channel.send('結果出力が終わるまでコマンドは打たないでください'+'\n試合結果'+Wname+"さん"+' 対 '+Lname+"さん"+'\n試合前レート'+'\n闘技場：'+str(WCR)+"-"+str(LCR)+"\n勝敗："+str(WWR)+"-"+str(LWR))
+            await message.channel.send('結果出力が終わるまでコマンドは打たないでください'+'\n試合結果：'+Wname+"さん"+' 対 '+Lname+"さん"+'\n試合前レート'+'\n闘技場：'+str(WCR)+"-"+str(LCR)+"\n勝敗："+str(WWR)+"-"+str(LWR))
     #闘技場レート計算
             CsaA=LCR-WCR
             CsaB=int(CsaA)*-1
@@ -316,9 +316,11 @@ async def on_message(message):
                 channel=client.get_channel(ch_kan)#更新告知　ch_kan
                 await channel.send(str(Rup[1])+'\nレート一覧を更新します\n完了の表示が出るまでコマンドを使用しないでください\nこの処理は5分～10分程度を要する可能性があります')
                 #レートリセット
-                cursor.execute("SELECT * FROM history order by MID")
-                alhis=cursor.fetchall()
-                for i in range(len(alhis)-1):
+                cursor.execute("SELECT * FROM PLdata order by ID")
+                allPL=cursor.fetchall()
+                cursor.execute("select * from history order by MID")
+                allhis=cursor.fetchall()
+                for i in range(len(allPL)-1):
                     cursor.execute("update PLdata set CR=(%s) where ID=(%s)",(1500,i+1))#CR
                     cursor.execute("update PLdata set WR=(%s) where ID=(%s)",(1500,i+1))#WR
                     cursor.execute("update PLdata set Ctotal=(%s) where ID=(%s)",(0,i+1))#Ctotal
@@ -476,9 +478,11 @@ async def on_message(message):
         if 'recal'in message.content:#レート更新
             if message.author.guild_permissions.administrator:
                 #レートリセット
-                cursor.execute("SELECT * FROM history order by MID")
-                alhis=cursor.fetchall()
-                for i in range(len(alhis)-1):
+                cursor.execute("SELECT * FROM PLdata order by ID")
+                allPL=cursor.fetchall()
+                cursor.execute("select * from history order by MID")
+                allhis=cursor.fetchall()
+                for i in range(len(allPL)-1):
                     cursor.execute("update PLdata set CR=(%s) where ID=(%s)",(1500,i+1))#CR
                     cursor.execute("update PLdata set WR=(%s) where ID=(%s)",(1500,i+1))#WR
                     cursor.execute("update PLdata set Ctotal=(%s) where ID=(%s)",(0,i+1))#Ctotal
@@ -487,6 +491,8 @@ async def on_message(message):
                     cursor.execute("update PLdata set Wtotal=(%s) where ID=(%s)",(0,i+1))#Wtotal
                     cursor.execute("update PLdata set Wwin=(%s) where ID=(%s)",(0,i+1))#Wwin
                     cursor.execute("update PLdata set Wlose=(%s) where ID=(%s)",(0,i+1))#Wlose
+                    await message.channel.send()
+
                 await message.channel.send('レリセ完了')
 
                 #レート計算
@@ -574,6 +580,8 @@ async def on_message(message):
                     cursor.execute("SELECT * FROM PLdata order by ID")
                     cursor.execute("SELECT * FROM history order by MID")
                     con.commit()
+                    await message.channel.send('完了です')
+
             else:
                 await message.channel.send('管理技士専用コマンドです')
 
