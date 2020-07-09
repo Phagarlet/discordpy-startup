@@ -66,7 +66,7 @@ async def on_message(message):
 
         if 'check_PLdata' == message.content:#PLdataを見る
             if message.author.guild_permissions.administrator:
-                cursor.execute("select * from PLdata")
+                cursor.execute("select * from PLdata order by ID")
                 allPL=cursor.fetchall()
                 for j in range(0,len(allPL),5):
                     if j!=len(allPL)-len(allPL)%5:
@@ -98,7 +98,7 @@ async def on_message(message):
                 cursor.execute("select * from PLdata where name=(%s)",(PLname,))
                 delet=cursor.fetchall()
                 if len(delet)==0:
-                    cursor.execute("select * from PLdata")
+                    cursor.execute("select * from PLdata order by ID")
                     num=(len(cursor.fetchall())-1)
                     cursor.execute("insert into PLdata values ((%s),(%s),(%s),(%s),(%s),(%s),(%s),(%s),(%s),(%s))",(PLname,num+1,1500,0,0,0,1500,0,0,0))
                     con.commit()
