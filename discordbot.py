@@ -129,23 +129,23 @@ async def on_message(message):
                 await message.channel.send("構文エラー\n自分のIDを入力してください")
             else:
                 nameID=int(res10[1])
-                cursor.execute("SELECT * FROM PLdata")#name
+                cursor.execute("SELECT * FROM PLdata order by ID")#name
                 Mname=cursor.fetchall()[nameID][0]
-                cursor.execute("SELECT * FROM PLdata")#ID
+                cursor.execute("SELECT * FROM PLdata order by ID")#ID
                 MID=cursor.fetchall()[nameID][1]
-                cursor.execute("SELECT * FROM PLdata")#CR
+                cursor.execute("SELECT * FROM PLdata order by ID")#CR
                 MCR=cursor.fetchall()[nameID][2]
-                cursor.execute("SELECT * FROM PLdata")#Cwin
+                cursor.execute("SELECT * FROM PLdata order by ID")#Cwin
                 MCw=cursor.fetchall()[nameID][4]
-                cursor.execute("SELECT * FROM PLdata")#Close
+                cursor.execute("SELECT * FROM PLdata order by ID")#Close
                 MCl=cursor.fetchall()[nameID][5]
-                cursor.execute("SELECT * FROM PLdata")#WR
+                cursor.execute("SELECT * FROM PLdata order by ID")#WR
                 MWR=cursor.fetchall()[nameID][6]
-                cursor.execute("SELECT * FROM PLdata")#Wtotal
+                cursor.execute("SELECT * FROM PLdata order by ID")#Wtotal
                 MWt=cursor.fetchall()[nameID][7]
-                cursor.execute("SELECT * FROM PLdata")#Wwin
+                cursor.execute("SELECT * FROM PLdata order by ID")#Wwin
                 MWw=cursor.fetchall()[nameID][8]
-                cursor.execute("SELECT * FROM PLdata")#Wlose
+                cursor.execute("SELECT * FROM PLdata order by ID")#Wlose
                 MWl=cursor.fetchall()[nameID][9]
                 await message.channel.send('名前：'+str(Mname)+'\nID：'+str(MID)+'\n'+str(MWt)+'試合'+str(MWw)+'勝'+str(MWl)+'敗'+'\n'+str(MCw)+'-'+str(MCl)+'\n闘技場レート'+str(MCR)+'\n勝敗レート'+str(MWR))
 
@@ -157,27 +157,27 @@ async def on_message(message):
                 await message.channel.send("構文エラー\n自分のIDを入力してください")
             else:
                 nameID=int(res11[1])
-                cursor.execute("SELECT * FROM PLdata")#name
+                cursor.execute("SELECT * FROM PLdata order by ID")#name
                 Mname=cursor.fetchall()[nameID][0]
-                cursor.execute("SELECT * FROM PLdata")#ID
+                cursor.execute("SELECT * FROM PLdata order by ID")#ID
                 MID=cursor.fetchall()[nameID][1]
-                cursor.execute("SELECT * FROM PLdata")#CR
+                cursor.execute("SELECT * FROM PLdata order by ID")#CR
                 MCR=cursor.fetchall()[nameID][2]
-                cursor.execute("SELECT * FROM PLdata")#Wtotal
+                cursor.execute("SELECT * FROM PLdata order by ID")#Wtotal
                 MWt=cursor.fetchall()[nameID][7]
-                cursor.execute("SELECT * FROM PLdata")#WR
+                cursor.execute("SELECT * FROM PLdata order by ID")#WR
                 MWR=cursor.fetchall()[nameID][6]
                 await message.channel.send('名前：'+str(Mname)+'\nID：'+str(MID)+'\n試合数：'+str(MWt)+'\n闘技場レート'+str(MCR)+'\n勝敗レート'+str(MWR))
     #プレーヤーID表示
         if 'IDlist'in message.content:
             if message.author.guild_permissions.administrator:
                 IDlist=[]
-                cursor.execute("SELECT * FROM PLdata")
+                cursor.execute("SELECT * FROM PLdata order by ID")
                 allPL=cursor.fetchall()
                 for i in range(len(allPL)):
-                    cursor.execute("SELECT * FROM PLdata")
+                    cursor.execute("SELECT * FROM PLdata order by ID")
                     PLname=cursor.fetchall()[i][0]
-                    cursor.execute("SELECT * FROM PLdata")
+                    cursor.execute("SELECT * FROM PLdata order by ID")
                     PLID=cursor.fetchall()[i][1]
                     IDlist.append([PLID,PLname])
                 IDlist.sort(key=lambda x:x[0],reverse=False)#IDソート
@@ -223,17 +223,17 @@ async def on_message(message):
             else:
                 await message.channel.send('構文エラーです。\n情報過多エラー')
     #レート処理
-            cursor.execute("SELECT * FROM PLdata")
+            cursor.execute("SELECT * FROM PLdata order by ID")
             Wname=cursor.fetchall()[WID][0]
-            cursor.execute("SELECT * FROM PLdata")
+            cursor.execute("SELECT * FROM PLdata order by ID")
             Lname=cursor.fetchall()[LID][0]
-            cursor.execute("SELECT * FROM PLdata")
+            cursor.execute("SELECT * FROM PLdata order by ID")
             WCR=cursor.fetchall()[WID][2]
-            cursor.execute("SELECT * FROM PLdata")
+            cursor.execute("SELECT * FROM PLdata order by ID")
             LCR=cursor.fetchall()[LID][2]
-            cursor.execute("SELECT * FROM PLdata")
+            cursor.execute("SELECT * FROM PLdata order by ID")
             WWR=cursor.fetchall()[WID][6]
-            cursor.execute("SELECT * FROM PLdata")
+            cursor.execute("SELECT * FROM PLdata order by ID")
             LWR=cursor.fetchall()[LID][6]
 
             match=int(WG+LG)
@@ -255,21 +255,21 @@ async def on_message(message):
             await message.channel.send('試合後レート'+"\n闘技場："+str(NWCR)+"-"+str(NLCR)+"\n勝敗："+str(NWWR)+"-"+str(NLWR))
     #データのアップデート
             #取得部分
-            cursor.execute("SELECT * FROM PLdata")
+            cursor.execute("SELECT * FROM PLdata order by ID")
             WCw=cursor.fetchall()[WID][4]
-            cursor.execute("SELECT * FROM PLdata")
+            cursor.execute("SELECT * FROM PLdata order by ID")
             WCl=cursor.fetchall()[WID][5]
-            cursor.execute("SELECT * FROM PLdata")
+            cursor.execute("SELECT * FROM PLdata order by ID")
             WWw=cursor.fetchall()[WID][8]
-            cursor.execute("SELECT * FROM PLdata")
+            cursor.execute("SELECT * FROM PLdata order by ID")
             WWl=cursor.fetchall()[WID][9]
-            cursor.execute("SELECT * FROM PLdata")
+            cursor.execute("SELECT * FROM PLdata order by ID")
             LCw=cursor.fetchall()[LID][4]
-            cursor.execute("SELECT * FROM PLdata")
+            cursor.execute("SELECT * FROM PLdata order by ID")
             LCl=cursor.fetchall()[LID][5]
-            cursor.execute("SELECT * FROM PLdata")
+            cursor.execute("SELECT * FROM PLdata order by ID")
             LWw=cursor.fetchall()[LID][8]
-            cursor.execute("SELECT * FROM PLdata")
+            cursor.execute("SELECT * FROM PLdata order by ID")
             LWl=cursor.fetchall()[LID][9]
             #勝利側
             WCw=WCw+WG
@@ -316,7 +316,7 @@ async def on_message(message):
                 channel=client.get_channel(ch_kan)#更新告知　ch_kan
                 await channel.send(str(Rup[1])+'\nレート一覧を更新します\n完了の表示が出るまでコマンドを使用しないでください\nこの処理は5分～10分程度を要する可能性があります')
                 #レートリセット
-                cursor.execute("SELECT * FROM history")
+                cursor.execute("SELECT * FROM history order by ID")
                 alhis=cursor.fetchall()
                 for i in range(len(alhis)-1):
                     cursor.execute("update PLdata set CR=(%s) where ID=(%s)",(1500,i+1))#CR
@@ -330,22 +330,22 @@ async def on_message(message):
                 #レート計算
 
                 for i in range(len(alhis)-1):
-                    cursor.execute("SELECT * FROM history")
+                    cursor.execute("SELECT * FROM history order by ID")
                     WID=cursor.fetchall()[i+1][2]
-                    cursor.execute("SELECT * FROM history")
+                    cursor.execute("SELECT * FROM history order by ID")
                     LID=cursor.fetchall()[i+1][4]
-                    cursor.execute("SELECT * FROM history")
+                    cursor.execute("SELECT * FROM history order by ID")
                     WG=cursor.fetchall()[i+1][5]
-                    cursor.execute("SELECT * FROM history")
+                    cursor.execute("SELECT * FROM history order by ID")
                     LG=cursor.fetchall()[i+1][6]
 
-                    cursor.execute("SELECT * FROM PLdata")
+                    cursor.execute("SELECT * FROM PLdata order by ID")
                     WCR=cursor.fetchall()[WID][2]
-                    cursor.execute("SELECT * FROM PLdata")
+                    cursor.execute("SELECT * FROM PLdata order by ID")
                     LCR=cursor.fetchall()[LID][2]
-                    cursor.execute("SELECT * FROM PLdata")
+                    cursor.execute("SELECT * FROM PLdata order by ID")
                     WWR=cursor.fetchall()[WID][6]
-                    cursor.execute("SELECT * FROM PLdata")
+                    cursor.execute("SELECT * FROM PLdata order by ID")
                     LWR=cursor.fetchall()[LID][6]
 
                     match=int(WG+LG)
@@ -365,21 +365,21 @@ async def on_message(message):
 
     #データのアップデート
                     #取得部分
-                    cursor.execute("SELECT * FROM PLdata")
+                    cursor.execute("SELECT * FROM PLdata order by ID")
                     WCw=cursor.fetchall()[WID][4]
-                    cursor.execute("SELECT * FROM PLdata")
+                    cursor.execute("SELECT * FROM PLdata order by ID")
                     WCl=cursor.fetchall()[WID][5]
-                    cursor.execute("SELECT * FROM PLdata")
+                    cursor.execute("SELECT * FROM PLdata order by ID")
                     WWw=cursor.fetchall()[WID][8]
-                    cursor.execute("SELECT * FROM PLdata")
+                    cursor.execute("SELECT * FROM PLdata order by ID")
                     WWl=cursor.fetchall()[WID][9]
-                    cursor.execute("SELECT * FROM PLdata")
+                    cursor.execute("SELECT * FROM PLdata order by ID")
                     LCw=cursor.fetchall()[LID][4]
-                    cursor.execute("SELECT * FROM PLdata")
+                    cursor.execute("SELECT * FROM PLdata order by ID")
                     LCl=cursor.fetchall()[LID][5]
-                    cursor.execute("SELECT * FROM PLdata")
+                    cursor.execute("SELECT * FROM PLdata order by ID")
                     LWw=cursor.fetchall()[LID][8]
-                    cursor.execute("SELECT * FROM PLdata")
+                    cursor.execute("SELECT * FROM PLdata order by ID")
                     LWl=cursor.fetchall()[LID][9]
                     #勝利側
                     WCw=WCw+WG
@@ -419,16 +419,16 @@ async def on_message(message):
 
                 channel=client.get_channel(ch_CR)#ch_CRに変更
                 #闘技場レート＆勝敗レート処理
-                cursor.execute("SELECT * FROM PLdata")
+                cursor.execute("SELECT * FROM PLdata order by ID")
                 allPL=cursor.fetchall()
                 for i in range(len(allPL)):
-                    cursor.execute("SELECT * FROM PLdata")
+                    cursor.execute("SELECT * FROM PLdata order by ID")
                     PLname=cursor.fetchall()[i][0]
-                    cursor.execute("SELECT * FROM PLdata")
+                    cursor.execute("SELECT * FROM PLdata order by ID")
                     PLID=cursor.fetchall()[i][1]
-                    cursor.execute("SELECT * FROM PLdata")
+                    cursor.execute("SELECT * FROM PLdata order by ID")
                     PLCR=cursor.fetchall()[i][2]
-                    cursor.execute("SELECT * FROM PLdata")
+                    cursor.execute("SELECT * FROM PLdata order by ID")
                     PLWR=cursor.fetchall()[i][6]
                     sort_CR.append([PLID,PLname,PLCR])
                     sort_WR.append([PLID,PLname,PLWR])
@@ -449,11 +449,11 @@ async def on_message(message):
                 channel=client.get_channel(ch_RR)#ch_RRに変更
                 await channel.send(str(Rup[1])+'現在\nレートランキング')#レートランキング更新
                 for k in range(len(allPL)):
-                    cursor.execute("SELECT * FROM PLdata")
+                    cursor.execute("SELECT * FROM PLdata order by ID")
                     PLname=cursor.fetchall()[k][0]
-                    cursor.execute("SELECT * FROM PLdata")
+                    cursor.execute("SELECT * FROM PLdata order by ID")
                     PLCRr=cursor.fetchall()[k][2]
-                    cursor.execute("SELECT * FROM PLdata")
+                    cursor.execute("SELECT * FROM PLdata order by ID")
                     PLWRr=cursor.fetchall()[k][6]
                     rank_CR.append([PLCRr,PLname])
                     rank_WR.append([PLWRr,PLname])
@@ -512,15 +512,15 @@ async def on_message(message):
             NLres=int(res100[9])
         
             #historyから抽出
-            cursor.execute("SELECT * FROM history")#試合ID
+            cursor.execute("SELECT * FROM history order by ID")#試合ID
             Match=cursor.fetchall()[MID][0]
-            cursor.execute("SELECT * FROM history")#WID
+            cursor.execute("SELECT * FROM history order by ID")#WID
             WinID=cursor.fetchall()[MID][2]
-            cursor.execute("SELECT * FROM history")#LID
+            cursor.execute("SELECT * FROM history order by ID")#LID
             LoseID=cursor.fetchall()[MID][4]
-            cursor.execute("SELECT * FROM history")#Wcount
+            cursor.execute("SELECT * FROM history order by ID")#Wcount
             Wcount=cursor.fetchall()[MID][5]
-            cursor.execute("SELECT * FROM history")#Lcount
+            cursor.execute("SELECT * FROM history order by ID")#Lcount
             Lcount=cursor.fetchall()[MID][6]
             
             try:
@@ -530,9 +530,9 @@ async def on_message(message):
                 test13=1/int(int(DLres)-int(Lcount))
             except ZeroDivisionError:
 
-                cursor.execute("SELECT * FROM PLdata")#勝者名前取得
+                cursor.execute("SELECT * FROM PLdata order by ID")#勝者名前取得
                 Wname=cursor.fetchall()[WinID][0]
-                cursor.execute("SELECT * FROM PLdata")#敗者名前取得
+                cursor.execute("SELECT * FROM PLdata order by ID")#敗者名前取得
                 Lname=cursor.fetchall()[LoseID][0]
 
                 #修正上書き
