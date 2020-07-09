@@ -316,7 +316,7 @@ async def on_message(message):
                 channel=client.get_channel(ch_kan)#更新告知　ch_kan
                 await channel.send(str(Rup[1])+'\nレート一覧を更新します\n完了の表示が出るまでコマンドを使用しないでください\nこの処理は5分～10分程度を要する可能性があります')
                 #レートリセット
-                cursor.execute("SELECT * FROM history order by ID")
+                cursor.execute("SELECT * FROM history order by MID")
                 alhis=cursor.fetchall()
                 for i in range(len(alhis)-1):
                     cursor.execute("update PLdata set CR=(%s) where ID=(%s)",(1500,i+1))#CR
@@ -330,13 +330,13 @@ async def on_message(message):
                 #レート計算
 
                 for i in range(len(alhis)-1):
-                    cursor.execute("SELECT * FROM history order by ID")
+                    cursor.execute("SELECT * FROM history order by MID")
                     WID=cursor.fetchall()[i+1][2]
-                    cursor.execute("SELECT * FROM history order by ID")
+                    cursor.execute("SELECT * FROM history order by MID")
                     LID=cursor.fetchall()[i+1][4]
-                    cursor.execute("SELECT * FROM history order by ID")
+                    cursor.execute("SELECT * FROM history order by MID")
                     WG=cursor.fetchall()[i+1][5]
-                    cursor.execute("SELECT * FROM history order by ID")
+                    cursor.execute("SELECT * FROM history order by MID")
                     LG=cursor.fetchall()[i+1][6]
 
                     cursor.execute("SELECT * FROM PLdata order by ID")
@@ -512,15 +512,15 @@ async def on_message(message):
             NLres=int(res100[9])
         
             #historyから抽出
-            cursor.execute("SELECT * FROM history order by ID")#試合ID
+            cursor.execute("SELECT * FROM history order by MID")#試合ID
             Match=cursor.fetchall()[MID][0]
-            cursor.execute("SELECT * FROM history order by ID")#WID
+            cursor.execute("SELECT * FROM history order by MID")#WID
             WinID=cursor.fetchall()[MID][2]
-            cursor.execute("SELECT * FROM history order by ID")#LID
+            cursor.execute("SELECT * FROM history order by MID")#LID
             LoseID=cursor.fetchall()[MID][4]
-            cursor.execute("SELECT * FROM history order by ID")#Wcount
+            cursor.execute("SELECT * FROM history order by MID")#Wcount
             Wcount=cursor.fetchall()[MID][5]
-            cursor.execute("SELECT * FROM history order by ID")#Lcount
+            cursor.execute("SELECT * FROM history order by MID")#Lcount
             Lcount=cursor.fetchall()[MID][6]
             
             try:
