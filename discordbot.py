@@ -573,6 +573,8 @@ async def on_message(message):
                     cursor.execute("SELECT * FROM PLdata order by ID")
                     cursor.execute("SELECT * FROM history order by MID")
                     con.commit()
+            else:
+                await message.channel.send('管理技士専用コマンドです')
 
                 
     #試合結果修正コマンド
