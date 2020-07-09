@@ -579,7 +579,7 @@ async def on_message(message):
                     cursor.execute("SELECT * FROM PLdata order by ID")
                     cursor.execute("SELECT * FROM history order by MID")
                     con.commit()
-                    await message.channel.send('完了です')
+                await message.channel.send('完了です')
 
             else:
                 await message.channel.send('管理技士専用コマンドです')
