@@ -705,13 +705,13 @@ async def on_message(message):
                 rank_CR.sort(key=lambda x:x[0],reverse=True)#ソートCR
                 rank_WR.sort(key=lambda x:x[0],reverse=True)#ソートWR
                 
-                await message.channel.send('闘技場レートランキング')
-                await message.channel.send(str(rank_CR[0])+'\n'+str(rank_CR[1])+'\n'+str(rank_CR[2])+'\n'+str(rank_CR[3])+'\n'+str(rank_CR[4])+'\n'+str(rank_CR[5])\
-                                   +'\n'+str(rank_CR[6])+'\n'+str(rank_CR[7])+'\n'+str(rank_CR[8])+'\n'+str(rank_CR[9]))
-                await message.channel.send('勝敗レートランキング')
-                await message.channel.send(str(rank_CR[0])+'\n'+str(rank_CR[1])+'\n'+str(rank_CR[2])+'\n'+str(rank_CR[3])+'\n'+str(rank_CR[4])+'\n'+str(rank_CR[5])\
-                                   +'\n'+str(rank_CR[6])+'\n'+str(rank_CR[7])+'\n'+str(rank_CR[8])+'\n'+str(rank_CR[9]))
-                await message.channel.send('出力完了です')
+            await message.channel.send('闘技場レートランキング')
+            await message.channel.send(str(rank_CR[0])+'\n'+str(rank_CR[1])+'\n'+str(rank_CR[2])+'\n'+str(rank_CR[3])+'\n'+str(rank_CR[4])+'\n'+str(rank_CR[5])\
+                               +'\n'+str(rank_CR[6])+'\n'+str(rank_CR[7])+'\n'+str(rank_CR[8])+'\n'+str(rank_CR[9]))
+            await message.channel.send('勝敗レートランキング')
+            await message.channel.send(str(rank_CR[0])+'\n'+str(rank_CR[1])+'\n'+str(rank_CR[2])+'\n'+str(rank_CR[3])+'\n'+str(rank_CR[4])+'\n'+str(rank_CR[5])\
+                               +'\n'+str(rank_CR[6])+'\n'+str(rank_CR[7])+'\n'+str(rank_CR[8])+'\n'+str(rank_CR[9]))
+            await message.channel.send('出力完了です')
 
             #終了告知
             await message.channel.send('レート一覧を更新しました')
