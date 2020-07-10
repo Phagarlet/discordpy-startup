@@ -477,8 +477,8 @@ async def on_message(message):
                 await channel.send(str(rank_CR[0])+'\n'+str(rank_CR[1])+'\n'+str(rank_CR[2])+'\n'+str(rank_CR[3])+'\n'+str(rank_CR[4])+'\n'+str(rank_CR[5])\
                                    +'\n'+str(rank_CR[6])+'\n'+str(rank_CR[7])+'\n'+str(rank_CR[8])+'\n'+str(rank_CR[9]))
                 await channel.send('勝敗レートランキング')
-                await channel.send(str(rank_CR[0])+'\n'+str(rank_CR[1])+'\n'+str(rank_CR[2])+'\n'+str(rank_CR[3])+'\n'+str(rank_CR[4])+'\n'+str(rank_CR[5])\
-                                   +'\n'+str(rank_CR[6])+'\n'+str(rank_CR[7])+'\n'+str(rank_CR[8])+'\n'+str(rank_CR[9]))
+                await channel.send(str(rank_WR[0])+'\n'+str(rank_WR[1])+'\n'+str(rank_WR[2])+'\n'+str(rank_WR[3])+'\n'+str(rank_WR[4])+'\n'+str(rank_WR[5])\
+                                   +'\n'+str(rank_WR[6])+'\n'+str(rank_WR[7])+'\n'+str(rank_WR[8])+'\n'+str(rank_WR[9]))
                 await channel.send('出力完了です')
                 #終了告知
                 channel=client.get_channel(ch_kan)#更新告知　ch_kan
