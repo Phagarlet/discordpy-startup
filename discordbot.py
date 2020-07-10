@@ -683,27 +683,17 @@ async def on_message(message):
             #闘技場レート＆勝敗レート処理
             cursor.execute("SELECT * FROM PLdata order by ID")
             allPL=cursor.fetchall()
-            for i in range(len(allPL)):
+            for k in range(len(allPL)):
                 cursor.execute("SELECT * FROM PLdata order by ID")
-                PLname=cursor.fetchall()[i][0]
+                PLname=cursor.fetchall()[k][0]
                 cursor.execute("SELECT * FROM PLdata order by ID")
-                PLID=cursor.fetchall()[i][1]
+                PLCRr=cursor.fetchall()[k][2]
                 cursor.execute("SELECT * FROM PLdata order by ID")
-                PLCR=cursor.fetchall()[i][2]
-                cursor.execute("SELECT * FROM PLdata order by ID")
-                PLWR=cursor.fetchall()[i][6]
-
-                for k in range(len(allPL)):
-                    cursor.execute("SELECT * FROM PLdata order by ID")
-                    PLname=cursor.fetchall()[k][0]
-                    cursor.execute("SELECT * FROM PLdata order by ID")
-                    PLCRr=cursor.fetchall()[k][2]
-                    cursor.execute("SELECT * FROM PLdata order by ID")
-                    PLWRr=cursor.fetchall()[k][6]
-                    rank_CR.append([PLCRr,PLname])
-                    rank_WR.append([PLWRr,PLname])
-                rank_CR.sort(key=lambda x:x[0],reverse=True)#ソートCR
-                rank_WR.sort(key=lambda x:x[0],reverse=True)#ソートWR
+                PLWRr=cursor.fetchall()[k][6]
+                rank_CR.append([PLCRr,PLname])
+                rank_WR.append([PLWRr,PLname])
+            rank_CR.sort(key=lambda x:x[0],reverse=True)#ソートCR
+            rank_WR.sort(key=lambda x:x[0],reverse=True)#ソートWR
                 
             await message.channel.send('闘技場レートランキング')
             await message.channel.send(str(rank_CR[0])+'\n'+str(rank_CR[1])+'\n'+str(rank_CR[2])+'\n'+str(rank_CR[3])+'\n'+str(rank_CR[4])+'\n'+str(rank_CR[5])\
@@ -716,40 +706,8 @@ async def on_message(message):
             #終了告知
             await message.channel.send('レート一覧を更新しました')
 
-
-
-
     #通称リセットコマンド
-        if 'reset' in message.content:#指定した何かの指定した列を変更する（シーズンリセット時に使用）
-                if message.author.guild_permissions.administrator:
-                    nani2=re.split('[\n]',message.content)[1]#変更前値
-                    namae=re.split('[\n]',message.content)[2]#name
-                    nani1=re.split('[\n]',message.content)[3]#変更後値
-                    retsu=re.split('[\n]',message.content)[4]#DBの場所
-                    typ=re.split('[\n]',message.content)[5]
-                    try:
-                        sori=int(namae)
-                        namae=sori
-                    except:
-                        pass
-                    cursor.execute("select * from PLdata where{0}=(%s)"%nani2,(namae,))
-                    try:
-                        await message.channel.send('変更前　'+str(cursor.fetchall()))
-                    except:
-                        await message.channel.send('文字数オーバーで変更前を表示できません')
-                    if typ=='str':
-                        cursor.execute("update PLdata set{0}=(%s) where{0}=(%s)"%(nani1,nani2),(retsu,namae))
-                    elif typ=='int':
-                        cursor.execute("update PLdata set{0}=(%s) where{0}=(%s)"%(nani1,nani2),(int(retsu),namae))
-                    cursor.execute("select * from PLdata where{0}=(%s)"%nani2,(namae,))
-                    try:
-                        await message.channel.send('変更後　'+str(cursor.fetchall()))
-                    except:
-                        await message.channel.send('文字数オーバーで変更後を表示できません')
-                    con.commit()
-                    await message.channel.send("変更完了です")
-                else:
-                    await message.channel.send('管理技士専用コマンドです')
+
     except:
         traceback.print_exc()
         cursor.execute("ROLLBACK")
