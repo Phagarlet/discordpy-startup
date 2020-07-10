@@ -686,15 +686,17 @@ async def on_message(message):
             #闘技場レート出力機構
             await message.channel.send('現在\n闘技場レート')#闘技場レート更新
             sort_CR.sort(key=lambda x:x[0],reverse=False)#IDソート
-            for i in range(len(allPL)):
-                await message.channel.send(sort_CR[i])
-            await channel.send('出力完了です')
-            #勝敗レート出力機構
-            await message.channel.send('現在\n勝敗レート')#勝敗レート更新
-            sort_WR.sort(key=lambda x:x[0],reverse=False)#IDソート
-            for j in range(len(allPL)):
-                await channel.send(sort_WR[j])
-            await channel.send('出力完了です')
+            #for i in range(len(allPL)):
+             #   await message.channel.send(sort_CR[i])
+            for j in range(0,len(allPL),5):
+                if j!=len(allPL)-len(allPL)%5:
+                        await message.channel.send(str(sort_CR[j])+'\n'+str(sort_CR[j+1])+'\n'+str(sort_CR[j+2])\
+                                   +'\n'+str(sort_CR[j+3])+'\n'+str(sort_CR[j+4]))
+            else:
+                for i in range(len(allPL)-(len(allPL)%5),len(allPL)):
+                    await message.channel.send(str(sort_CR[i]))
+            await message.channel.send('出力完了です')
+
             #終了告知
             await message.channel.send('レート一覧を更新しました')
 
