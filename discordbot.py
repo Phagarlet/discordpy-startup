@@ -695,26 +695,6 @@ async def on_message(message):
                 for j in range(len(allPL)):
                     await channel.send(sort_WR[j])
                 await channel.send('出力完了です')
-                #レートランキング出力機構
-                await message.channel.send(str(Rup[1])+'現在\nレートランキング')#レートランキング更新
-                for k in range(len(allPL)):
-                    cursor.execute("SELECT * FROM PLdata order by ID")
-                    PLname=cursor.fetchall()[k][0]
-                    cursor.execute("SELECT * FROM PLdata order by ID")
-                    PLCRr=cursor.fetchall()[k][2]
-                    cursor.execute("SELECT * FROM PLdata order by ID")
-                    PLWRr=cursor.fetchall()[k][6]
-                    rank_CR.append([PLCRr,PLname])
-                    rank_WR.append([PLWRr,PLname])
-                rank_CR.sort(key=lambda x:x[0],reverse=True)#ソートCR
-                rank_WR.sort(key=lambda x:x[0],reverse=True)#ソートWR
-                await message.channel.send('闘技場レートランキング')
-                for i in range(10):
-                    await message.channel.send(rank_CR[i])
-                await channel.send('勝敗レートランキング')
-                for j in range(10):
-                    await channel.send(rank_WR[j])
-                await message.channel.send('出力完了です')
                 #終了告知
                 await message.channel.send(str(Rup[1])+'\nレート一覧を更新しました')
             else:
