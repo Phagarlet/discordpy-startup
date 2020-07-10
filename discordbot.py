@@ -693,7 +693,6 @@ async def on_message(message):
                 cursor.execute("SELECT * FROM PLdata order by ID")
                 PLWR=cursor.fetchall()[i][6]
 
-                await channel.send(str(Rup[1])+'現在\nレートランキング')#レートランキング更新
                 for k in range(len(allPL)):
                     cursor.execute("SELECT * FROM PLdata order by ID")
                     PLname=cursor.fetchall()[k][0]
