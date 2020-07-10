@@ -669,7 +669,6 @@ async def on_message(message):
                 rank_CR=[]
                 rank_WR=[]
 
-                channel=client.get_channel(ch_CR)#ch_CRに変更
                 #闘技場レート＆勝敗レート処理
                 cursor.execute("SELECT * FROM PLdata order by ID")
                 allPL=cursor.fetchall()
@@ -685,21 +684,19 @@ async def on_message(message):
                     sort_CR.append([PLID,PLname,PLCR])
                     sort_WR.append([PLID,PLname,PLWR])
                 #闘技場レート出力機構
-                await channel.send(str(Rup[1])+'現在\n闘技場レート')#闘技場レート更新
+                await message.channel.send(str(Rup[1])+'現在\n闘技場レート')#闘技場レート更新
                 sort_CR.sort(key=lambda x:x[0],reverse=False)#IDソート
                 for i in range(len(allPL)):
-                    await channel.send(sort_CR[i])
+                    await message.channel.send(sort_CR[i])
                 await channel.send('出力完了です')
                 #勝敗レート出力機構
-                channel=client.get_channel(ch_WR)#ch_WRに変更
-                await channel.send(str(Rup[1])+'現在\n勝敗レート')#勝敗レート更新
+                await message.channel.send(str(Rup[1])+'現在\n勝敗レート')#勝敗レート更新
                 sort_WR.sort(key=lambda x:x[0],reverse=False)#IDソート
                 for j in range(len(allPL)):
                     await channel.send(sort_WR[j])
                 await channel.send('出力完了です')
                 #レートランキング出力機構
-                channel=client.get_channel(ch_RR)#ch_RRに変更
-                await channel.send(str(Rup[1])+'現在\nレートランキング')#レートランキング更新
+                await message.channel.send(str(Rup[1])+'現在\nレートランキング')#レートランキング更新
                 for k in range(len(allPL)):
                     cursor.execute("SELECT * FROM PLdata order by ID")
                     PLname=cursor.fetchall()[k][0]
@@ -711,16 +708,15 @@ async def on_message(message):
                     rank_WR.append([PLWRr,PLname])
                 rank_CR.sort(key=lambda x:x[0],reverse=True)#ソートCR
                 rank_WR.sort(key=lambda x:x[0],reverse=True)#ソートWR
-                await channel.send('闘技場レートランキング')
+                await message.channel.send('闘技場レートランキング')
                 for i in range(10):
-                    await channel.send(rank_CR[i])
+                    await message.channel.send(rank_CR[i])
                 await channel.send('勝敗レートランキング')
                 for j in range(10):
                     await channel.send(rank_WR[j])
-                await channel.send('出力完了です')
+                await message.channel.send('出力完了です')
                 #終了告知
-                channel=client.get_channel(ch_kan)#更新告知　ch_kan
-                await channel.send(str(Rup[1])+'\nレート一覧を更新しました')
+                await message.channel.send(str(Rup[1])+'\nレート一覧を更新しました')
             else:
                 await message.channel.send('管理技士専用コマンドです')
 
