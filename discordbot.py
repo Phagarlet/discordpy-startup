@@ -474,7 +474,7 @@ async def on_message(message):
                     rank_WR.append([PLWRr,PLname])
                 rank_CR.sort(key=lambda x:x[0],reverse=True)#ソートCR
                 rank_WR.sort(key=lambda x:x[0],reverse=True)#ソートWR
-                 channel=client.get_channel(ch_RR)#ch_RRに変更
+                channel=client.get_channel(ch_RR)#ch_RRに変更
                 await channel.send('闘技場レートランキング')
                 await channel.send(str(rank_CR[0])+'\n'+str(rank_CR[1])+'\n'+str(rank_CR[2])+'\n'+str(rank_CR[3])+'\n'+str(rank_CR[4])+'\n'+str(rank_CR[5])\
                                    +'\n'+str(rank_CR[6])+'\n'+str(rank_CR[7])+'\n'+str(rank_CR[8])+'\n'+str(rank_CR[9]))
