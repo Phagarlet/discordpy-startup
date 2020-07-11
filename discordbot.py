@@ -674,7 +674,7 @@ async def on_message(message):
                 await message.channel.send('構文エラーです。\n情報不一致エラー')
 
 
-        if 'test' in message.content:
+        if 'test' in message.content:#テスト専用コマンド
             sort_CR=[]
             sort_WR=[]
             rank_CR=[]
