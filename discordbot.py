@@ -424,7 +424,6 @@ async def on_message(message):
                 #闘技場レート＆勝敗レート処理
                 cursor.execute("SELECT * FROM PLdata order by ID")
                 allPL=cursor.fetchall()
-                channel=client.get_channel(ch_CR)#ch_CRに変更
                 for i in range(len(allPL)):
                     cursor.execute("SELECT * FROM PLdata order by ID")
                     PLname=cursor.fetchall()[i][0]
@@ -441,20 +440,22 @@ async def on_message(message):
                 sort_CR.sort(key=lambda x:x[0],reverse=False)#IDソート
                 for j in range(0,len(allPL),5):
                     if j!=len(allPL)-len(allPL)%5:
-                            await message.channel.send(str(sort_CR[j])+'\n'+str(sort_CR[j+1])+'\n'+str(sort_CR[j+2])\
+                        channel=client.get_channel(ch_CR)#ch_CRに変更
+                        await message.channel.send(str(sort_CR[j])+'\n'+str(sort_CR[j+1])+'\n'+str(sort_CR[j+2])\
                                        +'\n'+str(sort_CR[j+3])+'\n'+str(sort_CR[j+4]))
                 else:
                     for i in range(len(allPL)-(len(allPL)%5),len(allPL)):
+                        channel=client.get_channel(ch_CR)#ch_CRに変更
                         await message.channel.send(str(sort_CR[i]))
                 await channel.send('出力完了です')
                 #勝敗レート出力機構
                 channel=client.get_channel(ch_WR)#ch_WRに変更
                 await channel.send(str(Rup[1])+'現在\n勝敗レート')#勝敗レート更新
                 sort_WR.sort(key=lambda x:x[0],reverse=False)#IDソート
-                channel=client.get_channel(ch_WR)#ch_CRに変更
                 for j in range(0,len(allPL),5):
                     if j!=len(allPL)-len(allPL)%5:
-                            await message.channel.send(str(sort_WR[j])+'\n'+str(sort_WR[j+1])+'\n'+str(sort_WR[j+2])\
+                        channel=client.get_channel(ch_WR)#ch_CRに変更
+                        await message.channel.send(str(sort_WR[j])+'\n'+str(sort_WR[j+1])+'\n'+str(sort_WR[j+2])\
                                        +'\n'+str(sort_WR[j+3])+'\n'+str(sort_WR[j+4]))
                 else:
                     for i in range(len(allPL)-(len(allPL)%5),len(allPL)):
