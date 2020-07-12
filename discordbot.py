@@ -676,7 +676,13 @@ async def on_message(message):
             else:
                 await message.channel.send('構文エラーです。\n情報不一致エラー')
 
-
+                
+        if 'sort'essage.content:#レート更新
+            cursor.execute("SELECT * FROM PLdata order by ID")
+            cursor.execute("SELECT * FROM history order by MID")
+            con.commit()
+                
+                
         if 'test' in message.content:#テスト専用コマンド
             sort_CR=[]
             sort_WR=[]
