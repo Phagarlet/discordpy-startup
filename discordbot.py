@@ -79,7 +79,7 @@ async def on_message(message):
 
         if 'check_history' == message.content:#historyを見る
             if message.author.guild_permissions.administrator:
-               cursor.execute("SELECT * FROM history order by MID")
+                cursor.execute("SELECT * FROM history order by MID")
                 allhis=cursor.fetchall()
                 for j in range(0,len(allhis),5):
                     if j!=len(allhis)-len(allhis)%5:
