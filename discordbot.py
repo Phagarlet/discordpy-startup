@@ -133,7 +133,9 @@ async def on_message(message):
             his_ID=re.split('[\n]',message.content)[1]
             his_ID=int(his_ID)
             cursor.execute("select * from history where name=(%s)",(his_ID,))
-            await message.channel.send(cursor.fetchall()[0])
+            await message.channel.send(cursor.fetchall()[his_ID])
+            cursor.execute("SELECT * FROM PLdata order by ID")
+            con.commit()
         
         
         if 'fulldata' in message.content:#プレーヤーデータfullの確認
