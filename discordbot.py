@@ -115,20 +115,26 @@ async def on_message(message):
                     await message.channel.send("同じ名前が既に使用されています\nほかの名前を使ってください")
 
         if 'Nupdate' in message.content:#プレーヤーの名前を変更する
-                Defname=re.split('[\n]',message.content)[1]
-                Newname=re.split('[\n]',message.content)[2]
-                if ',' in Newname or ')' in Newname or '(' in Newname or '-' in Newname or '\u3000' in Newname:
-                    await message.channel.send(', - / ( ) 全角/半角スペースは名前に使用することができません')
-                else:
-                    cursor.execute("update PLdata set name=(%s) where name=(%s)",(Newname,Defname))
-                    con.commit()
-                    await message.channel.send("名前を変更しました")
+            Defname=re.split('[\n]',message.content)[1]
+            Newname=re.split('[\n]',message.content)[2]
+            if ',' in Newname or ')' in Newname or '(' in Newname or '-' in Newname or '\u3000' in Newname:
+                await message.channel.send(', - / ( ) 全角/半角スペースは名前に使用することができません')
+            else:
+                cursor.execute("update PLdata set name=(%s) where name=(%s)",(Newname,Defname))
+                con.commit()
+                await message.channel.send("名前を変更しました")
 
         if 'myID' in message.content:#指定した人のIDを表示
-                member_name=re.split('[\n]',message.content)[1]
-                cursor.execute("select * from PLdata where name=(%s)",(member_name,))
-                await message.channel.send(cursor.fetchall()[0][1])
-
+            member_name=re.split('[\n]',message.content)[1]
+            cursor.execute("select * from PLdata where name=(%s)",(member_name,))
+            await message.channel.send(cursor.fetchall()[0][1])
+        
+        if 'Hsearch' in message.content:#指定した試合を表示
+            his_ID=re.split('[\n]',message.content)[1]
+            cursor.execute("select * from history where name=(%s)",(his_ID,))
+            await message.channel.send(cursor.fetchall()[0])
+        
+        
         if 'fulldata' in message.content:#プレーヤーデータfullの確認
             res10=re.split('[\n]',message.content)
             try:
