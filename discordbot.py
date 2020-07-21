@@ -129,15 +129,6 @@ async def on_message(message):
             cursor.execute("select * from PLdata where name=(%s)",(member_name,))
             await message.channel.send(cursor.fetchall()[0][1])
         
-        if 'Hsearch' in message.content:#指定した試合を表示
-            his_ID=re.split('[\n]',message.content)[1]
-            his_ID=int(his_ID)
-            cursor.execute("select * from history where name=(%s)",(his_ID,))
-            await message.channel.send(cursor.fetchall()[his_ID])
-            cursor.execute("SELECT * FROM PLdata order by ID")
-            con.commit()
-        
-        
         if 'fulldata' in message.content:#プレーヤーデータfullの確認
             res10=re.split('[\n]',message.content)
             try:
