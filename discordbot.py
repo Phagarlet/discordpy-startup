@@ -131,6 +131,7 @@ async def on_message(message):
         
         if 'Hsearch' in message.content:#指定した試合を表示
             his_ID=re.split('[\n]',message.content)[1]
+            his_ID=int(his_ID)
             cursor.execute("select * from history where name=(%s)",(his_ID,))
             await message.channel.send(cursor.fetchall()[0])
         
