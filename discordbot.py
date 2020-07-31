@@ -195,7 +195,7 @@ async def on_message(message):
             else:
                 await message.channel.send('管理技士専用コマンドです')
         #試合処理系統 result Rupdateコマンド
-        if 'result'in message.content:#試合処理
+        if '/r/'in message.content:#試合処理
     #前処理
             res1=re.split('[\n]',message.content)
             try:
