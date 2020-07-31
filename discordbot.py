@@ -33,7 +33,7 @@ async def on_ready():
     channel=client.get_channel(ch_bot)#実装時に(ch_kan)に変更
     await channel.send('業務を開始します')
 
-@client.event
+@client.event #新規メンバー用
 async def on_member_join(member):
     channel=ch_kan
     await channel.send("はじめまして、どうぶつタワーバトル闘技場(通称 DTB闘技場)の運営をしているYatasweeと申します。"\
