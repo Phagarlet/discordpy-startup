@@ -602,6 +602,7 @@ async def on_message(message):
                     cursor.execute("SELECT * FROM history order by MID")
                     con.commit()
                 await message.channel.send('完了です')
+                await message.channel.send(MAXWR)
 
             else:
                 await message.channel.send('管理技士専用コマンドです')
