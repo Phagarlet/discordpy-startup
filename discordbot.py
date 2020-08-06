@@ -75,7 +75,7 @@ async def on_message(message):
         if 'make_TTQual' == message.content:#天庭戦関連DBの作成
             cursor.execute("DROP TABLE IF EXISTS TTQual")
             cursor.execute("create table TTQual(PLID integer,CRmax integer,WRmax integer,Qual text, Rank integer)")
-            cursor.execute("insert into PLdata values(0,1500,1500,'特になし',999)")
+            cursor.execute("insert into TTQual values(0,1500,1500,'特になし',999)")
             
             cursor.execute("select * from PLdata order by ID")
             allPL=cursor.fetchall()
