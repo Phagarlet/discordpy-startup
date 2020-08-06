@@ -549,8 +549,8 @@ async def on_message(message):
                     NWWR=int(WWR+32*WBWper)
                     NLWR=int(LWR-32*WBWper)
                     
-                    if MAXWR[WID+1]<NWWR:
-                        MAXWR[WID+1]=NWWR
+                    if MAXWR[WID]<NWWR:
+                        MAXWR[WID]=NWWR
 
     #データのアップデート
                     #取得部分
