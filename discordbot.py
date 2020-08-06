@@ -71,6 +71,23 @@ async def on_message(message):
             cursor.execute("insert into history values(0,'Yataswee',0,'Soraneko',71,0,0)")
             con.commit()
             await message.channel.send('作成完了です')
+            
+        if 'make_TTQual' == message.content:#天庭戦関連DBの作成
+            cursor.execute("DROP TABLE IF EXISTS TTQual")
+            cursor.execute("create table history(PLID integer,Cmax integer,Wmax integer,Qual text, Rank integer)")
+            cursor.execute("insert into PLdata values(0,1500,1500,"特になし",999)")
+            
+            cursor.execute("select * from PLdata order by ID")
+            allPL=cursor.fetchall()
+            for i in range(len(allPL)):
+                cursor.execute("select * from PLdata where PLID=(%s)",(i))
+                delet=cursor.fetchall()
+                if len(delet)==0:
+                    cursor.execute("select * from PLdata order by ID")
+                    num=(len(cursor.fetchall())-1)
+                    cursor.execute("insert into TTQual values ((%s),(%s),(%s),(%s),(%s))",(num+1,1500,1500,"特になし",999,))
+            con.commit()
+            await message.channel.send('作成完了です')
 
         if 'check_PLdata' == message.content:#PLdataを見る
             if message.author.guild_permissions.administrator:
@@ -97,6 +114,19 @@ async def on_message(message):
                         for i in range(len(allhis)-(len(allhis)%5),len(allhis)):
                             await message.channel.send(str(allhis[i]))
                 await message.channel.send("全試合出力完了！")
+                
+        if 'check_TTQual' == message.content:#TTQualを見る
+            if message.author.guild_permissions.administrator:
+                cursor.execute("SELECT * FROM TTQual order by PLID")
+                allQ=cursor.fetchall()
+                for j in range(0,len(allQ),5):
+                    if j!=len(allQ)-len(allQ)%5:
+                        await message.channel.send(str(allQ[j])+'\n'+str(allQ[j+1])+'\n'+str(allQ[j+2])\
+                                                   +'\n'+str(allQ[j+3])+'\n'+str(allQ[j+4]))
+                    else:
+                        for i in range(len(allQ)-(len(allQ)%5),len(allQ)):
+                            await message.channel.send(str(allQ[i]))
+                await message.channel.send("全員出力完了！")
 
         if 'regist' in message.content:#新規登録
             PLname=re.split('[\n]',message.content)[1]
