@@ -618,9 +618,9 @@ async def on_message(message):
                     cursor.execute("update PLdata set Close=(%s) where ID=(%s)",(WCl,WID))#Close
                     cursor.execute("update PLdata set Wtotal=(%s) where ID=(%s)",(WWt,WID))#Wtotal
                     cursor.execute("update PLdata set Wwin=(%s) where ID=(%s)",(WWw,WID))#Wwin
-                    if NWCR>WCmax:
+                    if int(NWCR)>int(WCmax):
                         cursor.execute("update TTQual set CRmax=(%s) where PLID=(%s)",(WCmax,WID))#WCmax
-                    if NWWR>WRmax:
+                    if int(NWWR)>int(WRmax):
                         cursor.execute("update TTQual set WRmax=(%s) where PLID=(%s)",(Wmax,WID))#WRmax
                     con.commit()
                     #敗北側
@@ -636,7 +636,7 @@ async def on_message(message):
                     cursor.execute("update PLdata set Close=(%s) where ID=(%s)",(LCl,LID))#Close
                     cursor.execute("update PLdata set Wtotal=(%s) where ID=(%s)",(LWt,LID))#Wtotal
                     cursor.execute("update PLdata set Wlose=(%s) where ID=(%s)",(LWl,LID))#Wlose
-                    if NLCR>LCmax:
+                    if int(NLCR)>int(LCmax):
                         cursor.execute("update TTQual set CRmax=(%s) where PLID=(%s)",(LCmax,LID))#LCmax
                     #ソート
                     cursor.execute("SELECT * FROM PLdata order by ID")
