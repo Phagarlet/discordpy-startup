@@ -783,11 +783,11 @@ async def on_message(message):
                     cursor.execute("select * TTQUal where Qual=='資格保持'")
                     FQ=cursor.fetchall()
                     for i in range(len(FQ)):
-                    await message.channel.send(FQ[i])
+                        await message.channel.send(FQ[i])
                     cursor.execute("select * TTQUal where Qual=='次点保持'")
                     SQ=cursor.fetchall()
                     for i in range(len(SQ)):
-                    await message.channel.send(SQ[i])
+                        await message.channel.send(SQ[i])
             else:
                 await message.channel.send('管理技士専用コマンドです')
 
