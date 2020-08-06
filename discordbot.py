@@ -79,7 +79,7 @@ async def on_message(message):
             
             cursor.execute("select * from PLdata order by ID")
             allPL=cursor.fetchall()
-            for i in range(len(allPL)):
+            for i in range(len(allPL)-1):
                 cursor.execute("insert into TTQual values ((%s),(%s),(%s),(%s),(%s))",(i+1,1500,1500,'特になし',999,))
             con.commit()
             await message.channel.send('作成完了です')
@@ -760,6 +760,26 @@ async def on_message(message):
 
             #終了告知
             await message.channel.send('レート一覧を更新しました')
+
+        if 'TTQ'in message.content:#資格関連更新
+            if message.author.guild_permissions.administrator:
+                for i in range(len(allPL)):
+                    cursor.execute("SELECT * FROM TTQual order by PLID")
+                    qual=cursor.fetchall()[i][3]
+                    cursor.execute("SELECT * FROM TTQual order by PLID")
+                    rank=cursor.fetchall()[i][4]
+                    cursor.execute("SELECT * FROM PLdata order by ID")
+                    game=cursor.fetchall()[i][7]
+                    if int(game)=>20:
+                        if int(game)=>25:
+                            qual='資格保持'
+                        else:
+                            qual='次点保持'
+                    #上書き
+                    cursor.execute("update TTQual set Qual=(%s) where PLID=(%s)",(qual,i))#Qual
+                    con.commit
+            else:
+                await message.channel.send('管理技士専用コマンドです')
 
     #通称リセットコマンド
 
