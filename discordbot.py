@@ -619,9 +619,9 @@ async def on_message(message):
                     cursor.execute("update PLdata set Wtotal=(%s) where ID=(%s)",(WWt,WID))#Wtotal
                     cursor.execute("update PLdata set Wwin=(%s) where ID=(%s)",(WWw,WID))#Wwin
                     if int(NWCR)>int(WCmax):
-                        cursor.execute("update TTQual set CRmax=(%s) where PLID=(%s)",(WCmax,WID))#WCmax
+                        cursor.execute("update TTQual set CRmax=(%s) where PLID=(%s)",(NWCR,WID))#WCmax
                     if int(NWWR)>int(WRmax):
-                        cursor.execute("update TTQual set WRmax=(%s) where PLID=(%s)",(Wmax,WID))#WRmax
+                        cursor.execute("update TTQual set WRmax=(%s) where PLID=(%s)",(NWWR,WID))#WRmax
                     con.commit()
                     #敗北側
                     LCw=LCw+LG
@@ -637,7 +637,7 @@ async def on_message(message):
                     cursor.execute("update PLdata set Wtotal=(%s) where ID=(%s)",(LWt,LID))#Wtotal
                     cursor.execute("update PLdata set Wlose=(%s) where ID=(%s)",(LWl,LID))#Wlose
                     if int(NLCR)>int(LCmax):
-                        cursor.execute("update TTQual set CRmax=(%s) where PLID=(%s)",(LCmax,LID))#LCmax
+                        cursor.execute("update TTQual set CRmax=(%s) where PLID=(%s)",(NLCR,LID))#LCmax
                     #ソート
                     cursor.execute("SELECT * FROM PLdata order by ID")
                     cursor.execute("SELECT * FROM history order by MID")
