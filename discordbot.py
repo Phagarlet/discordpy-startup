@@ -80,13 +80,7 @@ async def on_message(message):
             cursor.execute("select * from PLdata order by ID")
             allPL=cursor.fetchall()
             for i in range(len(allPL)):
-                i=str(i)
-                cursor.execute("select * from TTQual where PLID=(%s)",i)
-                delet=cursor.fetchall()
-                if len(delet)==0:
-                    cursor.execute("select * from PLdata order by ID")
-                    num=(len(cursor.fetchall())-1)
-                    cursor.execute("insert into TTQual values ((%s),(%s),(%s),(%s),(%s))",(num+1,1500,1500,'特になし',999,))
+                cursor.execute("insert into TTQual values ((%s),(%s),(%s),(%s),(%s))",(i+1,1500,1500,'特になし',999,))
             con.commit()
             await message.channel.send('作成完了です')
 
