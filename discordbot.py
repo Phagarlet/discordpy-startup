@@ -542,7 +542,6 @@ async def on_message(message):
                 await message.channel.send('レリセ完了')
 
                 #レート計算
-                MAXWR=[1500]*int(len(allPL))
                 for i in range(len(alhis)-1):
                     cursor.execute("SELECT * FROM history order by MID")
                     WID=cursor.fetchall()[i+1][2]
@@ -576,9 +575,6 @@ async def on_message(message):
                     WBWper=round(1/(10**((WsaB)/400)+1),2)
                     NWWR=int(WWR+32*WBWper)
                     NLWR=int(LWR-32*WBWper)
-                    
-                    if MAXWR[WID]<NWWR:
-                        MAXWR[WID]=NWWR
 
     #データのアップデート
                     #取得部分
@@ -644,7 +640,6 @@ async def on_message(message):
                     cursor.execute("SELECT * FROM TTQual order by PLID")
                     con.commit()
                 await message.channel.send('完了です')
-                await message.channel.send(MAXWR)
 
             else:
                 await message.channel.send('管理技士専用コマンドです')
@@ -773,6 +768,8 @@ async def on_message(message):
                     cursor.execute("SELECT * FROM TTQual order by PLID")
                     rank=cursor.fetchall()[i][4]
                     cursor.execute("SELECT * FROM PLdata order by ID")
+                    NWR=cursor.fetchall()[i][6]
+                    cursor.execute("SELECT * FROM PLdata order by ID")
                     game=cursor.fetchall()[i][7]
                     if int(game)>=20 and int(WRmax)>=1550:
                         if int(game)>=25 and int(WRmax)>=1600:
@@ -782,6 +779,10 @@ async def on_message(message):
                     #上書き
                     cursor.execute("update TTQual set Qual=(%s) where PLID=(%s)",(qual,i))#Qual
                     con.commit
+                    
+                    cursor.execute("select * TTQUal where {0}=(%s)".format(QUal),('資格保持',))
+                    FQ=cursor.fetchall()
+                    await message.channel.send(FQ)
             else:
                 await message.channel.send('管理技士専用コマンドです')
 
