@@ -780,7 +780,7 @@ async def on_message(message):
                     cursor.execute("update TTQual set Qual=(%s) where PLID=(%s)",(qual,i))#Qual
                     con.commit
                     
-                    cursor.execute("select * TTQUal where {0}=(%s)".format(Qual),('資格保持',))
+                    cursor.execute("select * TTQUal where Qual=(%s)",(Qual),)
                     FQ=cursor.fetchall()
                     await message.channel.send(FQ)
             else:
