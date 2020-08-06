@@ -619,9 +619,9 @@ async def on_message(message):
                     cursor.execute("update PLdata set Wtotal=(%s) where ID=(%s)",(WWt,WID))#Wtotal
                     cursor.execute("update PLdata set Wwin=(%s) where ID=(%s)",(WWw,WID))#Wwin
                     if NWCR>WCmax:
-                        cursor.execute("update TTQual set CRmax=(%s) where ID=(%s)",(WCmax,WID))#WCmax
+                        cursor.execute("update TTQual set CRmax=(%s) where PLID=(%s)",(WCmax,WID))#WCmax
                     if NWWR>WRmax:
-                        cursor.execute("update TTQual set WRmax=(%s) where ID=(%s)",(Wmax,WID))#WRmax
+                        cursor.execute("update TTQual set WRmax=(%s) where PLID=(%s)",(Wmax,WID))#WRmax
                     con.commit()
                     #敗北側
                     LCw=LCw+LG
@@ -637,10 +637,11 @@ async def on_message(message):
                     cursor.execute("update PLdata set Wtotal=(%s) where ID=(%s)",(LWt,LID))#Wtotal
                     cursor.execute("update PLdata set Wlose=(%s) where ID=(%s)",(LWl,LID))#Wlose
                     if NLCR>LCmax:
-                        cursor.execute("update TTQual set CRmax=(%s) where ID=(%s)",(LCmax,LID))#LCmax
+                        cursor.execute("update TTQual set CRmax=(%s) where PLID=(%s)",(LCmax,LID))#LCmax
                     #ソート
                     cursor.execute("SELECT * FROM PLdata order by ID")
                     cursor.execute("SELECT * FROM history order by MID")
+                    cursor.execute("SELECT * FROM TTQual order by PLID")
                     con.commit()
                 await message.channel.send('完了です')
                 await message.channel.send(MAXWR)
