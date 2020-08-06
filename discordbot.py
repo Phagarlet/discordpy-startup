@@ -180,7 +180,14 @@ async def on_message(message):
                 MWw=cursor.fetchall()[nameID][8]
                 cursor.execute("SELECT * FROM PLdata order by ID")#Wlose
                 MWl=cursor.fetchall()[nameID][9]
-                await message.channel.send('名前：'+str(Mname)+'\nID：'+str(MID)+'\n'+str(MWt)+'試合'+str(MWw)+'勝'+str(MWl)+'敗'+'\n'+str(MCw)+'-'+str(MCl)+'\n闘技場レート'+str(MCR)+'\n勝敗レート'+str(MWR))
+                cursor.execute("SELECT * FROM TTQual order by PLID")
+                CRmax=cursor.fetchall()[nameID][1]
+                cursor.execute("SELECT * FROM TTQual order by PLID")
+                WRmax=cursor.fetchall()[nameID][2]
+                cursor.execute("SELECT * FROM TTQual order by PLID")
+                qual=cursor.fetchall()[nameID][3]
+                await message.channel.send('名前：'+str(Mname)+'\nID：'+str(MID)+'\n'+str(MWt)+'試合'+str(MWw)+'勝'+str(MWl)+'敗'+'\n'+str(MCw)+'-'+str(MCl)\
+                                           +'\n闘技場レート'+str(MCR)+'/'+str(CRmax)+'\n勝敗レート'+str(MWR)+'/'+str(CRmax)+'\n天庭戦'+str(qual))
 
         if 'mydata' in message.content:#プレーヤーデータの確認
             res11=re.split('[\n]',message.content)
