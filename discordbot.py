@@ -80,7 +80,7 @@ async def on_message(message):
             cursor.execute("select * from PLdata order by ID")
             allPL=cursor.fetchall()
             for i in range(len(allPL)):
-                cursor.execute("select * from TTQual where PLID=(%s)",(i))
+                cursor.execute("select * from TTQual where PLID=(%s)",(int(i)))
                 delet=cursor.fetchall()
                 if len(delet)==0:
                     cursor.execute("select * from PLdata order by ID")
