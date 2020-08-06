@@ -600,11 +600,11 @@ async def on_message(message):
                     LWl=cursor.fetchall()[LID][9]
                     
                     cursor.execute("SELECT * FROM TTQual order by PLID")
-                    WCmax=cursor.fetchall()[WID][2]
+                    WCmax=cursor.fetchall()[WID][1]
                     cursor.execute("SELECT * FROM TTQual order by PLID")
-                    LCmax=cursor.fetchall()[LID][2]
+                    LCmax=cursor.fetchall()[LID][1]
                     cursor.execute("SELECT * FROM TTQual order by PLID")
-                    WRmax=cursor.fetchall()[WID][3]
+                    WRmax=cursor.fetchall()[WID][2]
                     #勝利側
                     WCw=WCw+WG
                     WCl=+WCl+LG
