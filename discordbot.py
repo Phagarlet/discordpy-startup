@@ -187,7 +187,7 @@ async def on_message(message):
                 cursor.execute("SELECT * FROM TTQual order by PLID")
                 qual=cursor.fetchall()[nameID][3]
                 await message.channel.send('名前：'+str(Mname)+'\nID：'+str(MID)+'\n'+str(MWt)+'試合'+str(MWw)+'勝'+str(MWl)+'敗'+'\n'+str(MCw)+'-'+str(MCl)\
-                                           +'\n闘技場レート'+str(MCR)+'/'+str(CRmax)+'\n勝敗レート'+str(MWR)+'/'+str(CRmax)+'\n天庭戦'+str(qual))
+                                           +'\n闘技場レート'+'：'+str(MCR)+'/'+str(CRmax)+'\n勝敗レート'+'：'+str(MWR)+'/'+str(WRmax)+'\n天庭戦'+'：'+str(qual))
 
         if 'mydata' in message.content:#プレーヤーデータの確認
             res11=re.split('[\n]',message.content)
