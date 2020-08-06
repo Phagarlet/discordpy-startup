@@ -514,7 +514,7 @@ async def on_message(message):
                 await message.channel.send('レリセ完了')
 
                 #レート計算
-
+                MAXWR=[1500]*int(len(allPL))
                 for i in range(len(alhis)-1):
                     cursor.execute("SELECT * FROM history order by MID")
                     WID=cursor.fetchall()[i+1][2]
@@ -548,6 +548,9 @@ async def on_message(message):
                     WBWper=round(1/(10**((WsaB)/400)+1),2)
                     NWWR=int(WWR+32*WBWper)
                     NLWR=int(LWR-32*WBWper)
+                    
+                    if MAXWR[WID+1]<NWWR:
+                        MAXWR[WID+1]=NWWR
 
     #データのアップデート
                     #取得部分
