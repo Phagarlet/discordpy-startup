@@ -770,8 +770,8 @@ async def on_message(message):
                     rank=cursor.fetchall()[i][4]
                     cursor.execute("SELECT * FROM PLdata order by ID")
                     game=cursor.fetchall()[i][7]
-                    if int(game)=>20:
-                        if int(game)=>25:
+                    if int(game)>=20:
+                        if int(game)>=25:
                             qual='資格保持'
                         else:
                             qual='次点保持'
