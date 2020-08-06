@@ -75,7 +75,7 @@ async def on_message(message):
         if 'make_TTQual' == message.content:#天庭戦関連DBの作成
             cursor.execute("DROP TABLE IF EXISTS TTQual")
             cursor.execute("create table history(PLID integer,Cmax integer,Wmax integer,Qual text, Rank integer)")
-            cursor.execute("insert into PLdata values(0,1500,1500,"特になし",999)")
+            cursor.execute("insert into PLdata values(0,1500,1500,'特になし',999)")
             
             cursor.execute("select * from PLdata order by ID")
             allPL=cursor.fetchall()
@@ -85,7 +85,7 @@ async def on_message(message):
                 if len(delet)==0:
                     cursor.execute("select * from PLdata order by ID")
                     num=(len(cursor.fetchall())-1)
-                    cursor.execute("insert into TTQual values ((%s),(%s),(%s),(%s),(%s))",(num+1,1500,1500,"特になし",999,))
+                    cursor.execute("insert into TTQual values ((%s),(%s),(%s),(%s),(%s))",(num+1,1500,1500,'特になし',999,))
             con.commit()
             await message.channel.send('作成完了です')
 
