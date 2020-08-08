@@ -785,6 +785,7 @@ async def on_message(message):
                             qual='次点保持'
                     #上書き
                     cursor.execute("update TTQual set Qual=(%s) where PLID=(%s)",(qual,i))#Qual
+                    cursor.execute("SELECT * FROM history order by MID")
                     con.commit
             else:
                 await message.channel.send('管理技士専用コマンドです')
