@@ -822,7 +822,7 @@ async def on_message(message):
             cursor.execute("select * from PLdata order by ID")
             allPL=cursor.fetchall()
             for i in range(len(allPL)-1):
-                cursor.execute("insert into s2PLD values ((%s),(%s),(%s),(%s),(%s),(%s),(%s),(%s),(%s),(%s))",('仮',1+1,1500,0,0,0,1500,0,0,0))
+                cursor.execute("insert into s2PLD values ((%s),(%s),(%s),(%s),(%s),(%s),(%s),(%s),(%s),(%s))",('仮',i+1,1500,0,0,0,1500,0,0,0))
             con.commit()
             await message.channel.send('作成完了です')
             
