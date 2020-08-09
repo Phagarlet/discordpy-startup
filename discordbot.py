@@ -838,6 +838,129 @@ async def on_message(message):
                         for i in range(len(allPL)-(len(allPL)%5),len(allPL)):
                             await message.channel.send(str(allPL[i]))
                 await message.channel.send("全員出力完了！")
+                
+        if 'recal'in message.content:#レート更新
+            if message.author.guild_permissions.administrator:
+                #レートリセット
+                cursor.execute("SELECT * FROM s2PLD order by ID")
+                allPL=cursor.fetchall()
+                cursor.execute("select * from history order by MID")
+                alhis=cursor.fetchall()
+                for i in range(len(allPL)):
+                    cursor.execute("update s2PLD set CR=(%s) where ID=(%s)",(1500,i))#CR
+                    cursor.execute("update s2PLD set WR=(%s) where ID=(%s)",(1500,i))#WR
+                    cursor.execute("update s2PLD set Ctotal=(%s) where ID=(%s)",(0,i))#Ctotal
+                    cursor.execute("update s2PLD set Cwin=(%s) where ID=(%s)",(0,i))#Cwin
+                    cursor.execute("update s2PLD set Close=(%s) where ID=(%s)",(0,i))#Close
+                    cursor.execute("update s2PLD set Wtotal=(%s) where ID=(%s)",(0,i))#Wtotal
+                    cursor.execute("update s2PLD set Wwin=(%s) where ID=(%s)",(0,i))#Wwin
+                    cursor.execute("update s2PLD set Wlose=(%s) where ID=(%s)",(0,i))#Wlose
+
+                await message.channel.send('レリセ完了')
+
+                #レート計算
+                for i in range(len(alhis)-1):
+                    cursor.execute("SELECT * FROM history order by MID")
+                    WID=cursor.fetchall()[i+1][2]
+                    cursor.execute("SELECT * FROM history order by MID")
+                    LID=cursor.fetchall()[i+1][4]
+                    cursor.execute("SELECT * FROM history order by MID")
+                    WG=cursor.fetchall()[i+1][5]
+                    cursor.execute("SELECT * FROM history order by MID")
+                    LG=cursor.fetchall()[i+1][6]
+
+                    cursor.execute("SELECT * FROM s2PLD order by ID")
+                    WCR=cursor.fetchall()[WID][2]
+                    cursor.execute("SELECT * FROM s2PLD order by ID")
+                    LCR=cursor.fetchall()[LID][2]
+                    cursor.execute("SELECT * FROM s2PLD order by ID")
+                    WWR=cursor.fetchall()[WID][6]
+                    cursor.execute("SELECT * FROM s2PLD order by ID")
+                    LWR=cursor.fetchall()[LID][6]
+
+                    match=int(WG+LG)
+                    #闘技場レート計算
+                    CsaA=LCR-WCR
+                    CsaB=int(CsaA)*-1
+                    AWper=round(1/(10**((CsaA)/400)+1),2)
+                    BWper=round(1/(10**((CsaB)/400)+1),2)
+                    NWCR=round(WCR+16*(WG-match*AWper))
+                    NLCR=round(LCR+16*(LG-match*BWper))
+    #勝敗レート計算
+                    WsaA=LWR-WWR
+                    WsaB=int(WsaA*-1)
+                    WBWper=round(1/(10**((WsaB)/400)+1),2)
+                    NWWR=int(WWR+32*WBWper)
+                    NLWR=int(LWR-32*WBWper)
+
+    #データのアップデート
+                    #取得部分
+                    cursor.execute("SELECT * FROM s2PLD order by ID")
+                    WCw=cursor.fetchall()[WID][4]
+                    cursor.execute("SELECT * FROM s2PLD order by ID")
+                    WCl=cursor.fetchall()[WID][5]
+                    cursor.execute("SELECT * FROM s2PLD order by ID")
+                    WWw=cursor.fetchall()[WID][8]
+                    cursor.execute("SELECT * FROM s2PLD order by ID")
+                    WWl=cursor.fetchall()[WID][9]
+                    cursor.execute("SELECT * FROM s2PLD order by ID")
+                    LCw=cursor.fetchall()[LID][4]
+                    cursor.execute("SELECT * FROM s2PLD order by ID")
+                    LCl=cursor.fetchall()[LID][5]
+                    cursor.execute("SELECT * FROM s2PLD order by ID")
+                    LWw=cursor.fetchall()[LID][8]
+                    cursor.execute("SELECT * FROM s2PLD order by ID")
+                    LWl=cursor.fetchall()[LID][9]
+                    
+                    cursor.execute("SELECT * FROM s2TTQ order by PLID")
+                    WCmax=cursor.fetchall()[WID][1]
+                    cursor.execute("SELECT * FROM s2TTQ order by PLID")
+                    LCmax=cursor.fetchall()[LID][1]
+                    cursor.execute("SELECT * FROM s2TTQ order by PLID")
+                    WRmax=cursor.fetchall()[WID][2]
+                    #勝利側
+                    WCw=WCw+WG
+                    WCl=+WCl+LG
+                    WCt=int(WCw)+int(WCl)
+                    WWw=int(WWw)+1
+                    WWt=int(WWw)+int(WWl)
+                    cursor.execute("update s2PLD set CR=(%s) where ID=(%s)",(NWCR,WID))#CR
+                    cursor.execute("update s2PLD set WR=(%s) where ID=(%s)",(NWWR,WID))#WR
+                    cursor.execute("update s2PLD set Ctotal=(%s) where ID=(%s)",(WCt,WID))#Ctotal
+                    cursor.execute("update s2PLD set Cwin=(%s) where ID=(%s)",(WCw,WID))#Cwin
+                    cursor.execute("update s2PLD set Close=(%s) where ID=(%s)",(WCl,WID))#Close
+                    cursor.execute("update s2PLD set Wtotal=(%s) where ID=(%s)",(WWt,WID))#Wtotal
+                    cursor.execute("update s2PLD set Wwin=(%s) where ID=(%s)",(WWw,WID))#Wwin
+                    if int(NWCR)>int(WCmax):
+                        cursor.execute("update s2TTQ set CRmax=(%s) where PLID=(%s)",(NWCR,WID))#WCmax
+                    if int(NWWR)>int(WRmax):
+                        cursor.execute("update s2TTQ set WRmax=(%s) where PLID=(%s)",(NWWR,WID))#WRmax
+                    con.commit()
+                    #敗北側
+                    LCw=LCw+LG
+                    LCl=LCl+WG
+                    LCt=int(LCw)+int(LCl)
+                    LWl=int(LWl)+1
+                    LWt=int(LWl)+int(LWw)
+                    cursor.execute("update s2PLD set CR=(%s) where ID=(%s)",(NLCR,LID))#CR
+                    cursor.execute("update s2PLD set WR=(%s) where ID=(%s)",(NLWR,LID))#WR
+                    cursor.execute("update s2PLD set Ctotal=(%s) where ID=(%s)",(LCt,LID))#Ctotal
+                    cursor.execute("update s2PLD set Cwin=(%s) where ID=(%s)",(LCw,LID))#Cwin
+                    cursor.execute("update s2PLD set Close=(%s) where ID=(%s)",(LCl,LID))#Close
+                    cursor.execute("update s2PLD set Wtotal=(%s) where ID=(%s)",(LWt,LID))#Wtotal
+                    cursor.execute("update s2PLD set Wlose=(%s) where ID=(%s)",(LWl,LID))#Wlose
+                    if int(NLCR)>int(LCmax):
+                        cursor.execute("update s2TTQ set CRmax=(%s) where PLID=(%s)",(NLCR,LID))#LCmax
+                    #ソート
+                    cursor.execute("SELECT * FROM s2PLD order by ID")
+                    cursor.execute("SELECT * FROM history order by MID")
+                    cursor.execute("SELECT * FROM s2TTQ order by PLID")
+                    con.commit()
+                await message.channel.send('完了です')
+
+            else:
+                await message.channel.send('管理技士専用コマンドです')
+
 
     #通称リセットコマンド
 
