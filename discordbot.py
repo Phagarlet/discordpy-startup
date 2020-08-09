@@ -97,7 +97,7 @@ async def on_message(message):
                             await message.channel.send(str(allPL[i]))
                 await message.channel.send("全員出力完了！")
 
-        if 'check_history' == message.content:#historyを見る
+        if 's2_history' == message.content:#historyを見る
             if message.author.guild_permissions.administrator:
                 cursor.execute("SELECT * FROM history order by MID")
                 allhis=cursor.fetchall()
