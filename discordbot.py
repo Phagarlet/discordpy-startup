@@ -37,9 +37,9 @@ async def on_ready():
 async def on_member_join(member):
     channel=ch_kan
     await channel.send("はじめまして、どうぶつタワーバトル闘技場(通称 DTB闘技場)の運営をしているYatasweeと申します。"\
-                        "\n闘技場に参加するにはまず登録コマンド「regist\n名前」を打って新規登録をしてください"\
-                        "\nこのサーバーでは、そこで発行されるIDが重要ですので、自分のIDをニックネーム変更から名前の後ろに付けていただけるとありがたいです。"\
-                        "\nまずは部屋説明から一読することをお勧めします。")
+                        +"\n闘技場に参加するにはまず登録コマンド「regist\n名前」を打って新規登録をしてください"\
+                        +"\nこのサーバーでは、そこで発行されるIDが重要ですので、自分のIDをニックネーム変更から名前の後ろに付けていただけるとありがたいです。"\
+                        +"\nまずは部屋説明から一読することをお勧めします。")
 
 # メッセージ受信時に動作する処理
 @client.event
@@ -813,6 +813,31 @@ async def on_message(message):
                 con.commit
             else:
                 await message.channel.send('管理技士専用コマンドです')
+                
+        if 'make_s2PLD' == message.content:#S2PLdata DB作成
+            cursor.execute("DROP TABLE IF EXISTS s2PLD")
+            cursor.execute("create table s2PLD(name text,ID integer,CR integer,Ctotal integer,Cwin integer,Close integer,WR integer,Wtotal integer,Wwin integer,Wlose integer)")
+            cursor.execute("insert into s2PLD values('Yataswee',0,1500,0,0,0,1500,0,0,0)")
+            
+            cursor.execute("select * from PLdata order by ID")
+            allPL=cursor.fetchall()
+            for i in range(len(allPL)-1):
+                cursor.execute("insert into s2PLD values ((%s),(%s),(%s),(%s),(%s),(%s),(%s),(%s),(%s),(%s))",('仮',1+1,1500,0,0,0,1500,0,0,0))
+            con.commit()
+            await message.channel.send('作成完了です')
+            
+        if 'check_s2PLD' == message.content:#s2PLDを見る
+            if message.author.guild_permissions.administrator:
+                cursor.execute("select * from s2PLD order by ID")
+                allPL=cursor.fetchall()
+                for j in range(0,len(allPL),5):
+                    if j!=len(allPL)-len(allPL)%5:
+                        await message.channel.send(str(allPL[j])+'\n'+str(allPL[j+1])+'\n'+str(allPL[j+2])\
+                                                   +'\n'+str(allPL[j+3])+'\n'+str(allPL[j+4]))
+                    else:
+                        for i in range(len(allPL)-(len(allPL)%5),len(allPL)):
+                            await message.channel.send(str(allPL[i]))
+                await message.channel.send("全員出力完了！")
 
     #通称リセットコマンド
 
