@@ -788,16 +788,16 @@ async def on_message(message):
                     cursor.execute("SELECT * FROM history order by MID")
                     con.commit
                     
-                    cursor.execute("SELECT * FROM TTQual where Qual=(%s)",('資格保持',))
-                    FQ=cursor.fetchall()
-                    for i in range(len(FQ)):
-                        await message.channel.send(FQ[i])
-                    cursor.execute("SELECT * FROM TTQual where Qual=(%s)",('次点保持',))
-                    SQ=cursor.fetchall()
-                    for i in range(len(SQ)):
-                        await message.channel.send(SQ[i])
-                    cursor.execute("SELECT * FROM history order by MID")
-                    con.commit
+                cursor.execute("SELECT * FROM TTQual where Qual=(%s)",('資格保持',))
+                FQ=cursor.fetchall()
+                for i in range(len(FQ)):
+                    await message.channel.send(FQ[i])
+                cursor.execute("SELECT * FROM TTQual where Qual=(%s)",('次点保持',))
+                SQ=cursor.fetchall()
+                for i in range(len(SQ)):
+                    await message.channel.send(SQ[i])
+                cursor.execute("SELECT * FROM history order by MID")
+                con.commit
             else:
                 await message.channel.send('管理技士専用コマンドです')
 
