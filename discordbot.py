@@ -549,15 +549,15 @@ async def on_message(message):
                 allPL=cursor.fetchall()
                 cursor.execute("select * from history3 order by MID")
                 alhis=cursor.fetchall()
-                for i in range(len(allPL)-1):
-                    cursor.execute("update PLdata set CR=(%s) where ID=(%s)",(1500,i+1))#CR
-                    cursor.execute("update PLdata set WR=(%s) where ID=(%s)",(1500,i+1))#WR
-                    cursor.execute("update PLdata set Ctotal=(%s) where ID=(%s)",(0,i+1))#Ctotal
-                    cursor.execute("update PLdata set Cwin=(%s) where ID=(%s)",(0,i+1))#Cwin
-                    cursor.execute("update PLdata set Close=(%s) where ID=(%s)",(0,i+1))#Close
-                    cursor.execute("update PLdata set Wtotal=(%s) where ID=(%s)",(0,i+1))#Wtotal
-                    cursor.execute("update PLdata set Wwin=(%s) where ID=(%s)",(0,i+1))#Wwin
-                    cursor.execute("update PLdata set Wlose=(%s) where ID=(%s)",(0,i+1))#Wlose
+                for i in range(len(allPL)):
+                    cursor.execute("update PLdata set CR=(%s) where ID=(%s)",(1500,i))#CR
+                    cursor.execute("update PLdata set WR=(%s) where ID=(%s)",(1500,i))#WR
+                    cursor.execute("update PLdata set Ctotal=(%s) where ID=(%s)",(0,i))#Ctotal
+                    cursor.execute("update PLdata set Cwin=(%s) where ID=(%s)",(0,i))#Cwin
+                    cursor.execute("update PLdata set Close=(%s) where ID=(%s)",(0,i))#Close
+                    cursor.execute("update PLdata set Wtotal=(%s) where ID=(%s)",(0,i))#Wtotal
+                    cursor.execute("update PLdata set Wwin=(%s) where ID=(%s)",(0,i))#Wwin
+                    cursor.execute("update PLdata set Wlose=(%s) where ID=(%s)",(0,i))#Wlose
 
                 await message.channel.send('レリセ完了')
 
