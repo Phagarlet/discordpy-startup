@@ -97,6 +97,19 @@ async def on_message(message):
                             await message.channel.send(str(allPL[i]))
                 await message.channel.send("全員出力完了！")
 
+        if 'check_history' == message.content:#historyを見る
+            if message.author.guild_permissions.administrator:
+                cursor.execute("SELECT * FROM history order by MID")
+                allhis=cursor.fetchall()
+                for j in range(0,len(allhis),5):
+                    if j!=len(allhis)-len(allhis)%5:
+                        await message.channel.send(str(allhis[j])+'\n'+str(allhis[j+1])+'\n'+str(allhis[j+2])\
+                                                   +'\n'+str(allhis[j+3])+'\n'+str(allhis[j+4]))
+                    else:
+                        for i in range(len(allhis)-(len(allhis)%5),len(allhis)):
+                            await message.channel.send(str(allhis[i]))
+                await message.channel.send("全試合出力完了！")
+
         if 'check_history3' == message.content:#history3を見る
             if message.author.guild_permissions.administrator:
                 cursor.execute("SELECT * FROM history3 order by MID")
