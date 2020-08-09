@@ -839,7 +839,32 @@ async def on_message(message):
                             await message.channel.send(str(allPL[i]))
                 await message.channel.send("全員出力完了！")
                 
-        if 'recal'in message.content:#レート更新
+        if 'make_s2TTQ' == message.content:#天庭戦関連DBの作成
+            cursor.execute("DROP TABLE IF EXISTS s2TTQ")
+            cursor.execute("create table s2TTQ(PLID integer,CRmax integer,WRmax integer,Qual text, Rank integer)")
+            cursor.execute("insert into s2TTQ values(0,1500,1500,'特になし',999)")
+            
+            cursor.execute("select * from s2PLD order by ID")
+            allPL=cursor.fetchall()
+            for i in range(len(allPL)-1):
+                cursor.execute("insert into s2TTQ values ((%s),(%s),(%s),(%s),(%s))",(i+1,1500,1500,'特になし',999,))
+            con.commit()
+            await message.channel.send('作成完了です')
+
+        if 'check_s2TTQ' == message.content:#s2TTQを見る
+            if message.author.guild_permissions.administrator:
+                cursor.execute("SELECT * FROM s2TTQ order by PLID")
+                allQ=cursor.fetchall()
+                for j in range(0,len(allQ),5):
+                    if j!=len(allQ)-len(allQ)%5:
+                        await message.channel.send(str(allQ[j])+'\n'+str(allQ[j+1])+'\n'+str(allQ[j+2])\
+                                                   +'\n'+str(allQ[j+3])+'\n'+str(allQ[j+4]))
+                    else:
+                        for i in range(len(allQ)-(len(allQ)%5),len(allQ)):
+                            await message.channel.send(str(allQ[i]))
+                await message.channel.send("全員出力完了！")
+                
+        if 's2recal'in message.content:#レート更新
             if message.author.guild_permissions.administrator:
                 #レートリセット
                 cursor.execute("SELECT * FROM s2PLD order by ID")
