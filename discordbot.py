@@ -864,7 +864,7 @@ async def on_message(message):
                             await message.channel.send(str(allQ[i]))
                 await message.channel.send("全員出力完了！")
                 
-        if 's2recal'in message.content:#レート更新
+        if 's2RCL'in message.content:#レート更新
             if message.author.guild_permissions.administrator:
                 #レートリセット
                 cursor.execute("SELECT * FROM s2PLD order by ID")
