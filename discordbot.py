@@ -985,6 +985,44 @@ async def on_message(message):
 
             else:
                 await message.channel.send('管理技士専用コマンドです')
+                
+        if 's2TUD'in message.content:#資格関連更新
+            if message.author.guild_permissions.administrator:
+                cursor.execute("select * from s2PLD order by ID")
+                allPL=cursor.fetchall()
+                for i in range(len(allPL)):
+                    cursor.execute("SELECT * FROM s2TTQ order by PLID")
+                    WRmax=cursor.fetchall()[i][2]
+                    cursor.execute("SELECT * FROM s2TTQ order by PLID")
+                    qual=cursor.fetchall()[i][3]
+                    cursor.execute("SELECT * FROM s2TTQ order by PLID")
+                    rank=cursor.fetchall()[i][4]
+                    cursor.execute("SELECT * FROM s2PLD order by ID")
+                    NWR=cursor.fetchall()[i][6]
+                    cursor.execute("SELECT * FROM s2PLD order by ID")
+                    game=cursor.fetchall()[i][7]
+                    if int(game)>=20 and int(WRmax)>=1550:
+                        if int(game)>=25 and int(WRmax)>=1600:
+                            qual='資格保持'
+                        else:
+                            qual='次点保持'
+                    #上書き
+                    cursor.execute("update s2TTQ set Qual=(%s) where PLID=(%s)",(qual,i))#Qual
+                    cursor.execute("SELECT * FROM history order by MID")
+                    con.commit
+                    
+                cursor.execute("SELECT * FROM s2TTQ where Qual=(%s)",('資格保持',))
+                FQ=cursor.fetchall()
+                for i in range(len(FQ)):
+                    await message.channel.send(FQ[i])
+                cursor.execute("SELECT * FROM s2TTQ where Qual=(%s)",('次点保持',))
+                SQ=cursor.fetchall()
+                for i in range(len(SQ)):
+                    await message.channel.send(SQ[i])
+                cursor.execute("SELECT * FROM history order by MID")
+                con.commit
+            else:
+                await message.channel.send('管理技士専用コマンドです')
 
 
     #通称リセットコマンド
