@@ -885,6 +885,8 @@ async def on_message(message):
 
                 #レート計算
                 for i in range(len(alhis)-1):
+                    if i%5==2:
+                        await message.channel.send(i+1)
                     cursor.execute("SELECT * FROM history order by MID")
                     WID=cursor.fetchall()[i+1][2]
                     cursor.execute("SELECT * FROM history order by MID")
