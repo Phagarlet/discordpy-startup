@@ -152,7 +152,7 @@ async def on_message(message):
                 else:
                     await message.channel.send("同じ名前が既に使用されています\nほかの名前を使ってください")
 
-        if 'Nupdate' in message.content:#プレーヤーの名前を変更する
+        if 'Nupdate' in message.content:#プレーヤーの名前変更
             Defname=re.split('[\n]',message.content)[1]
             Newname=re.split('[\n]',message.content)[2]
             if ',' in Newname or ')' in Newname or '(' in Newname or '-' in Newname or '\u3000' in Newname:
