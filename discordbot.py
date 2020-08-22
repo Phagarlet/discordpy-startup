@@ -301,9 +301,10 @@ async def on_message(message):
     #勝敗レート計算
             WsaA=LWR-WWR
             WsaB=int(WsaA*-1)
+            WAWper=round(1/(10**((WsaA)/400)+1),2)
             WBWper=round(1/(10**((WsaB)/400)+1),2)
-            NWWR=int(WWR+32*WBWper)
-            NLWR=int(LWR-32*WBWper)
+            NWWR=int(WWR+32*WAWper)
+            NLWR=int(LWR+32*WBWper)
     #試合後の出力
             await message.channel.send('試合後レート'+"\n闘技場："+str(NWCR)+"-"+str(NLCR)+"\n勝敗："+str(NWWR)+"-"+str(NLWR))
     #データのアップデート
@@ -592,9 +593,10 @@ async def on_message(message):
     #勝敗レート計算
                     WsaA=LWR-WWR
                     WsaB=int(WsaA*-1)
+                    WAWper=round(1/(10**((WsaA)/400)+1),2)
                     WBWper=round(1/(10**((WsaB)/400)+1),2)
-                    NWWR=int(WWR+32*WBWper)
-                    NLWR=int(LWR-32*WBWper)
+                    NWWR=int(WWR+32*WAWper)
+                    NLWR=int(LWR+32*WBWper)
 
     #データのアップデート
                     #取得部分
