@@ -20,6 +20,9 @@ ch_RR=677771772212412459
 bot = commands.Bot(command_prefix='/')
 token = os.environ['DISCORD_BOT_TOKEN']
 
+#season定義
+season=3
+
 #レート計算関数
 
 def Rate_Cal(LCR,WCR,LWR,WWR,WG,LG):
