@@ -125,13 +125,13 @@ async def on_message(message):
 #history直接入力コマンド
         if 'add' == message.content:#試合履歴DBの作成
 #前処理
-            res1=re.split('[\n]',message.content)
-            await message.channel.send(res1)
+            res001=re.split('[\n]',message.content)
+            await message.channel.send(res001)
             try:
-                test0=res1[3]
+                test00=res1[3]
             except IndexError:
-                res2=res1[1]
-                res3=res1[2]
+                res2=res001[1]
+                res3=res001[2]
                 res4=res2.split('/')
                 res5=res3.split('-')
                 try:
