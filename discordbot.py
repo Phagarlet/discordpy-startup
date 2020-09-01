@@ -20,7 +20,24 @@ ch_RR=677771772212412459
 bot = commands.Bot(command_prefix='/')
 token = os.environ['DISCORD_BOT_TOKEN']
 
+#レート計算関数
 
+def Rate_Cal(LCR,WCR,LWR,WWR,WG,LG):
+    match=WG+LG
+#闘技場レート計算
+    CsaA=LCR-WCR
+    CsaB=int(CsaA)*-1
+    AWper=round(1/(10**((CsaA)/400)+1),2)
+    BWper=round(1/(10**((CsaB)/400)+1),2)
+    NWCR=round(WCR+16*(WG-match*AWper))
+    NLCR=round(LCR+16*(LG-match*BWper))
+#勝敗レート計算
+    WsaA=LWR-WWR
+    WsaB=int(WsaA*-1)
+    WBWper=round(1/(10**((WsaB)/400)+1),2)
+    NWWR=int(WWR+32*WBWper)
+    NLWR=int(LWR-32*WBWper)
+    return(NWCR,NLCR,NWWR,NLWR)
 
 @client.event
 async def on_command_error(ctx, error):
