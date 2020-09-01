@@ -76,11 +76,6 @@ async def on_message(message):
             
         #s3代理試合記録DB
         if 'make_s3history' == message.content:#試合履歴DBの作成
-            cursor.execute("DROP TABLE IF EXISTS 3shistorys")
-            cursor.execute("DROP TABLE IF EXISTS 3dhistorys")
-            cursor.execute("create table 3shistory(MID integer,Wname text,WinID integer,Lname text,LoseID integer,Wcount integer,Lcount integer)")
-            cursor.execute("insert into 3shistory values(0,'Yataswee',0,'Soraneko',71,0,0)")
-            
             for i in range(606):
                 cursor.execute("SELECT * FROM history3 order by MID")#name
                 MID=cursor.fetchall()[i+1][0]
@@ -96,11 +91,11 @@ async def on_message(message):
                 Wcount=cursor.fetchall()[i+1][5]
                 cursor.execute("SELECT * FROM history3 order by MID")#name
                 Lcount=cursor.fetchall()[i+1][6]
-                cursor.execute("select * from 3shistory where Wname=(%s)",(Wname,))
-                cursor.execute("select * from 3shistory")
+                cursor.execute("select * from s3history where Wname=(%s)",(Wname,))
+                cursor.execute("select * from s3history")
                 Num=(len(cursor.fetchall())-1)
                 
-                cursor.execute("insert into 3shistory values ((%s),(%s),(%s),(%s),(%s),(%s),(%s))",(MID,Wname,WinID,Lname,LoseID,Wcount,Lcount,))
+                cursor.execute("insert into sehistory values ((%s),(%s),(%s),(%s),(%s),(%s),(%s))",(MID,Wname,WinID,Lname,LoseID,Wcount,Lcount,))
             con.commit()
             await message.channel.send('作成完了です')
             
