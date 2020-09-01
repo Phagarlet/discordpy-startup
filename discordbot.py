@@ -20,6 +20,8 @@ ch_RR=677771772212412459
 bot = commands.Bot(command_prefix='/')
 token = os.environ['DISCORD_BOT_TOKEN']
 
+
+
 @client.event
 async def on_command_error(ctx, error):
     orig_error = getattr(error, "original", error)
@@ -69,6 +71,17 @@ async def on_message(message):
             cursor.execute("DROP TABLE IF EXISTS history3")
             cursor.execute("create table history3(MID integer,Wname text,WinID integer,Lname text,LoseID integer,Wcount integer,Lcount integer)")
             cursor.execute("insert into history3 values(0,'Yataswee',0,'Soraneko',71,0,0)")
+            con.commit()
+            await message.channel.send('作成完了です')
+            
+        #s3代理試合記録DB
+        if 'make_s3history' == message.content:#試合履歴DBの作成
+            cursor.execute("DROP TABLE IF EXISTS historys3")
+            cursor.execute("create table history3(MID integer,Wname text,WinID integer,Lname text,LoseID integer,Wcount integer,Lcount integer)")
+            cursor.execute("insert into history3 values(0,'Yataswee',0,'Soraneko',71,0,0)")
+            
+            for i in range(606):
+                cursor.execute("insert into TTQual values ((%s),(%s),(%s),(%s),(%s),(%s),(%s))",(i+1,1500,1500,'特になし',999,))
             con.commit()
             await message.channel.send('作成完了です')
             
