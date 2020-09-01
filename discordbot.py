@@ -123,7 +123,7 @@ async def on_message(message):
             await message.channel.send('作成完了です')
             
 #history直接入力コマンド
-        if 'add_history' == message.content:
+        if 'add' == message.content:
     #前処理
             res1=re.split('[\n]',message.content)
             try:
