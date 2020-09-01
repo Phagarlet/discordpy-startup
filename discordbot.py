@@ -901,11 +901,11 @@ async def on_message(message):
                 SQ=cursor.fetchall()
                 for i in range(len(SQ)):
                     SQID=SQ[i][0]
-                    await message.channel.send(SQID)
                     cursor.execute("update TTQual set Rank=(%s) where PLID=(%s)",(i+101,SQID))#Lcount
+                    con.commit()
                     await message.channel.send(SQ[i])
                 cursor.execute("SELECT * FROM s3history order by MID")
-                con.commit
+                con.commit()
             else:
                 await message.channel.send('管理技士専用コマンドです')
                 
