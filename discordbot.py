@@ -95,6 +95,9 @@ async def on_message(message):
                 Wcount=cursor.fetchall()[i+1][5]
                 cursor.execute("SELECT * FROM history3 order by MID")#name
                 Lcount=cursor.fetchall()[i+1][6]
+                cursor.execute("select * from s3history where Wname=(%s)",(Wname,))
+                cursor.execute("select * from s3history")
+                Num=(len(cursor.fetchall())-1)
                 
                 cursor.execute("insert into s3history values ((%s),(%s),(%s),(%s),(%s),(%s),(%s))",(MID,Wname,WinID,Lname,LoseID,Wcount,Lcount,))
             con.commit()
