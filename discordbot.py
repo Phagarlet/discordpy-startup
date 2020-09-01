@@ -24,7 +24,6 @@ token = os.environ['DISCORD_BOT_TOKEN']
 season=3
 
 #レート計算関数
-
 def Rate_Cal(LCR,WCR,LWR,WWR,WG,LG):
     match=WG+LG
 #闘技場レート計算
@@ -485,8 +484,8 @@ async def on_message(message):
             cursor.execute("SELECT * FROM PLdata order by ID")
             con.commit()
             await message.channel.send('試合ID：'+str(Num+1)+'\n出力終了です')
-
-    #レート一覧表示 以下管理技士専用コマンド
+            
+#レート一覧表示 以下管理技士専用コマンド
         if 'Rupdate'in message.content:#レート更新
             if message.author.guild_permissions.administrator:
                 Rup=re.split('[\n]',message.content)
@@ -663,6 +662,7 @@ async def on_message(message):
             else:
                 await message.channel.send('管理技士専用コマンドです')
 
+#レート再計算コマンド
         if 'recal'in message.content:#レート更新
             if message.author.guild_permissions.administrator:
                 #レートリセット
@@ -786,7 +786,7 @@ async def on_message(message):
                 await message.channel.send('管理技士専用コマンドです')
 
                 
-    #試合結果修正コマンド
+#試合結果修正コマンド
         if 'edit' in message.content:
             res100=re.split('[\n/-]',message.content)#分割
             try:
@@ -865,38 +865,7 @@ async def on_message(message):
 
                 
                 
-        if 'test' in message.content:#テスト専用コマンド
-            sort_CR=[]
-            sort_WR=[]
-            rank_CR=[]
-            rank_WR=[]
-
-            #闘技場レート＆勝敗レート処理
-            cursor.execute("SELECT * FROM PLdata order by ID")
-            allPL=cursor.fetchall()
-            for k in range(len(allPL)):
-                cursor.execute("SELECT * FROM PLdata order by ID")
-                PLname=cursor.fetchall()[k][0]
-                cursor.execute("SELECT * FROM PLdata order by ID")
-                PLCRr=cursor.fetchall()[k][2]
-                cursor.execute("SELECT * FROM PLdata order by ID")
-                PLWRr=cursor.fetchall()[k][6]
-                rank_CR.append([PLCRr,PLname])
-                rank_WR.append([PLWRr,PLname])
-            rank_CR.sort(key=lambda x:x[0],reverse=True)#ソートCR
-            rank_WR.sort(key=lambda x:x[0],reverse=True)#ソートWR
-                
-            await message.channel.send('闘技場レートランキング')
-            await message.channel.send(str(rank_CR[0])+'\n'+str(rank_CR[1])+'\n'+str(rank_CR[2])+'\n'+str(rank_CR[3])+'\n'+str(rank_CR[4])+'\n'+str(rank_CR[5])\
-                               +'\n'+str(rank_CR[6])+'\n'+str(rank_CR[7])+'\n'+str(rank_CR[8])+'\n'+str(rank_CR[9]))
-            await message.channel.send('勝敗レートランキング')
-            await message.channel.send(str(rank_CR[0])+'\n'+str(rank_CR[1])+'\n'+str(rank_CR[2])+'\n'+str(rank_CR[3])+'\n'+str(rank_CR[4])+'\n'+str(rank_CR[5])\
-                               +'\n'+str(rank_CR[6])+'\n'+str(rank_CR[7])+'\n'+str(rank_CR[8])+'\n'+str(rank_CR[9]))
-            await message.channel.send('出力完了です')
-
-            #終了告知
-            await message.channel.send('レート一覧を更新しました')
-
+#天庭戦資格アップデートコマンド
         if 'Tupdate'in message.content:#資格関連更新
             if message.author.guild_permissions.administrator:
                 cursor.execute("select * from PLdata order by ID")
@@ -921,7 +890,8 @@ async def on_message(message):
                     cursor.execute("update TTQual set Qual=(%s) where PLID=(%s)",(qual,i))#Qual
                     cursor.execute("SELECT * FROM s3history order by MID")
                     con.commit
-                    
+                #高レート順ソート
+                cursor.execute("SELECT * FROM TTQual order by PLID desc")
                 cursor.execute("SELECT * FROM TTQual where Qual=(%s)",('資格保持',))
                 FQ=cursor.fetchall()
                 for i in range(len(FQ)):
