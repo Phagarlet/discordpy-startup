@@ -163,6 +163,11 @@ async def on_message(message):
                             LG=int(res5[1])
             else:
                 await message.channel.send('構文エラーです。\n情報過多エラー')
+            
+            cursor.execute("SELECT * FROM PLdata order by ID")
+            Wname=cursor.fetchall()[WID][0]
+            cursor.execute("SELECT * FROM PLdata order by ID")
+            Lname=cursor.fetchall()[LID][0]
 
             #試合記録
             cursor.execute("select * from s3history")
