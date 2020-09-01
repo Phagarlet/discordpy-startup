@@ -165,7 +165,6 @@ async def on_message(message):
                 await message.channel.send('構文エラーです。\n情報過多エラー')
 
             #試合記録
-            cursor.execute("select * from s3history where Wname=(%s)",(Wname,))
             cursor.execute("select * from s3history")
             Num=(len(cursor.fetchall())-1)
             cursor.execute("insert into s3history values ((%s),(%s),(%s),(%s),(%s),(%s),(%s))",(Num+1,Wname,WID,Lname,LID,WG,LG))
