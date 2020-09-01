@@ -158,12 +158,13 @@ async def on_message(message):
             if message.author.guild_permissions.administrator:
                 cursor.execute("SELECT * FROM s3history order by MID")
                 allhis=cursor.fetchall()
-                for j in range(0,len(allhis),5):
-                    if j!=len(allhis)-len(allhis)%5:
+                for j in range(0,len(allhis),10):
+                    if j!=len(allhis)-len(allhis)%10:
                         await message.channel.send(str(allhis[j])+'\n'+str(allhis[j+1])+'\n'+str(allhis[j+2])\
-                                                   +'\n'+str(allhis[j+3])+'\n'+str(allhis[j+4]))
+                                                   +'\n'+str(allhis[j+3])+'\n'+str(allhis[j+4])+'\n'+str(allhis[j+5])+'\n'+str(allhis[j+6])+'\n'+str(allhis[j+7])\
+                                                   +'\n'+str(allhis[j+8])+'\n'+str(allhis[j+9]))
                     else:
-                        for i in range(len(allhis)-(len(allhis)%5),len(allhis)):
+                        for i in range(len(allhis)-(len(allhis)%10),len(allhis)):
                             await message.channel.send(str(allhis[i]))
                 await message.channel.send("全試合出力完了！")
                 
