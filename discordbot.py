@@ -122,8 +122,8 @@ async def on_message(message):
             con.commit()
             await message.channel.send('作成完了です')
             
-#history直接入力コマンド
-        if 'add' == message.content:
+        
+        if 'plus' == message.content:
             
 #前処理
             res001=re.split('[\n]',message.content)
