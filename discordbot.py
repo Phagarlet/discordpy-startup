@@ -287,6 +287,7 @@ async def on_message(message):
             cursor.execute("select * from PLdata where name=(%s)",(member_name,))
             await message.channel.send(cursor.fetchall()[0][1])
         
+#全情報確認コマンド
         if 'fulldata' in message.content:#プレーヤーデータfullの確認
             res10=re.split('[\n]',message.content)
             try:
@@ -319,8 +320,10 @@ async def on_message(message):
                 WRmax=cursor.fetchall()[nameID][2]
                 cursor.execute("SELECT * FROM TTQual order by PLID")
                 qual=cursor.fetchall()[nameID][3]
+                cursor.execute("SELECT * FROM TTQual order by PLID")
+                rank=cursor.fetchall()[nameID][5]
                 await message.channel.send('名前：'+str(Mname)+'\nID：'+str(MID)+'\n'+str(MWt)+'試合'+str(MWw)+'勝'+str(MWl)+'敗'+'\n'+str(MCw)+'-'+str(MCl)\
-                                           +'\n闘技場レート'+'：'+str(MCR)+'/'+str(CRmax)+'\n勝敗レート'+'：'+str(MWR)+'/'+str(WRmax)+'\n天庭戦'+'：'+str(qual))
+                                           +'\n闘技場レート'+'：'+str(MCR)+'/'+str(CRmax)+'\n勝敗レート'+'：'+str(MWR)+'/'+str(WRmax)+'\n天庭戦'+'：'+str(qual)+str(rank)+'位')
 
         if 'mydata' in message.content:#プレーヤーデータの確認
             res11=re.split('[\n]',message.content)
@@ -897,9 +900,9 @@ async def on_message(message):
                 for i in range(len(FQ)):
                     FQID=FQ[i][0]
                     cursor.execute("update TTQual set Rank=(%s) where PLID=(%s)",(i+1,FQID))#順位更新
-                    if i>=10:
-                        cursor.execute("update TTQual set Qual=(%s) where PLID=(%s)",('資格補欠',FQID))#順位更新
-                        cursor.execute("update TTQual set Rank=(%s) where PLID=(%s)",(i+11,FQID))#順位更新
+                    if i+1>=9:
+                        cursor.execute("update TTQual set Qual=(%s) where PLID=(%s)",('資格補欠',FQID))#資格変更
+                        cursor.execute("update TTQual set Rank=(%s) where PLID=(%s)",(i+2,FQID))#順位更新
                     con.commit()    
                     await message.channel.send(FQ[i])
                 cursor.execute("SELECT * FROM TTQual where Qual=(%s) order by Wnow desc",('次点保持',))
