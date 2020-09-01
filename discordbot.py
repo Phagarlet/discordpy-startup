@@ -179,13 +179,13 @@ async def on_message(message):
 #天庭戦DB作成コマンド            
         if 'make_TTQual' == message.content:#天庭戦関連DBの作成
             cursor.execute("DROP TABLE IF EXISTS TTQual")
-            cursor.execute("create table TTQual(PLID integer,CRmax integer,WRmax integer,Qual text, Rank integer)")
-            cursor.execute("insert into TTQual values(0,1500,1500,'特になし',999)")
+            cursor.execute("create table TTQual(PLID integer,CRmax integer,WRmax integer,Qual text,Wnow integer,Rank integer)")
+            cursor.execute("insert into TTQual values(0,1500,1500,'特になし',0,999)")
             
             cursor.execute("select * from PLdata order by ID")
             allPL=cursor.fetchall()
             for i in range(len(allPL)-1):
-                cursor.execute("insert into TTQual values ((%s),(%s),(%s),(%s),(%s))",(i+1,1500,1500,'特になし',999,))
+                cursor.execute("insert into TTQual values ((%s),(%s),(%s),(%s),(%s))",(i+1,1500,1500,'特になし',0,999,))
             con.commit()
             await message.channel.send('作成完了です')
 
@@ -755,6 +755,7 @@ async def on_message(message):
                     cursor.execute("update PLdata set Close=(%s) where ID=(%s)",(WCl,WID))#Close
                     cursor.execute("update PLdata set Wtotal=(%s) where ID=(%s)",(WWt,WID))#Wtotal
                     cursor.execute("update PLdata set Wwin=(%s) where ID=(%s)",(WWw,WID))#Wwin
+                    cursor.execute("update TTQual set Wnow=(%s) where PLID=(%s)",(NWWR,WID))#WR
                     if int(NWCR)>int(WCmax):
                         cursor.execute("update TTQual set CRmax=(%s) where PLID=(%s)",(NWCR,WID))#WCmax
                     if int(NWWR)>int(WRmax):
@@ -773,6 +774,7 @@ async def on_message(message):
                     cursor.execute("update PLdata set Close=(%s) where ID=(%s)",(LCl,LID))#Close
                     cursor.execute("update PLdata set Wtotal=(%s) where ID=(%s)",(LWt,LID))#Wtotal
                     cursor.execute("update PLdata set Wlose=(%s) where ID=(%s)",(LWl,LID))#Wlose
+                    cursor.execute("update TTQual set Wnow=(%s) where PLID=(%s)",(NLWR,LID))#WR
                     if int(NLCR)>int(LCmax):
                         cursor.execute("update TTQual set CRmax=(%s) where PLID=(%s)",(NLCR,LID))#LCmax
                     #ソート
