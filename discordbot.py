@@ -39,6 +39,9 @@ def Rate_Cal(LCR,WCR,LWR,WWR,WG,LG):
     NLWR=int(LWR-32*WBWper)
     return(NWCR,NLCR,NWWR,NLWR)
 
+#抽出関数
+    
+
 @client.event
 async def on_command_error(ctx, error):
     orig_error = getattr(error, "original", error)
@@ -54,7 +57,7 @@ async def on_ready():
 
 @client.event #新規メンバー用
 async def on_member_join(member):
-    channel=ch_kan
+    channel=667380995242328078
     await channel.send("はじめまして、どうぶつタワーバトル闘技場、DTB闘技場の運営をしているYatasweeと申します。"\
                         +"\n闘技場に参加するにはまず登録コマンド「regist\n名前」を打って新規登録をしてください"\
                         +"\nこのサーバーでは、そこで発行されるIDが重要ですので、自分のIDをニックネーム変更から名前の後ろに付けていただけるとありがたいです。"\
@@ -119,6 +122,54 @@ async def on_message(message):
             con.commit()
             await message.channel.send('作成完了です')
             
+#history直接入力コマンド
+        if 'add_history' == message.content:
+    #前処理
+            res1=re.split('[\n]',message.content)
+            try:
+                test0=res1[3]
+            except IndexError:
+                res2=res1[1]
+                res3=res1[2]
+                res4=res2.split('/')
+                res5=res3.split('-')
+                try:
+                    res4[0]=='' or res4[1]=='' or res5[0]=='' or res5[1]==''#エラー検出（記号ミス)
+                except IndexError:
+                    await message.channel.send('構文エラーです\n記号ミスエラー')
+                else:
+                    try:
+                        test4=int(res4[0])
+                        test5=int(res4[1])
+                        test6=int(res5[0])
+                        test7=int(res5[1])
+                    except ValueError:
+                        await message.channel.send('構文エラーです。\n情報欠損エラー')
+                    else:
+                        try:
+                            test8=1/int(int(res5[0])-int(res5[1]))
+                            test9=1/int(int(res4[0])-int(res4[1]))
+                        except ZeroDivisionError:
+                            await message.channel.send('構文エラーです。\n情報同一エラー')
+                        else:
+                            WID=int(res4[0])#勝者データ
+                            WG=int(res5[0])
+                            LID=int(res4[1])#敗者データ
+                            LG=int(res5[1])
+            else:
+                await message.channel.send('構文エラーです。\n情報過多エラー')
+            #試合記録
+            cursor.execute("select * from s3history where Wname=(%s)",(Wname,))
+            cursor.execute("select * from s3history")
+            Num=(len(cursor.fetchall())-1)
+            cursor.execute("insert into s3history values ((%s),(%s),(%s),(%s),(%s),(%s),(%s))",(Num+1,Wname,WID,Lname,LID,WG,LG))
+            con.commit()
+            #ソート
+            cursor.execute("SELECT * FROM PLdata order by ID")
+            con.commit()
+            await message.channel.send('試合ID：'+str(Num+1)+'\n出力終了です')
+            
+#天庭戦DB作成コマンド            
         if 'make_TTQual' == message.content:#天庭戦関連DBの作成
             cursor.execute("DROP TABLE IF EXISTS TTQual")
             cursor.execute("create table TTQual(PLID integer,CRmax integer,WRmax integer,Qual text, Rank integer)")
@@ -1088,8 +1139,6 @@ async def on_message(message):
             else:
                 await message.channel.send('管理技士専用コマンドです')
 
-
-    #通称リセットコマンド
 
     except:
         traceback.print_exc()
