@@ -126,6 +126,7 @@ async def on_message(message):
         if 'add' == message.content:
     #前処理
             res1=re.split('[\n]',message.content)
+            await message.channel.send('test')
             try:
                 test0=res1[3]
             except IndexError:
@@ -135,6 +136,7 @@ async def on_message(message):
                 res5=res3.split('-')
                 try:
                     res4[0]=='' or res4[1]=='' or res5[0]=='' or res5[1]==''#エラー検出（記号ミス)
+                    await message.channel.send('test')
                 except IndexError:
                     await message.channel.send('構文エラーです\n記号ミスエラー')
                 else:
