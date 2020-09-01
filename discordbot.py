@@ -77,7 +77,7 @@ async def on_message(message):
         #s3代理試合記録DB
         if 'make_s3history' == message.content:#試合履歴DBの作成
             cursor.execute("DROP TABLE IF EXISTS s3historys")
-            cursor.execute("delate table s3history")
+            cursor.execute("DROP TABLE IF EXISTS s3historys")
             cursor.execute("create table s3history(MID integer,Wname text,WinID integer,Lname text,LoseID integer,Wcount integer,Lcount integer)")
             cursor.execute("insert into s3history values(0,'Yataswee',0,'Soraneko',71,0,0)")
             
