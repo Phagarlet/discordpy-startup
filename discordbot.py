@@ -896,12 +896,17 @@ async def on_message(message):
                 FQ=cursor.fetchall()
                 for i in range(len(FQ)):
                     FQID=FQ[i][0]
+                    cursor.execute("update TTQual set Rank=(%s) where PLID=(%s)",(i+1,FQID))#順位更新
+                    if i>=10:
+                        cursor.execute("update TTQual set Qual=(%s) where PLID=(%s)",('資格補欠',FQID))#順位更新
+                        cursor.execute("update TTQual set Rank=(%s) where PLID=(%s)",(i+11,FQID))#順位更新
+                    con.commit()    
                     await message.channel.send(FQ[i])
                 cursor.execute("SELECT * FROM TTQual where Qual=(%s) order by Wnow desc",('次点保持',))
                 SQ=cursor.fetchall()
                 for i in range(len(SQ)):
                     SQID=SQ[i][0]
-                    cursor.execute("update TTQual set Rank=(%s) where PLID=(%s)",(i+101,SQID))#Lcount
+                    cursor.execute("update TTQual set Rank=(%s) where PLID=(%s)",(i+101,SQID))#順位更新
                     con.commit()
                     await message.channel.send(SQ[i])
                 cursor.execute("SELECT * FROM s3history order by MID")
