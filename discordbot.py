@@ -99,7 +99,7 @@ async def on_message(message):
                 cursor.execute("select * from s3history")
                 Num=(len(cursor.fetchall())-1)
                 
-                cursor.execute("insert into sehistory values ((%s),(%s),(%s),(%s),(%s),(%s),(%s))",(MID,Wname,WinID,Lname,LoseID,Wcount,Lcount,))
+                cursor.execute("insert into s3history values ((%s),(%s),(%s),(%s),(%s),(%s),(%s))",(MID,Wname,WinID,Lname,LoseID,Wcount,Lcount,))
             con.commit()
             await message.channel.send('作成完了です')
             
