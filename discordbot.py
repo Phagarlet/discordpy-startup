@@ -124,8 +124,6 @@ async def on_message(message):
             
         
         if 'plus' == message.content:
-            
-#前処理
             res001=re.split('[\n]',message.content)
             await message.channel.send(res001)
             try:
@@ -161,6 +159,7 @@ async def on_message(message):
                             LG=int(res5[1])
             else:
                 await message.channel.send('構文エラーです。\n情報過多エラー')
+
             #試合記録
             cursor.execute("select * from s3history where Wname=(%s)",(Wname,))
             cursor.execute("select * from s3history")
