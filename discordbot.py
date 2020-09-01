@@ -129,7 +129,7 @@ async def on_message(message):
             res001=re.split('[\n]',message.content)
             await message.channel.send(res001)
             try:
-                test00=res1[3]
+                test00=res001[3]
             except IndexError:
                 res2=res001[1]
                 res3=res001[2]
