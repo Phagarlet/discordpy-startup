@@ -892,7 +892,6 @@ async def on_message(message):
                     con.commit
                 #高レート順ソート
                 cursor.execute("SELECT * FROM TTQual order by WRmax desc")
-                Lcount=cursor.fetchall()[MID][6]
                 cursor.execute("SELECT * FROM TTQual where Qual=(%s)",('資格保持',))
                 FQ=cursor.fetchall()
                 for i in range(len(FQ)):
