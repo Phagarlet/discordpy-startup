@@ -132,14 +132,12 @@ async def on_message(message):
             try:
                 test00=res001[3]
             except IndexError:
-                await message.channel.send('test1')
                 res2=res001[1]
                 res3=res001[2]
                 res4=res2.split('/')
                 res5=res3.split('-')
                 try:
                     res4[0]=='' or res4[1]=='' or res5[0]=='' or res5[1]==''#エラー検出（記号ミス)
-                    await message.channel.send('test2')
                 except IndexError:
                     await message.channel.send('構文エラーです\n記号ミスエラー')
                 else:
