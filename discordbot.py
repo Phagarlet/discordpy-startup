@@ -126,7 +126,7 @@ async def on_message(message):
             await message.channel.send('作成完了です')
             
         
-        if 'plus' == in message.content:
+        if 'plus' in message.content:#新規登録
             res001=re.split('[\n]',message.content)
             await message.channel.send(res001)
             try:
