@@ -893,11 +893,13 @@ async def on_message(message):
                 #高レート順ソート
                 cursor.execute("SELECT * FROM TTQual order by WRmax desc")
                 cursor.execute("SELECT * FROM TTQual where Qual=(%s)",('資格保持',))
+                cursor.execute("SELECT * FROM TTQual order by WRmax desc")
                 FQ=cursor.fetchall()
                 for i in range(len(FQ)):
 
                     await message.channel.send(FQ[i])
                 cursor.execute("SELECT * FROM TTQual where Qual=(%s)",('次点保持',))
+                cursor.execute("SELECT * FROM TTQual order by WRmax desc")
                 SQ=cursor.fetchall()
                 for i in range(len(SQ)):
                     await message.channel.send(SQ[i])
