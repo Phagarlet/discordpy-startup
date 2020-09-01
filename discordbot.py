@@ -96,7 +96,7 @@ async def on_message(message):
                 cursor.execute("SELECT * FROM history3 order by MID")#name
                 Lcount=cursor.fetchall()[i+1][6]
                 
-                cursor.execute("insert into TTQual values ((%s),(%s),(%s),(%s),(%s),(%s),(%s))",(MID,Wname,WinID,Lname,LoseID,Wcount,Lcount,))
+                cursor.execute("insert into s3history values ((%s),(%s),(%s),(%s),(%s),(%s),(%s))",(MID,Wname,WinID,Lname,LoseID,Wcount,Lcount,))
             con.commit()
             await message.channel.send('作成完了です')
             
