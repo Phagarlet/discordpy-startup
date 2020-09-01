@@ -79,7 +79,6 @@ async def on_message(message):
             cursor.execute("DROP TABLE IF EXISTS s3history")
             cursor.execute("create table s3history(MID integer,Wname text,WinID integer,Lname text,LoseID integer,Wcount integer,Lcount integer)")
             cursor.execute("insert into s3history values(0,'Yataswee',0,'Soraneko',71,0,0)")
-            await message.channel.send('test')
             for i in range(606):
                 cursor.execute("SELECT * FROM history3 order by MID")#name
                 MID=cursor.fetchall()[i+1][0]
@@ -148,7 +147,8 @@ async def on_message(message):
                 for j in range(0,len(allhis),5):
                     if j!=len(allhis)-len(allhis)%5:
                         await message.channel.send(str(allhis[j])+'\n'+str(allhis[j+1])+'\n'+str(allhis[j+2])\
-                                                   +'\n'+str(allhis[j+3])+'\n'+str(allhis[j+4]))
+                                                   +'\n'+str(allhis[j+3])+'\n'+str(allhis[j+4])+'\n'+str(allhis[j+5])+'\n'+str(allhis[j+6])+'\n'+str(allhis[j+7])\
+                                                   +'\n'+str(allhis[j+8])+'\n'+str(allhis[j+9]))
                     else:
                         for i in range(len(allhis)-(len(allhis)%5),len(allhis)):
                             await message.channel.send(str(allhis[i]))
