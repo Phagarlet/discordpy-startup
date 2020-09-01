@@ -893,6 +893,7 @@ async def on_message(message):
                     cursor.execute("SELECT * FROM s3history order by MID")
                     con.commit
                 cursor.execute("SELECT * FROM TTQual where Qual=(%s)",('資格保持',))
+                cursor.execute("SELECT * FROM TTQual order by Wnow")
                 FQ=cursor.fetchall()
                 for i in range(len(FQ)):
                     await message.channel.send(FQ[i])
