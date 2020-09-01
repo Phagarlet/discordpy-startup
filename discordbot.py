@@ -894,7 +894,9 @@ async def on_message(message):
                 cursor.execute("SELECT * FROM TTQual order by PLID desc")
                 cursor.execute("SELECT * FROM TTQual where Qual=(%s)",('資格保持',))
                 FQ=cursor.fetchall()
+                await message.channel.send(FQ)
                 for i in range(len(FQ)):
+                    cursor.execute("update TTQual set Rank=(%s) where MID=(%s)",(i))#Rank
                     await message.channel.send(FQ[i])
                 cursor.execute("SELECT * FROM TTQual where Qual=(%s)",('次点保持',))
                 SQ=cursor.fetchall()
