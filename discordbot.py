@@ -77,8 +77,8 @@ async def on_message(message):
         #s3代理試合記録DB
         if 'make_s3history' == message.content:#試合履歴DBの作成
             cursor.execute("DROP TABLE IF EXISTS historys3")
-            cursor.execute("create table history3(MID integer,Wname text,WinID integer,Lname text,LoseID integer,Wcount integer,Lcount integer)")
-            cursor.execute("insert into history3 values(0,'Yataswee',0,'Soraneko',71,0,0)")
+            cursor.execute("create table s3history(MID integer,Wname text,WinID integer,Lname text,LoseID integer,Wcount integer,Lcount integer)")
+            cursor.execute("insert into s3history values(0,'Yataswee',0,'Soraneko',71,0,0)")
             
             for i in range(606):
                 cursor.execute("SELECT * FROM history3 order by ID")#name
