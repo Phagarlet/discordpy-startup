@@ -42,7 +42,7 @@ def Rate_Cal(LCR,WCR,LWR,WWR,WG,LG):
     NLWR=int(LWR-32*WBWper)
     return(NWCR,NLCR,NWWR,NLWR)
 
-#抽出関数
+#抽出関数 DBに汎用性を持たせる
     
 
 @client.event
