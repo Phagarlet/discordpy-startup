@@ -81,7 +81,22 @@ async def on_message(message):
             cursor.execute("insert into history3 values(0,'Yataswee',0,'Soraneko',71,0,0)")
             
             for i in range(606):
-                cursor.execute("insert into TTQual values ((%s),(%s),(%s),(%s),(%s),(%s),(%s))",(i+1,1500,1500,'特になし',999,))
+                cursor.execute("SELECT * FROM history3 order by ID")#name
+                MID=cursor.fetchall()[i+1][0]
+                cursor.execute("SELECT * FROM history3 order by ID")#name
+                Wname=cursor.fetchall()[i+1][1]
+                cursor.execute("SELECT * FROM history3 order by ID")#name
+                WinID=cursor.fetchall()[i+1][2]
+                cursor.execute("SELECT * FROM history3 order by ID")#name
+                Lname=cursor.fetchall()[i+1][3]
+                cursor.execute("SELECT * FROM history3 order by ID")#name
+                LoseID=cursor.fetchall()[i+1][4]
+                cursor.execute("SELECT * FROM history3 order by ID")#name
+                Wcount=cursor.fetchall()[i+1][5]
+                cursor.execute("SELECT * FROM history3 order by ID")#name
+                Lcount=cursor.fetchall()[i+1][6]
+                
+                cursor.execute("insert into TTQual values ((%s),(%s),(%s),(%s),(%s),(%s),(%s))",(MID,Wname,WinID,Lname,LoseID,Wcount,Lcount,))
             con.commit()
             await message.channel.send('作成完了です')
             
@@ -126,6 +141,19 @@ async def on_message(message):
         if 'check_history3' == message.content:#history3を見る
             if message.author.guild_permissions.administrator:
                 cursor.execute("SELECT * FROM history3 order by MID")
+                allhis=cursor.fetchall()
+                for j in range(0,len(allhis),5):
+                    if j!=len(allhis)-len(allhis)%5:
+                        await message.channel.send(str(allhis[j])+'\n'+str(allhis[j+1])+'\n'+str(allhis[j+2])\
+                                                   +'\n'+str(allhis[j+3])+'\n'+str(allhis[j+4]))
+                    else:
+                        for i in range(len(allhis)-(len(allhis)%5),len(allhis)):
+                            await message.channel.send(str(allhis[i]))
+                await message.channel.send("全試合出力完了！")
+                
+        if 'check_s3history' == message.content:#history3を見る
+            if message.author.guild_permissions.administrator:
+                cursor.execute("SELECT * FROM s3history order by MID")
                 allhis=cursor.fetchall()
                 for j in range(0,len(allhis),5):
                     if j!=len(allhis)-len(allhis)%5:
