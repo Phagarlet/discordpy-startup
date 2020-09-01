@@ -81,19 +81,19 @@ async def on_message(message):
             cursor.execute("insert into s3history values(0,'Yataswee',0,'Soraneko',71,0,0)")
             
             for i in range(606):
-                cursor.execute("SELECT * FROM history3 order by ID")#name
+                cursor.execute("SELECT * FROM history3 order by MID")#name
                 MID=cursor.fetchall()[i+1][0]
-                cursor.execute("SELECT * FROM history3 order by ID")#name
+                cursor.execute("SELECT * FROM history3 order by MID")#name
                 Wname=cursor.fetchall()[i+1][1]
-                cursor.execute("SELECT * FROM history3 order by ID")#name
+                cursor.execute("SELECT * FROM history3 order by MID")#name
                 WinID=cursor.fetchall()[i+1][2]
-                cursor.execute("SELECT * FROM history3 order by ID")#name
+                cursor.execute("SELECT * FROM history3 order by MID")#name
                 Lname=cursor.fetchall()[i+1][3]
-                cursor.execute("SELECT * FROM history3 order by ID")#name
+                cursor.execute("SELECT * FROM history3 order by MID")#name
                 LoseID=cursor.fetchall()[i+1][4]
-                cursor.execute("SELECT * FROM history3 order by ID")#name
+                cursor.execute("SELECT * FROM history3 order by MID")#name
                 Wcount=cursor.fetchall()[i+1][5]
-                cursor.execute("SELECT * FROM history3 order by ID")#name
+                cursor.execute("SELECT * FROM history3 order by MID")#name
                 Lcount=cursor.fetchall()[i+1][6]
                 
                 cursor.execute("insert into TTQual values ((%s),(%s),(%s),(%s),(%s),(%s),(%s))",(MID,Wname,WinID,Lname,LoseID,Wcount,Lcount,))
