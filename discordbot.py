@@ -21,7 +21,7 @@ bot = commands.Bot(command_prefix='/')
 token = os.environ['DISCORD_BOT_TOKEN']
 
 #season定義
-season=3
+season='s3'
 
 #レート計算関数
 def Rate_Cal(LCR,WCR,LWR,WWR,WG,LG):
@@ -42,6 +42,7 @@ def Rate_Cal(LCR,WCR,LWR,WWR,WG,LG):
     return(NWCR,NLCR,NWWR,NLWR)
 
 #抽出関数 DBに汎用性を持たせる
+    
     
 
 @client.event
@@ -82,6 +83,7 @@ async def on_message(message):
         if message.content =='進捗どうですか？':
             await message.channel.send('Season2待機中です')
 
+#プレーヤーデータベース作成コマンド(10項目)
         if 'make_PLdata' == message.content:#プレーヤーデータの作成
             cursor.execute("DROP TABLE IF EXISTS PLdata")
             cursor.execute("create table PLdata(name text,ID integer,CR integer,Ctotal integer,Cwin integer,Close integer,WR integer,Wtotal integer,Wwin integer,Wlose integer)")
@@ -96,7 +98,7 @@ async def on_message(message):
             con.commit()
             await message.channel.send('作成完了です')
             
-        #s3代理試合記録DB
+#s3代理試合記録DB
         if 'make_s3history' == message.content:#試合履歴DBの作成
             cursor.execute("DROP TABLE IF EXISTS s3history")
             cursor.execute("create table s3history(MID integer,Wname text,WinID integer,Lname text,LoseID integer,Wcount integer,Lcount integer)")
@@ -176,7 +178,7 @@ async def on_message(message):
             con.commit()
             await message.channel.send('試合ID：'+str(Num+1)+'\n出力終了です')
             
-#天庭戦DB作成コマンド            
+#天庭戦データベース作成コマンド            
         if 'make_TTQual' == message.content:#天庭戦関連DBの作成
             cursor.execute("DROP TABLE IF EXISTS TTQual")
             cursor.execute("create table TTQual(PLID integer,CRmax integer,WRmax integer,Qual text,Wnow integer,Rank integer)")
@@ -189,6 +191,7 @@ async def on_message(message):
             con.commit()
             await message.channel.send('作成完了です')
 
+#PLdataデータベース確認コマンド
         if 'check_PLdata' == message.content:#PLdataを見る
             if message.author.guild_permissions.administrator:
                 cursor.execute("select * from PLdata order by ID")
@@ -202,6 +205,7 @@ async def on_message(message):
                             await message.channel.send(str(allPL[i]))
                 await message.channel.send("全員出力完了！")
 
+#season2historyデータベース確認コマンド
         if 's2_history' == message.content:#historyを見る
             if message.author.guild_permissions.administrator:
                 cursor.execute("SELECT * FROM history order by MID")
@@ -344,7 +348,8 @@ async def on_message(message):
                 cursor.execute("SELECT * FROM PLdata order by ID")#WR
                 MWR=cursor.fetchall()[nameID][6]
                 await message.channel.send('名前：'+str(Mname)+'\nID：'+str(MID)+'\n試合数：'+str(MWt)+'\n闘技場レート'+str(MCR)+'\n勝敗レート'+str(MWR))
-    #プレーヤーID表示
+    
+#全闘技場登録プレーヤーID表示コマンド
         if 'IDlist'in message.content:
             if message.author.guild_permissions.administrator:
                 IDlist=[]
@@ -356,9 +361,13 @@ async def on_message(message):
                     cursor.execute("SELECT * FROM PLdata order by ID")
                     PLID=cursor.fetchall()[i][1]
                     IDlist.append([PLID,PLname])
-                IDlist.sort(key=lambda x:x[0],reverse=False)#IDソート
-                for i in range(len(allPL)):
-                    await message.channel.send(IDlist[i])
+                IDlist.sort(key=lambda x:x[0],reverse=False)#IDソート             
+                for j in range(0,len(allPL),10):
+                    if j!=len(allPL)-len(allPL)%10:
+                        await message.channel.send(IDlist[i]+'\n'+IDlist[i+1]+'\n'+IDlist[i+2]+'\n'+IDlist[i+3]+'\n'+IDlist[i+4]+'\n'+IDlist[i+5]+'\n'+IDlist[i+6]+'\n'+IDlist[i+7]+'\n'+IDlist[i+8]+'\n'+IDlist[i+9])
+                    else:
+                        for i in range(len(allPL)-(len(allPL)%10),len(allPL)):
+                            await message.channel.send(str(IDlist[i]))
                 await message.channel.send('出力完了です')
             else:
                 await message.channel.send('管理技士専用コマンドです')
