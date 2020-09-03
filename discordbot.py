@@ -23,6 +23,10 @@ token = os.environ['DISCORD_BOT_TOKEN']
 #season定義
 season='s3'
 
+#全登録プレーヤー数
+cursor.execute("select * from PLdata order by ID")
+allPlayer=cursor.fetchall()
+
 #レート計算関数
 def Rate_Cal(LCR,WCR,LWR,WWR,WG,LG):
     match=WG+LG
@@ -362,12 +366,12 @@ async def on_message(message):
                     PLID=cursor.fetchall()[i][1]
                     IDlist.append([PLID,PLname])
                 IDlist.sort(key=lambda x:x[0],reverse=False)#IDソート             
-                for j in range(0,len(allPL),10):
-                    if j!=len(allPL)-len(allPL)%10:
+                for i in range(0,len(allPL),10):
+                    if i!=len(allPL)-len(allPL)%10:
                         await message.channel.send(str(IDlist[i])+'\n'+str(IDlist[i+1])+'\n'+str(IDlist[i+2])+'\n'+str(IDlist[i+3])+'\n'+str(IDlist[i+4])+'\n'+str(IDlist[i+5])+'\n'+str(IDlist[i+6])+'\n'+str(IDlist[i+7])+'\n'+str(IDlist[i+8])+'\n'+str(IDlist[i+9]))
                     else:
-                        for i in range(len(allPL)-(len(allPL)%10),len(allPL)):
-                            await message.channel.send(str(IDlist[i]))
+                        for j in range(len(allPL)-(len(allPL)%10),len(allPL)):
+                            await message.channel.send(str(IDlist[j]))
                 await message.channel.send('出力完了です')
             else:
                 await message.channel.send('管理技士専用コマンドです')
