@@ -924,7 +924,7 @@ async def on_message(message):
                     cursor.execute("update TTQual set Rank=(%s) where PLID=(%s)",(i+1,FQID))#順位更新
                     if i+1>=9:
                         cursor.execute("update TTQual set Qual=(%s) where PLID=(%s)",('資格補欠',FQID))#資格変更
-                        cursor.execute("update TTQual set Rank=(%s) where PLID=(%s)",(i+2,FQID))#順位更新
+                        cursor.execute("update TTQual set Rank=(%s) where PLID=(%s)",(i+3,FQID))#順位更新
                     con.commit()    
                     await message.channel.send(FQ[i])
                 cursor.execute("SELECT * FROM TTQual where Qual=(%s) order by Wnow desc",('次点保持',))
