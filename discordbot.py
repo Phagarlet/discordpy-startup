@@ -27,6 +27,10 @@ season='s3'
 cursor.execute("select * from PLdata order by ID")
 allPlayer=cursor.fetchall()
 
+#season試合数
+s1match=2726
+s2match=887
+
 #レート計算関数
 def Rate_Cal(LCR,WCR,LWR,WWR,WG,LG):
     match=WG+LG
@@ -57,6 +61,7 @@ async def on_command_error(ctx, error):
 
 # 起動時に動作する処理
 @client.event
+#再起動通知
 async def on_ready():
     # 起動したらターミナルにログイン通知が表示される
     channel=client.get_channel(ch_bot)#実装時に(ch_kan)に変更
@@ -77,15 +82,9 @@ async def on_message(message):
         # メッセージ送信者がBotだった場合は無視する
         if message.author.bot:
             return
-        # 「/neko」と発言したら「正論」が返る処理
+        # 「neko」と発言したら「正論」が返る処理
         if message.content == 'neko':
             await message.channel.send('私は猫ではないです...')
-        #「/who」botの説明
-        if message.content == 'who':
-            await message.channel.send('私はDTB闘技場の管理人です。\nSeason2から正式に業務を開始します。よろしくお願いします。')
-        #「進捗どうですか？」
-        if message.content =='進捗どうですか？':
-            await message.channel.send('Season2待機中です')
 
 #プレーヤーデータベース作成コマンド(10項目)
         if 'make_PLdata' == message.content:#プレーヤーデータの作成
@@ -264,11 +263,14 @@ async def on_message(message):
                             await message.channel.send(str(allQ[i]))
                 await message.channel.send("全員出力完了！")
 
+#闘技場登録コマンド
         if 'regist' in message.content:#新規登録
             PLname=re.split('[\n]',message.content)[1]
+            #名称利用可能/不可能判定
             if ',' in PLname or ' ' in PLname or '/' in PLname or '-' in PLname or '(' in PLname or ')' in PLname or'\u3000' in PLname:
                 await message.channel.send(', - / ( ) 全角/半角スペースは名前に使用することができません')
             else:
+                #新規登録処理
                 cursor.execute("select * from PLdata where name=(%s)",(PLname,))
                 delet=cursor.fetchall()
                 if len(delet)==0:
@@ -276,26 +278,32 @@ async def on_message(message):
                     num=(len(cursor.fetchall())-1)
                     cursor.execute("insert into PLdata values ((%s),(%s),(%s),(%s),(%s),(%s),(%s),(%s),(%s),(%s))",(PLname,num+1,1500,0,0,0,1500,0,0,0))
                     con.commit()
+                    #発行ID出力
                     await message.channel.send("新規登録完了です\nIDは"+str(num+1)+"です")
+                    #同一名存在時
                 else:
                     await message.channel.send("同じ名前が既に使用されています\nほかの名前を使ってください")
 
-        if 'Nupdate' in message.content:#プレーヤーの名前変更
+#プレーヤー名称変更コマンド
+        if 'Nupdate' in message.content:
             Defname=re.split('[\n]',message.content)[1]
             Newname=re.split('[\n]',message.content)[2]
+            #名称利用可能/不可能判定
             if ',' in Newname or ')' in Newname or '(' in Newname or '-' in Newname or '\u3000' in Newname:
                 await message.channel.send(', - / ( ) 全角/半角スペースは名前に使用することができません')
             else:
+                #名称変更処理
                 cursor.execute("update PLdata set name=(%s) where name=(%s)",(Newname,Defname))
                 con.commit()
                 await message.channel.send("名前を変更しました")
 
+#ID確認コマンド
         if 'myID' in message.content:#指定した人のIDを表示
             member_name=re.split('[\n]',message.content)[1]
             cursor.execute("select * from PLdata where name=(%s)",(member_name,))
             await message.channel.send(cursor.fetchall()[0][1])
         
-#全情報確認コマンド
+#全情報確認コマンド(現行シーズンのみ)
         if 'fulldata' in message.content:#プレーヤーデータfullの確認
             res10=re.split('[\n]',message.content)
             try:
@@ -333,7 +341,8 @@ async def on_message(message):
                 await message.channel.send('名前：'+str(Mname)+'\nID：'+str(MID)+'\n'+str(MWt)+'試合'+str(MWw)+'勝'+str(MWl)+'敗'+'\n'+str(MCw)+'-'+str(MCl)\
                                            +'\n闘技場レート'+'：'+str(MCR)+'/'+str(CRmax)+'\n勝敗レート'+'：'+str(MWR)+'/'+str(WRmax)+'\n天庭戦'+'：'+str(qual)+'**'+str(rank)+'位**')
 
-        if 'mydata' in message.content:#プレーヤーデータの確認
+#簡略式情報確認コマンド
+        if 'mydata' in message.content:
             res11=re.split('[\n]',message.content)
             try:
                 testID=int(res11[1])
@@ -351,7 +360,7 @@ async def on_message(message):
                 MWt=cursor.fetchall()[nameID][7]
                 cursor.execute("SELECT * FROM PLdata order by ID")#WR
                 MWR=cursor.fetchall()[nameID][6]
-                await message.channel.send('名前：'+str(Mname)+'\nID：'+str(MID)+'\n試合数：'+str(MWt)+'\n闘技場レート'+str(MCR)+'\n勝敗レート'+str(MWR))
+                await message.channel.send('名前：'+str(Mname)+'\nID：'+str(MID)+'\n試合数：'+str(MWt)+'\n闘技場レート：'+str(MCR)+'\n勝敗レート：'+str(MWR))
     
 #全闘技場登録プレーヤーID表示コマンド
         if 'IDlist'in message.content:
