@@ -364,7 +364,7 @@ async def on_message(message):
                 IDlist.sort(key=lambda x:x[0],reverse=False)#IDソート             
                 for j in range(0,len(allPL),10):
                     if j!=len(allPL)-len(allPL)%10:
-                        await message.channel.send(IDlist[i]+'\n'+IDlist[i+1]+'\n'+IDlist[i+2]+'\n'+IDlist[i+3]+'\n'+IDlist[i+4]+'\n'+IDlist[i+5]+'\n'+IDlist[i+6]+'\n'+IDlist[i+7]+'\n'+IDlist[i+8]+'\n'+IDlist[i+9])
+                        await message.channel.send(str(IDlist[i])+'\n'+str(IDlist[i+1])+'\n'+str(IDlist[i+2])+'\n'+str(IDlist[i+3])+'\n'+str(IDlist[i+4])+'\n'+str(IDlist[i+5])+'\n'+str(IDlist[i+6])+'\n'+str(IDlist[i+7])+'\n'+str(IDlist[i+8])+'\n'+str(IDlist[i+9]))
                     else:
                         for i in range(len(allPL)-(len(allPL)%10),len(allPL)):
                             await message.channel.send(str(IDlist[i]))
