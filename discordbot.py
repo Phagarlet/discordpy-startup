@@ -32,21 +32,22 @@ s1match=2726
 s2match=887
 
 #レート計算関数
-def Rate_Cal(LCR,WCR,LWR,WWR,WG,LG):
-    match=WG+LG
+def Rate_Cal(Lose_CR,Wwin_CR,Lose_WR,Win_WR,Win_game,Lose_game):
+    match=Win_game+Lose_game
 #闘技場レート計算
-    CsaA=LCR-WCR
-    CsaB=int(CsaA)*-1
-    AWper=round(1/(10**((CsaA)/400)+1),2)
-    BWper=round(1/(10**((CsaB)/400)+1),2)
-    NWCR=round(WCR+16*(WG-match*AWper))
-    NLCR=round(LCR+16*(LG-match*BWper))
+    CR_saA=Lose_CR-Win_CR
+    CR_saB=int(CR_saA)*-1
+    A_Winper_CR=round(1/(10**((CR_saA)/400)+1),2)
+    B_Winper_CR=round(1/(10**((CR_saB)/400)+1),2)
+    New_Win_CR=round(Win_CR+16*(Win_game-match*A_Winper_CR))
+    New_Lose_CR=round(Lose_CR+16*(Lose_game-match*B_Winper_CR))
 #勝敗レート計算
-    WsaA=LWR-WWR
-    WsaB=int(WsaA*-1)
-    WBWper=round(1/(10**((WsaB)/400)+1),2)
-    NWWR=int(WWR+32*WBWper)
-    NLWR=int(LWR-32*WBWper)
+    WR_saA=Lose_WR-Win_WR
+    WR_saB=int(WR_saA*-1)
+    A_Winper_WR=round(1/(10**((WR_saA)/400)+1),2)
+    B_Winper_WR=round(1/(10**((WR_saB)/400)+1),2)
+    New_Win_WR=int(round(Win_WR+32*WBWper))
+    New_Lose_WR=int(round(Lose_WR-32*WBWper))
     return(NWCR,NLCR,NWWR,NLWR)
 
 #抽出関数 DBに汎用性を持たせる
@@ -447,8 +448,8 @@ async def on_message(message):
             WsaA=LWR-WWR
             WsaB=int(WsaA*-1)
             WBWper=round(1/(10**((WsaB)/400)+1),2)
-            NWWR=int(WWR+32*WBWper)
-            NLWR=int(LWR-32*WBWper)
+            NWWR=int(round(WWR+32*WBWper))
+            NLWR=int(round(LWR-32*WBWper))
     #試合後の出力
             await message.channel.send('試合後レート'+"\n闘技場："+str(NWCR)+"-"+str(NLCR)+"\n勝敗："+str(NWWR)+"-"+str(NLWR))
     #データのアップデート
@@ -563,8 +564,8 @@ async def on_message(message):
                     WsaA=LWR-WWR
                     WsaB=int(WsaA*-1)
                     WBWper=round(1/(10**((WsaB)/400)+1),2)
-                    NWWR=int(WWR+32*WBWper)
-                    NLWR=int(LWR-32*WBWper)
+                    NWWR=int(round(WWR+32*WBWper))
+                    NLWR=int(round(LWR-32*WBWper))
 
     #データのアップデート
                     #取得部分
@@ -739,8 +740,8 @@ async def on_message(message):
                     WsaA=LWR-WWR
                     WsaB=int(WsaA*-1)
                     WBWper=round(1/(10**((WsaB)/400)+1),2)
-                    NWWR=int(WWR+32*WBWper)
-                    NLWR=int(LWR-32*WBWper)
+                    NWWR=int(round(WWR+32*WBWper))
+                    NLWR=int(round(LWR-32*WBWper))
 
     #データのアップデート
                     #取得部分
