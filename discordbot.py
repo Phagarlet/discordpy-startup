@@ -1159,7 +1159,7 @@ async def on_message(message):
                 cursor.execute("SELECT * FROM PLdata order by ID")#CR
                 CR=cursor.fetchall()[i][2]
                 cursor.execute("SELECT * FROM PLdata order by ID")#Cwin
-                CR=cursor.fetchall()[i][6]
+                WR=cursor.fetchall()[i][6]
                 TCR+=CR
                 TWR+=WR
                 Ave_CR=TCR/allPlayer
