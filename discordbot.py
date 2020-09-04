@@ -1152,6 +1152,18 @@ async def on_message(message):
             else:
                 await message.channel.send('管理技士専用コマンドです')
 
+        if 'Rcheck'in message.content:#資格関連更新
+            for i in range(AllPlayer):
+                cursor.execute("SELECT * FROM PLdata order by ID")#CR
+                CR=cursor.fetchall()[i][2]
+                cursor.execute("SELECT * FROM PLdata order by ID")#Cwin
+                CR=cursor.fetchall()[i][6]
+                TCR+=CR
+                TWR+=WR
+                Ave_CR=TCR/AllPlayer
+                Ave_WR=TWR/AllPlayer
+            await message.channel.send(str(Ave_CR)+'　'+str(Ave_WR))
+
 
     except:
         traceback.print_exc()
