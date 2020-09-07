@@ -27,6 +27,7 @@ season='s3'
 cursor.execute("select * from PLdata order by ID")
 allPL=cursor.fetchall()
 allPlayer=int(len(allPL))
+
 #season試合数
 s1match=2726
 s2match=887
@@ -196,16 +197,15 @@ async def on_message(message):
             await message.channel.send('作成完了です')
 
 #PLdataデータベース確認コマンド
+#定数変更済
         if 'check_PLdata' == message.content:#PLdataを見る
             if message.author.guild_permissions.administrator:
-                cursor.execute("select * from PLdata order by ID")
-                allPL=cursor.fetchall()
-                for j in range(0,len(allPL),10):
-                    if j!=len(allPL)-len(allPL)%10:
+                for j in range(0,allPlayer,10):
+                    if j!=allPlayer-allPlayer%10:
                         await message.channel.send(str(allPL[j])+'\n'+str(allPL[j+1])+'\n'+str(allPL[j+2])\
                                                    +'\n'+str(allPL[j+3])+'\n'+str(allPL[j+4])+'\n'+str(allPL[j+5])+'\n'+str(allPL[j+6])+'\n'+str(allPL[j+7])+'\n'+str(allPL[j+8])+'\n'+str(allPL[j+9]))
                     else:
-                        for i in range(len(allPL)-(len(allPL)%10),len(allPL)):
+                        for i in range(allPlayer-(allPlayer%10),allPlayer):
                             await message.channel.send(str(allPL[i]))
                 await message.channel.send("全員出力完了！")
 
