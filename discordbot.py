@@ -200,6 +200,7 @@ async def on_message(message):
 #定数変更済
         if 'check_PLdata' == message.content:#PLdataを見る
             if message.author.guild_permissions.administrator:
+                await message.channel.send(allPL)
                 for j in range(0,allPlayer,10):
                     if j!=allPlayer-allPlayer%10:
                         await message.channel.send(str(allPL[j])+'\n'+str(allPL[j+1])+'\n'+str(allPL[j+2])\
