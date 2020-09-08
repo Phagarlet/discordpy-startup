@@ -80,17 +80,12 @@ async def on_member_join(member):
 @client.event
 async def on_message(message):
     try:
-        if message.content == 'DFE':
-            await message.channel.send('テスト成功')
-        # メッセージ送信者がBotだった場合は無視する 無効化
-        #if message.author.bot:
+        # メッセージ送信者がBotだった場合は無視する
+        if message.author.bot:
             return
         # 「neko」と発言したら「正論」が返る処理
         if message.content == 'neko':
             await message.channel.send('私は猫ではないです...')
-            
-        if message.content == 'TEST':
-            await message.channel.send('DEF')
 
 
 #プレーヤーデータベース作成コマンド(10項目)
