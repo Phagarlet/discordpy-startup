@@ -30,7 +30,6 @@ allPlayer=int(len(cursor.fetchall()))
 def PLdata_DB():
     cursor.execute("select * from PLdata order by ID")
     allPL=cursor.fetchall()
-    return allPL
 
 #season試合数
 s1match=2726
@@ -205,6 +204,7 @@ async def on_message(message):
         if 'check_PLdata' == message.content:#PLdataを見る
             if message.author.guild_permissions.administrator:
                 for j in range(0,allPlayer,10):
+                    PLdata_DB()
                     if j!=allPlayer-allPlayer%10:
                         await message.channel.send(str(allPL[j])+'\n'+str(allPL[j+1])+'\n'+str(allPL[j+2])\
                                                    +'\n'+str(allPL[j+3])+'\n'+str(allPL[j+4])+'\n'+str(allPL[j+5])+'\n'+str(allPL[j+6])+'\n'+str(allPL[j+7])+'\n'+str(allPL[j+8])+'\n'+str(allPL[j+9]))
