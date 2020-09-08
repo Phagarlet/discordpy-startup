@@ -25,8 +25,11 @@ season='s3'
 
 #全登録プレーヤー数
 cursor.execute("select * from PLdata order by ID")
+allPlayer=int(len(cursor.fetchall()))
+
+#PLdataDB
+cursor.execute("select * from PLdata order by ID")
 allPL=cursor.fetchall()
-allPlayer=int(len(allPL))
 
 #season試合数
 s1match=2726
