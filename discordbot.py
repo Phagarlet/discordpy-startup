@@ -31,6 +31,8 @@ allPlayer=int(len(cursor.fetchall()))
 s1match=2726
 s2match=887
 s3match=993
+cursor.execute("select * from history4 order by MID")
+s4match=int(len(cursor.fetchall()))
 
 #レート計算関数
 
@@ -1168,6 +1170,18 @@ async def on_message(message):
                 Ave_WR=TWR/allPlayer
             await message.channel.send(str(Ave_CR)+'　'+str(Ave_WR))
 
+        if 'Hcheck'in message.content:#資格関連更新
+            This1=0
+            This2=0 #history
+            This3=0 #s3history
+            This4=0 #history4
+            for i in range(s2match):
+                cursor.execute("SELECT * FROM history order by MID")
+                MID=cursor.fetchall()[i][5]
+                cursor.execute("SELECT * FROM history order by MID")
+                MID2=cursor.fetchall()[i][6]
+                This2=This3+MID+MID2
+            await message.channel.send(This2)
 
     except:
         traceback.print_exc()
