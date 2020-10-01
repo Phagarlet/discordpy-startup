@@ -36,7 +36,7 @@ s4match=int(len(cursor.fetchall()))
 
 #レート計算関数
 
-#抽出関数 DBに汎用性を持たせる
+#抽出関数 DBに汎用性を持たせる０
     
     
 
