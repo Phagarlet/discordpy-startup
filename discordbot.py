@@ -1157,7 +1157,7 @@ async def on_message(message):
                 await message.channel.send('管理技士専用コマンドです')
 
 #レート一覧表示 以下管理技士専用コマンド
-        if 'Rupdate'in message.content:#レート更新
+        if 'sRupdate'in message.content:#レート更新
             if message.author.guild_permissions.administrator:
                 Rup=re.split('[\n]',message.content)
                 channel=client.get_channel(ch_kan)#更新告知　ch_kan
