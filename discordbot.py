@@ -1266,6 +1266,15 @@ async def on_message(message):
                 MID2=cursor.fetchall()[i][6]
                 This2=This3+MID+MID2
             await message.channel.send(This2)
+            
+        if 'del_his' in message.content:#試合履歴削除コマンド
+            if message.author.guild_permissions.administrator:
+                MID=re.split('[\n]',message.content)[1]
+                cursor.execute("SELECT * FROM history4")
+                cursor.execute("DELETE FROM history4 where name=(%s)",(MID,))
+                con.commit()
+            else:
+                await message.channel.send('管理技士専用コマンドです')
 
     except:
         traceback.print_exc()
