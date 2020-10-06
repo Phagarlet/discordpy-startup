@@ -1271,7 +1271,7 @@ async def on_message(message):
             if message.author.guild_permissions.administrator:
                 MID=re.split('[\n]',message.content)[1]
                 cursor.execute("SELECT * FROM history4")
-                cursor.execute("DELETE FROM history4 where name=(%s)",(MID,))
+                cursor.execute("DELETE FROM history4 where MID=(%s)",(MID,))
                 con.commit()
             else:
                 await message.channel.send('管理技士専用コマンドです')
