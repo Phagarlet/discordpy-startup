@@ -32,8 +32,8 @@ s1match=2726
 s2match=887
 s3match=993
 s4match=527
-cursor.execute("select * from history5 order by MID")
-s4match=int(len(cursor.fetchall()))
+#cursor.execute("select * from history5 order by MID")
+#s4match=int(len(cursor.fetchall()))
 
 #レート計算関数
 
