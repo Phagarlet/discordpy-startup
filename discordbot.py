@@ -21,7 +21,7 @@ bot = commands.Bot(command_prefix='/')
 token = os.environ['DISCORD_BOT_TOKEN']
 
 #season定義
-season='4'
+season='5'
 
 #全登録プレーヤー数
 cursor.execute("select * from PLdata order by ID")
@@ -31,7 +31,8 @@ allPlayer=int(len(cursor.fetchall()))
 s1match=2726
 s2match=887
 s3match=993
-cursor.execute("select * from history4 order by MID")
+s4match=527
+cursor.execute("select * from history5 order by MID")
 s4match=int(len(cursor.fetchall()))
 
 #レート計算関数
@@ -58,7 +59,7 @@ async def on_ready():
 async def on_member_join(member):
     channel=667380995242328078
     await channel.send("はじめまして、どうぶつタワーバトル闘技場、DTB闘技場の運営をしているYatasweeと申します。"\
-                        +"\n闘技場に参加するにはまず登録コマンド「regist\n名前」を打って新規登録をしてください"\
+                        +"\n闘技場に参加するにはまず登録コマンド**「regist\n名前」**\nを打って新規登録をしてください"\
                         +"\nこのサーバーでは、そこで発行されるIDが重要ですので、自分のIDをニックネーム変更から名前の後ろに付けていただけるとありがたいです。"\
                         +"\nまずは部屋説明から一読することをお勧めします。")
 
@@ -83,10 +84,10 @@ async def on_message(message):
             await message.channel.send('作成完了です')
 
 #SeasonhistoryDB作成
-        if 'make_history4' == message.content:#試合履歴DBの作成
-            cursor.execute("DROP TABLE IF EXISTS history4")
-            cursor.execute("create table history4(MID integer,Wname text,WinID integer,Lname text,LoseID integer,Wcount integer,Lcount integer)")
-            cursor.execute("insert into history4 values(0,'Yataswee',0,'Soraneko',71,0,0)")
+        if 'make_history5' == message.content:#試合履歴DBの作成
+            cursor.execute("DROP TABLE IF EXISTS history5")
+            cursor.execute("create table history5(MID integer,Wname text,WinID integer,Lname text,LoseID integer,Wcount integer,Lcount integer)")
+            cursor.execute("insert into history5 values(0,'Yataswee',0,'Soraneko',71,0,0)")
             con.commit()
             await message.channel.send('作成完了です')
             
@@ -110,8 +111,8 @@ async def on_message(message):
                 Wcount=cursor.fetchall()[i+1][5]
                 cursor.execute("SELECT * FROM history3 order by MID")#name
                 Lcount=cursor.fetchall()[i+1][6]
-                cursor.execute("select * from history4 where Wname=(%s)",(Wname,))
-                cursor.execute("select * from history4")
+                cursor.execute("select * from history5 where Wname=(%s)",(Wname,))
+                cursor.execute("select * from history5")
                 Num=(len(cursor.fetchall())-1)
                 
                 cursor.execute("insert into s3history values ((%s),(%s),(%s),(%s),(%s),(%s),(%s))",(MID,Wname,WinID,Lname,LoseID,Wcount,Lcount,))
@@ -227,7 +228,7 @@ async def on_message(message):
                 await message.channel.send("全試合出力完了！")
                 
                 
-        if 'check_s3history' == message.content:#history4を見る
+        if 'check_s3history' == message.content:#history5を見る
             if message.author.guild_permissions.administrator:
                 cursor.execute("SELECT * FROM s3history order by MID")
                 allhis=cursor.fetchall()
@@ -241,9 +242,9 @@ async def on_message(message):
                             await message.channel.send(str(allhis[i]))
                 await message.channel.send("全試合出力完了！")
                 
-        if 'check_history4' == message.content:#history4を見る
+        if 'check_history5' == message.content:#history5を見る
             if message.author.guild_permissions.administrator:
-                cursor.execute("SELECT * FROM history4 order by MID")
+                cursor.execute("SELECT * FROM history5 order by MID")
                 allhis=cursor.fetchall()
                 for j in range(0,len(allhis),10):
                     if j!=len(allhis)-len(allhis)%10:
@@ -505,10 +506,10 @@ async def on_message(message):
             cursor.execute("update PLdata set Wtotal=(%s) where ID=(%s)",(LWt,LID))#Wtotal
             cursor.execute("update PLdata set Wlose=(%s) where ID=(%s)",(LWl,LID))#Wlose
             #試合記録
-            cursor.execute("select * from history4 where Wname=(%s)",(Wname,))
-            cursor.execute("select * from history4")
+            cursor.execute("select * from history5 where Wname=(%s)",(Wname,))
+            cursor.execute("select * from history5")
             Num=(len(cursor.fetchall())-1)
-            cursor.execute("insert into history4 values ((%s),(%s),(%s),(%s),(%s),(%s),(%s))",(Num+1,Wname,WID,Lname,LID,WG,LG))
+            cursor.execute("insert into history5 values ((%s),(%s),(%s),(%s),(%s),(%s),(%s))",(Num+1,Wname,WID,Lname,LID,WG,LG))
             con.commit()
             #ソート
             cursor.execute("SELECT * FROM PLdata order by ID")
@@ -524,7 +525,7 @@ async def on_message(message):
                 #レートリセット
                 cursor.execute("SELECT * FROM PLdata order by ID")
                 allPL=cursor.fetchall()
-                cursor.execute("select * from history4 order by MID")
+                cursor.execute("select * from history5 order by MID")
                 alhis=cursor.fetchall()
                 for i in range(len(allPL)-1):
                     cursor.execute("update PLdata set CR=(%s) where ID=(%s)",(1500,i+1))#CR
@@ -538,13 +539,13 @@ async def on_message(message):
                 #レート計算
 
                 for i in range(len(alhis)-1):
-                    cursor.execute("SELECT * FROM history4 order by MID")
+                    cursor.execute("SELECT * FROM history5 order by MID")
                     WID=cursor.fetchall()[i+1][2]
-                    cursor.execute("SELECT * FROM history4 order by MID")
+                    cursor.execute("SELECT * FROM history5 order by MID")
                     LID=cursor.fetchall()[i+1][4]
-                    cursor.execute("SELECT * FROM history4 order by MID")
+                    cursor.execute("SELECT * FROM history5 order by MID")
                     WG=cursor.fetchall()[i+1][5]
-                    cursor.execute("SELECT * FROM history4 order by MID")
+                    cursor.execute("SELECT * FROM history5 order by MID")
                     LG=cursor.fetchall()[i+1][6]
 
                     cursor.execute("SELECT * FROM PLdata order by ID")
@@ -618,7 +619,7 @@ async def on_message(message):
                     cursor.execute("update PLdata set Wlose=(%s) where ID=(%s)",(LWl,LID))#Wlose
                     #ソート
                     cursor.execute("SELECT * FROM PLdata order by ID")
-                    cursor.execute("SELECT * FROM history4 order by MID")
+                    cursor.execute("SELECT * FROM history5 order by MID")
                     con.commit()
 
                 sort_CR=[]
@@ -698,7 +699,7 @@ async def on_message(message):
                 #レートリセット
                 cursor.execute("SELECT * FROM PLdata order by ID")
                 allPL=cursor.fetchall()
-                cursor.execute("select * from history4 order by MID")
+                cursor.execute("select * from history5 order by MID")
                 alhis=cursor.fetchall()
                 for i in range(len(allPL)):
                     cursor.execute("update PLdata set CR=(%s) where ID=(%s)",(1500,i))#CR
@@ -714,13 +715,13 @@ async def on_message(message):
 
                 #レート計算
                 for i in range(len(alhis)-1):
-                    cursor.execute("SELECT * FROM history4 order by MID")
+                    cursor.execute("SELECT * FROM history5 order by MID")
                     WID=cursor.fetchall()[i+1][2]
-                    cursor.execute("SELECT * FROM history4 order by MID")
+                    cursor.execute("SELECT * FROM history5 order by MID")
                     LID=cursor.fetchall()[i+1][4]
-                    cursor.execute("SELECT * FROM history4 order by MID")
+                    cursor.execute("SELECT * FROM history5 order by MID")
                     WG=cursor.fetchall()[i+1][5]
-                    cursor.execute("SELECT * FROM history4 order by MID")
+                    cursor.execute("SELECT * FROM history5 order by MID")
                     LG=cursor.fetchall()[i+1][6]
 
                     cursor.execute("SELECT * FROM PLdata order by ID")
@@ -809,7 +810,7 @@ async def on_message(message):
                         cursor.execute("update TTQual set CRmax=(%s) where PLID=(%s)",(NLCR,LID))#LCmax
                     #ソート
                     cursor.execute("SELECT * FROM PLdata order by ID")
-                    cursor.execute("SELECT * FROM history4 order by MID")
+                    cursor.execute("SELECT * FROM history5 order by MID")
                     cursor.execute("SELECT * FROM TTQual order by PLID")
                     con.commit()
                 await message.channel.send('完了です')
@@ -857,16 +858,16 @@ async def on_message(message):
             NWres=int(res100[8])
             NLres=int(res100[9])
         
-            #history4から抽出
-            cursor.execute("SELECT * FROM history4 order by MID")#試合ID
+            #history5から抽出
+            cursor.execute("SELECT * FROM history5 order by MID")#試合ID
             Match=cursor.fetchall()[MID][0]
-            cursor.execute("SELECT * FROM history4 order by MID")#WID
+            cursor.execute("SELECT * FROM history5 order by MID")#WID
             WinID=cursor.fetchall()[MID][2]
-            cursor.execute("SELECT * FROM history4 order by MID")#LID
+            cursor.execute("SELECT * FROM history5 order by MID")#LID
             LoseID=cursor.fetchall()[MID][4]
-            cursor.execute("SELECT * FROM history4 order by MID")#Wcount
+            cursor.execute("SELECT * FROM history5 order by MID")#Wcount
             Wcount=cursor.fetchall()[MID][5]
-            cursor.execute("SELECT * FROM history4 order by MID")#Lcount
+            cursor.execute("SELECT * FROM history5 order by MID")#Lcount
             Lcount=cursor.fetchall()[MID][6]
             
             try:
@@ -882,13 +883,13 @@ async def on_message(message):
                 Lname=cursor.fetchall()[LoseID][0]
 
                 #修正上書き
-                cursor.execute("update history4 set Wname=(%s) where MID=(%s)",(Wname,MID))#Wname
-                cursor.execute("update history4 set WinID=(%s) where MID=(%s)",(NWID,MID))#WinID
-                cursor.execute("update history4 set Lname=(%s) where MID=(%s)",(Lname,MID))#Lname
-                cursor.execute("update history4 set LoseID=(%s) where MID=(%s)",(NLID,MID))#LoseID
-                cursor.execute("update history4 set Wcount=(%s) where MID=(%s)",(NWres,MID))#Wcount
-                cursor.execute("update history4 set Lcount=(%s) where MID=(%s)",(NLres,MID))#Lcount
-                cursor.execute("SELECT * FROM history4 order by MID")
+                cursor.execute("update history5 set Wname=(%s) where MID=(%s)",(Wname,MID))#Wname
+                cursor.execute("update history5 set WinID=(%s) where MID=(%s)",(NWID,MID))#WinID
+                cursor.execute("update history5 set Lname=(%s) where MID=(%s)",(Lname,MID))#Lname
+                cursor.execute("update history5 set LoseID=(%s) where MID=(%s)",(NLID,MID))#LoseID
+                cursor.execute("update history5 set Wcount=(%s) where MID=(%s)",(NWres,MID))#Wcount
+                cursor.execute("update history5 set Lcount=(%s) where MID=(%s)",(NLres,MID))#Lcount
+                cursor.execute("SELECT * FROM history5 order by MID")
                 con.commit()
                 await message.channel.send('修正完了です')
 
@@ -920,7 +921,7 @@ async def on_message(message):
                             qual='次点保持'
                     #上書き
                     cursor.execute("update TTQual set Qual=(%s) where PLID=(%s)",(qual,i))#Qual
-                    cursor.execute("SELECT * FROM history4 order by MID")
+                    cursor.execute("SELECT * FROM history5 order by MID")
                     con.commit
                 cursor.execute("SELECT * FROM TTQual where Qual=(%s) order by Wnow desc",('資格保持',) )
                 FQ=cursor.fetchall()
@@ -939,7 +940,7 @@ async def on_message(message):
                     cursor.execute("update TTQual set Rank=(%s) where PLID=(%s)",(i+101,SQID))#順位更新
                     con.commit()
                     await message.channel.send(SQ[i])
-                cursor.execute("SELECT * FROM history4 order by MID")
+                cursor.execute("SELECT * FROM history5 order by MID")
                 con.commit()
             else:
                 await message.channel.send('管理技士専用コマンドです')
@@ -1165,7 +1166,7 @@ async def on_message(message):
                 #レートリセット
                 cursor.execute("SELECT * FROM PLdata order by ID")
                 allPL=cursor.fetchall()
-                cursor.execute("select * from history4 order by MID")
+                cursor.execute("select * from history5 order by MID")
                 alhis=cursor.fetchall()
                 sort_CR=[]
                 sort_WR=[]
@@ -1258,7 +1259,7 @@ async def on_message(message):
             This1=0
             This2=0 #history
             This3=0 #s3history
-            This4=0 #history4
+            This4=0 #history5
             for i in range(s2match):
                 cursor.execute("SELECT * FROM history order by MID")
                 MID=cursor.fetchall()[i][5]
@@ -1270,8 +1271,8 @@ async def on_message(message):
         if 'del_his' in message.content:#試合履歴削除コマンド
             if message.author.guild_permissions.administrator:
                 MID=re.split('[\n]',message.content)[1]
-                cursor.execute("SELECT * FROM history4")
-                cursor.execute("DELETE FROM history4 where MID=(%s)",(MID,))
+                cursor.execute("SELECT * FROM history5")
+                cursor.execute("DELETE FROM history5 where MID=(%s)",(MID,))
                 con.commit()
             else:
                 await message.channel.send('管理技士専用コマンドです')
