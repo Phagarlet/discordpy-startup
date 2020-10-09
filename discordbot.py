@@ -1259,7 +1259,7 @@ async def on_message(message):
             This1=0
             This2=0 #history
             This3=0 #s3history
-            This4=0 #history5
+            This4=0 #history4
             for i in range(s2match):
                 cursor.execute("SELECT * FROM history order by MID")
                 MID=cursor.fetchall()[i][5]
